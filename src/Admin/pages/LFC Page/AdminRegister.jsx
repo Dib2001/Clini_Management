@@ -5,7 +5,7 @@ import "./readonly.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../Firebase/firebase-conf";
 
-import { ref, set, onValue } from "firebase/database";
+import { ref, set } from "firebase/database";
 
 export default function AdminRegister() {
   const navigate = useNavigate();
@@ -19,18 +19,16 @@ export default function AdminRegister() {
   const [registerPincode, setregisterPincode] = useState("");
   const [registerAddress, setregisterAddress] = useState("");
 
-  const getUser = async (e) => {
-    const userdata = ref(db, 'clinic/');
-    onValue(userdata, (snapshot) => {
-      const data = snapshot.hasChild(registerClinicName);
-      if (data === true){
-        // alert("Clinic Already Exsist");
-      }
-    });
-  };
+  // const getUser = async (e) => {
+  //   // const userdata = ref(db, 'clinic/');
+  //   onValue(ref(db, "clinic/"), (snapshot) => {
+  //     snapshot.hasChild(registerClinicName);
+  //   });
+  // };
 
-  const createUser = async (e) => { {/*await delete*/ }
-    await set(ref(db, "clinic/" + registerClinicName + "/profile"), {
+  const createUser = async (e) => {
+    const REmail = registerEmail.replace(".",'');
+    await set(ref(db, "clinic/" + REmail + "/profile"), {
       adminEmail: registerEmail,
       adminPassword: registerPassword,
       adminClinicName: registerClinicName,
@@ -53,17 +51,14 @@ export default function AdminRegister() {
   const register = async (e) => {
     e.preventDefault();
     try {
-      getUser();
       await createUserWithEmailAndPassword(
         auth,
         registerEmail,
         registerPassword
       );
-      // getUser();
       createUser();
       navigate("/admin");
     } catch (error) {
-      console.log(error.message)
       if (error.message === "Firebase: Error (auth/email-already-in-use).") {
         alert("Email Already Exsist");
       } else if (error.message === "Firebase: Error (auth/invalid-email).") {
@@ -309,11 +304,8 @@ export default function AdminRegister() {
                           placeholder="District"
                           value={pin.district}
                           required
-                          data-readonly
+                          disabled="True"
                           id="district"
-                          // onChange={(event) => {
-                          //   setregisterDistrict(event.target.value);
-                          // }}
                         />
                       </div>
                     </div>
@@ -330,13 +322,9 @@ export default function AdminRegister() {
                           type="text"
                           placeholder="State"
                           value={pin.state}
-                          data-readonly
                           required="True"
-                          autoComplete="True"
+                          disabled="True"
                           id="state"
-                          // onChange={(event) => {
-                          //   setregisterState(event.target.value);
-                          // }}
                         />
                       </div>
                     </div>

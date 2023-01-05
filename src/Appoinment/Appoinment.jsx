@@ -1,10 +1,20 @@
 import { React, useState } from "react";
-import {
-  Form,
-  Link
-} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "./Firebase/firebase-conf";
+
+import { ref, set, onValue } from "firebase/database";
 
 export default function Appoinment() {
+  
+  // const getUser = async (e) => {
+  //   const userdata = ref(db, 'clinic/');
+  //   // onValue(userdata, (snapshot) => {
+  //   //   snapshot.hasChild();
+  //   });
+  // };
+
   const [pin, SetPin] = useState({
     district: "",
     state: "",

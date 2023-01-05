@@ -1,7 +1,16 @@
 import { React, useState } from "react";
-import { Form,Link } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
+
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../Firebase/firebase-conf";
+
+import { ref, set } from "firebase/database";
 
 export default function AdminLogin() {
+
+  const [loginEmail, setloginEmail] = useState("");
+  const [loginPassword, setloginPassword] = useState("");
+
   const [wrong, setWrong] = useState(
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
   );
