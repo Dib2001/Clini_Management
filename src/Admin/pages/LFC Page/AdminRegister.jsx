@@ -19,15 +19,21 @@ export default function AdminRegister() {
   const [registerPincode, setregisterPincode] = useState("");
   const [registerAddress, setregisterAddress] = useState("");
 
-  // const getUser = async (e) => {
-  //   // const userdata = ref(db, 'clinic/');
-  //   onValue(ref(db, "clinic/"), (snapshot) => {
-  //     snapshot.hasChild(registerClinicName);
-  //   });
-  // };
-
   const createUser = async (e) => {
-    const REmail = registerEmail.replace(".",'');
+    const REmail = registerEmail.replace(".", "");
+    await set(ref(db, "clinic/" + REmail), {
+      adminClinicName: registerClinicName,
+      adminAddress:
+        registerAddress +
+        ", " +
+        document.getElementById("pos").value +
+        ", " +
+        document.getElementById("district").value +
+        ", " +
+        registerPincode +
+        ", " +
+        document.getElementById("state").value,
+    });
     await set(ref(db, "clinic/" + REmail + "/profile"), {
       adminEmail: registerEmail,
       adminPassword: registerPassword,
