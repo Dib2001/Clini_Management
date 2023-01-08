@@ -1,16 +1,63 @@
-import { React, useState } from "react";
-import { Form, Link } from "react-router-dom";
+import { React, useState, useEffect } from "react";
 
+import { db } from "../Firebase/firebase-conf";
+
+import { ref, push, onValue } from "firebase/database";
 export default function DoctorRegister() {
+
+  const [doctorName, setdoctorName] = useState("");
+  const [doctorEmail, setdoctorEmail] = useState("");
+  const [doctorContact, setdoctorContact] = useState("");
+  const [doctorAddress, setdoctorAddress] = useState("");
+  const [doctorDepartment, setdoctorDepartment] = useState("");
+
+  const clinicEmail = localStorage.getItem("adminEmail");
+
+  const addDoctor = async (e) => {
+    e.preventDefault();
+    const CEmail = clinicEmail.replace(".", "");
+    await push(ref(db, "clinic/" + CEmail + "/doctors"), {
+      doctorName: doctorName,
+      doctorEmail: doctorEmail,
+      doctorContact: doctorContact,
+      doctorAddress: doctorAddress,
+      doctorDepartment: doctorDepartment,
+    });
+    alert("Doctor Successfully added")
+  };
+
+  const getDepartment = async (e) => {
+    const department = document.getElementById("departmentlist");
+    const CEmail = clinicEmail.replace(".", "");
+    const userdata = ref(db, "clinic/" + CEmail + "/department");
+    var html = "<option value=''>Select Department</option>";
+    onValue(userdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const departmentName = child.val()["departmentname"];
+        html +=
+          "<option value=" +
+          departmentName +
+          ">" +
+          departmentName +
+          "</option>";
+        department.innerHTML = html;
+      });
+    });
+  };
+
+  useEffect(() => {
+    getDepartment();
+  }, []);
+
   return (
     <>
       <div className="row mx-5 my-3">
         <div className="col-sm-4 mb-3 mb-sm-0"></div>
         <div className="col-sm-4 mb-3 mb-sm-0">
-          <div className="card" style={{ "background-color": "#59cbc0" }}>
+          <div className="card" style={{ backgroundColor: "#59cbc0" }}>
             <div className="card-header text-center">Register Doctor</div>
             <div className="card-body">
-              <form className="row g-3">
+              <form className="row g-3" onSubmit={addDoctor}>
                 <div className="col-md-12">
                   <label htmlFor="DoctorName" className="form-label">
                     Name
@@ -22,6 +69,9 @@ export default function DoctorRegister() {
                     id="DoctorName"
                     placeholder="Doctor-Name"
                     pattern="[A-Za-z-A-Za-z]{1,}"
+                    onChange={(event) => {
+                      setdoctorName(event.target.value);
+                    }}
                   />
                 </div>
                 <div className="col-md-6">
@@ -34,6 +84,9 @@ export default function DoctorRegister() {
                     className="form-control"
                     id="DoctorEmail"
                     placeholder="Email"
+                    onChange={(event) => {
+                      setdoctorEmail(event.target.value);
+                    }}
                   />
                 </div>
                 <div className="col-md-6">
@@ -49,6 +102,9 @@ export default function DoctorRegister() {
                     maxLength={10}
                     minLength={10}
                     pattern="[6-9][0-9]{9}"
+                    onChange={(event) => {
+                      setdoctorContact(event.target.value);
+                    }}
                   />
                 </div>
                 <div className="col-12">
@@ -61,10 +117,20 @@ export default function DoctorRegister() {
                     id="DoctorAddress"
                     placeholder="Address"
                     required
+                    onChange={(event) => {
+                      setdoctorAddress(event.target.value);
+                    }}
                   />
                 </div>
                 <div className="col-sm-6">
-                  <select className="btn btn-secondary" required>
+                  <select
+                    className="btn btn-secondary"
+                    required
+                    id="departmentlist"
+                    onChange={(event) => {
+                      setdoctorDepartment(event.target.value);
+                    }}
+                  >
                     <option value="">Select Department</option>
                   </select>
                 </div>

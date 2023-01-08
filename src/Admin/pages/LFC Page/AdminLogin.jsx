@@ -1,15 +1,36 @@
 import { React, useState } from "react";
 import { useNavigate,Link } from "react-router-dom";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../Firebase/firebase-conf";
 
 import { ref, set } from "firebase/database";
 
 export default function AdminLogin() {
+  const navigate = useNavigate();
 
   const [loginEmail, setloginEmail] = useState("");
   const [loginPassword, setloginPassword] = useState("");
+
+  localStorage.setItem('adminEmail',loginEmail)
+
+  const login = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      navigate("/admin/dashboard");
+    } catch (error) {
+      if (error.message === "Firebase: Error (auth/user-not-found).") {
+        alert("Email Not Exsist");
+      } else if (error.message === "Firebase: Error (auth/wrong-password).") {
+        alert("Enter Correct Password");
+      }
+    }
+  };
 
   const [wrong, setWrong] = useState(
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
@@ -37,7 +58,7 @@ export default function AdminLogin() {
                     <br></br>
                     <strong>LOCAL</strong>
                   </h3>
-                  <form>
+                  <form onSubmit={login}>
                     <div className="uk-margin">
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: mail" />
@@ -45,6 +66,9 @@ export default function AdminLogin() {
                           className="uk-input uk-form-large"
                           type="email"
                           placeholder="Email Address"
+                          onChange={(event) => {
+                            setloginEmail(event.target.value);
+                          }}
                           required
                         />
                       </div>
@@ -62,6 +86,9 @@ export default function AdminLogin() {
                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                           required="True"
                           autoComplete="True"
+                          onChange={(event) => {
+                            setloginPassword(event.target.value);
+                          }}
                         />
                       </div>
                     </div>

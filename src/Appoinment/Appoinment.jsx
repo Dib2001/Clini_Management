@@ -1,19 +1,55 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "./Firebase/firebase-conf";
 
-import { ref, set, onValue } from "firebase/database";
+import { ref, onValue, query, orderByChild, child } from "firebase/database";
 
 export default function Appoinment() {
-  
   // const getUser = async (e) => {
   //   const userdata = ref(db, 'clinic/');
   //   // onValue(userdata, (snapshot) => {
   //   //   snapshot.hasChild();
   //   });
   // };
+  const getClinic = async (e) => {
+    const Clinicdata = ref(db, "clinic");
+    const clinicName = document.getElementById("clinicName");
+    const clinicAddress = document.getElementById("clinicaddress");
+    var cName = '<option value="">Select Clinic</option>';
+    var cAddress = '<option value="">Select Address</option>';
+    onValue(Clinicdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const clinicAddrss = child.val()["profile"]["adminAddress"];
+        const clinicN = child.val()["profile"]["adminClinicName"];
+        cName += '<option value="' + clinicN + '">' + clinicN + "</option>";
+        // cAddress +=
+        //   '<option value="' + clinicAddrss + '">' + clinicAddrss + "</option>";
+      });
+      clinicName.innerHTML = cName;
+      // clinicAddress.innerHTML = cAddress;
+    });
+  };
+
+  useEffect(() => {
+    getClinic();
+  }, []);
+
+  const getDepartment = async (e) => {
+    const AEmail = "dasrick269@gmailcom";
+    const departmentdata = ref(db, "clinic/" + AEmail + "/department");
+    const departmentName = document.getElementById("pDepartment");
+    var DName = '<option value="">Select Department</option>';
+    onValue(departmentdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const Department = child.val()["profile"]["adminAddress"];
+        DName +=
+          '<option value="' + Department + '">' + Department + "</option>";
+      });
+      departmentName.innerHTML = DName;
+    });
+  };
 
   const [pin, SetPin] = useState({
     district: "",
@@ -91,20 +127,31 @@ export default function Appoinment() {
           </div>
         </div>
       </div>
-      <section className="py-2 text-center container">
+      <form className="py-2 text-center container">
         <div className="row py-lg-5 mb-3">
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">Take Appointment</h1>
             <p className="lead text-muted">
               From Your Favourit Clinic, Register Yourself First
             </p>
-            <select className="btn btn-outline-success">
+            <select
+              className="btn btn-outline-success mb-2 mx-2"
+              id="clinicName"
+              required
+            >
               <option value="">Select Clinic</option>
+            </select>
+            <select
+              className="btn btn-outline-success mb-2"
+              id="clinicaddress"
+              required
+            >
+              <option value="">Select Address</option>
             </select>
             <p className="lead text-muted">Register Yourself First</p>
           </div>
         </div>
-        <form className="row gy-2 gx-3 align-items-center">
+        <div className="row gy-2 gx-3 align-items-center">
           <div className="row">
             <div className="col-auto">
               <label htmlFor="pEmail" className="form-label">
@@ -131,6 +178,7 @@ export default function Appoinment() {
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                 required
+                autoComplete="on"
               />
             </div>
           </div>
@@ -260,8 +308,8 @@ export default function Appoinment() {
               </button>
             </div>
           </div>
-        </form>
-      </section>
+        </div>
+      </form>
     </>
   );
 }

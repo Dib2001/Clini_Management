@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { useState, useEffect } from "react";
 import AdminLogin from "./Admin/pages/LFC Page/AdminLogin";
 import AdminRegister from "./Admin/pages/LFC Page/AdminRegister";
 import AdminForgotpsw from "./Admin/pages/LFC Page/AdminForgotpsw";
@@ -26,6 +25,15 @@ function App() {
     <>
       <Router>
         <Routes>
+        <Route
+            exact
+            path="/*"
+            element={
+              <>
+                <Appoinment/>
+              </>
+            }
+          />
         <Route
             exact
             path="/admin/profile"

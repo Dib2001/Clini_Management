@@ -1,20 +1,46 @@
 import { React, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
+
+import { db } from "./Firebase/firebase-conf";
+
+import { ref, onValue } from "firebase/database";
 
 export default function UNavbar() {
+
+  const [clinicname, Setclinicname] = useState(
+    ""
+  );
+
+  const clinicEmail = localStorage.getItem('adminEmail')
+
+   const getUser = async (e) => {
+    const CEmail = clinicEmail.replace(".", "");
+    const userdata = ref(db, "clinic/"+CEmail);
+    onValue(userdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const clinicN = child.val()['adminClinicName'];
+        Setclinicname(clinicN)
+      });
+    });
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <>
       <nav
         className="navbar navbar-expand-lg"
-        style={{ "background-color": "#cddfed" }}
+        style={{ "backgroundColor": "#cddfed" }}
       >
         <div className="container-fluid">
           <Link
             to="#"
             className="navbar-brand"
-            style={{ "text-decoration": "none" }}
+            style={{ "textDecoration": "none" }}
           >
-            Your Clinic
+            {clinicname}
           </Link>
           <button
             className="navbar-toggler"
@@ -32,7 +58,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "text-decoration": "none" }}
+                  style={{ "textDecoration": "none" }}
                   to="/admin/dashboard"
                 >
                   Home
@@ -41,7 +67,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "text-decoration": "none" }}
+                  style={{ "textDecoration": "none" }}
                   to="/admin/doctor"
                 >
                   Doctor
@@ -50,7 +76,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "text-decoration": "none" }}
+                  style={{ "textDecoration": "none" }}
                   to="/admin/patient"
                 >
                   Patient
@@ -59,7 +85,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "text-decoration": "none" }}
+                  style={{ "textDecoration": "none" }}
                   to="/admin/customer"
                 >
                   Customer
@@ -68,7 +94,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "text-decoration": "none" }}
+                  style={{ "textDecoration": "none" }}
                   to="/admin/dashboard"
                 >
                   Medicine
@@ -77,7 +103,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "text-decoration": "none" }}
+                  style={{ "textDecoration": "none" }}
                   to="/admin/profile"
                 >
                   Profile

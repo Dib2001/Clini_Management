@@ -1,11 +1,11 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./readonly.css";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../Firebase/firebase-conf";
 
-import { ref, set } from "firebase/database";
+import { ref, set, onValue } from "firebase/database";
 
 export default function AdminRegister() {
   const navigate = useNavigate();
@@ -19,21 +19,37 @@ export default function AdminRegister() {
   const [registerPincode, setregisterPincode] = useState("");
   const [registerAddress, setregisterAddress] = useState("");
 
+  const [wrong, setWrong] = useState(
+    "uk-button-danger uk-button  uk-button-large uk-width-1-1"
+  );
+
+  const clinicCheck = async (e) => {
+    const checkclinic = document.getElementById("checkclinic");
+    const userdata = ref(db, "clinic");
+    onValue(userdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const clinicName = child.toJSON()["profile"]["adminClinicName"];
+        var html = "";
+        if (registerClinicName === clinicName) {
+          html =
+            ' <div class="alert alert-danger" role="alert">' +
+            "Clinic Name Already Exist" +
+            "</div>";
+          checkclinic.innerHTML = html;
+        } else {
+          checkclinic.innerHTML = "";
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    clinicCheck();
+  }, []);
+  
+
   const createUser = async (e) => {
     const REmail = registerEmail.replace(".", "");
-    await set(ref(db, "clinic/" + REmail), {
-      adminClinicName: registerClinicName,
-      adminAddress:
-        registerAddress +
-        ", " +
-        document.getElementById("pos").value +
-        ", " +
-        document.getElementById("district").value +
-        ", " +
-        registerPincode +
-        ", " +
-        document.getElementById("state").value,
-    });
     await set(ref(db, "clinic/" + REmail + "/profile"), {
       adminEmail: registerEmail,
       adminPassword: registerPassword,
@@ -72,10 +88,6 @@ export default function AdminRegister() {
       }
     }
   };
-
-  const [wrong, setWrong] = useState(
-    "uk-button-danger uk-button  uk-button-large uk-width-1-1"
-  );
 
   const checkPassword = (event) => {
     const passowrd = event.target;
@@ -153,6 +165,7 @@ export default function AdminRegister() {
                     <br></br>
                     Register now and join with us....<br></br>
                     <strong>LOCAL</strong>
+                    <div id="checkclinic"></div>
                   </h3>
                   <form onSubmit={register}>
                     <div className="uk-margin">
@@ -170,7 +183,6 @@ export default function AdminRegister() {
                         />
                       </div>
                     </div>
-
                     <div className="uk-margin">
                       {/*Password */}
                       <div className="uk-inline uk-width-1-1">
@@ -199,7 +211,9 @@ export default function AdminRegister() {
                         <input
                           className="uk-input uk-form-large"
                           type="text"
-                          onKeyUp={checkPassword}
+                          onKeyUp={(event) => {
+                            setregisterClinicName(event.target.value);
+                          }}
                           placeholder="Clinic-Name"
                           required="True"
                           autoComplete="True"
