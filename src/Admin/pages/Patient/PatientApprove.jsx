@@ -1,10 +1,91 @@
-import { React, useState } from "react";
-import { Form, Link } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+
+import { db } from "../Firebase/firebase-conf";
+
+import { ref, onValue } from "firebase/database";
 
 export default function PatientApprove() {
-  const [patientcount, setpatientcount] = useState(0);
+  const clinicEmail = localStorage.getItem("adminEmail");
 
-  const [startDate, setStartDate] = useState(new Date());
+  const getPatient = async (e) => {
+    const needApprove = document.getElementById("needApprove");
+    const CEmail = clinicEmail.replace(".", "");
+    const userdata = ref(db, "clinic/" + CEmail + "/clinicstatus");
+    var html = "";
+    onValue(userdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const PatientName =
+          child.val()["Patient_FirstName"] +
+          " " +
+          child.val()["Patient_LastName"];
+        const PatientMobile = child.val()["Patient_Mobile"];
+        const PatientAddress = child.val()["Patient_Address"];
+        const PatientSymptoms = child.val()["Patient_Symptoms"];
+        const PatientAge = child.val()["Patient_Age"];
+        const PatientSex = child.val()["Patient_Gender"];
+        html +=
+          "<tr>" +
+          "<td>" +
+          PatientName +
+          "</td>" +
+          "<td>" +
+          PatientMobile +
+          "</td>" +
+          "<td>" +
+          PatientAddress +
+          "</td>" +
+          "<td>" +
+          PatientSymptoms +
+          "</td>" +
+          "<td>" +
+          PatientAge +
+          "</td>" +
+          "<td>" +
+          PatientSex +
+          "</td>" +
+          "<td class='text-center'>" +
+          "<button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>" +
+          "<i class='fas fa-check-circle'></i>" +
+          "</button>" +
+          "<form class='modal fade' id='staticBackdrop' data-bs-backdrop='static' data-bs-keyboard='false' tabIndex=-1 aria-labelledby='staticBackdropLabel' aria-hidden='true'>" +
+          "<div class='modal-dialog'>" +
+          "<div class='modal-content'>" +
+          "<div class='modal-header'>" +
+          "<h1 class='modal-title fs-5' id='staticBackdropLabel'>" +
+          "Appointment Date" +
+          "</h1>" +
+          "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'/>" +
+          "</div>" +
+          "<div class='modal-body'>" +
+          "<input type='date' required id='dateappointment'/>" +
+          "</div>" +
+          "<div class='modal-footer'>" +
+          "<button type='Submit' class='btn btn-success'>" +
+          "Done" +
+          "</button>" +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          "</form>" +
+          "</td>" +
+          "</tr>";
+        needApprove.innerHTML = html;
+      });
+    });
+  };
+
+  const updatePatient = async (e) => {
+    e.preventDefault();
+    const date = document.getElementById("dateappointment").value;
+    console.log(date);
+    alert("Patient Approved")
+  };
+
+  // console.log();
+
+  useEffect(() => {
+    getPatient();
+  }, []);
 
   return (
     <>
@@ -15,24 +96,18 @@ export default function PatientApprove() {
               <caption className="text-center">Patient Wants To Admit</caption>
               <thead className="table-danger">
                 <tr>
-                  <th scope="col">Sl No.</th>
                   <th scope="col">Name</th>
                   <th scope="col">Mobile</th>
                   <th scope="col">Address</th>
                   <th scope="col">Symptoms</th>
-                  <th scope="col">Department</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Sex</th>
                   <th scope="col">Approve</th>
                   <th scope="col">Reject</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">{patientcount}</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+              <tbody id='needApprove'>
+                {/* <tr>
                   <td className="text-center">
                     <button
                       type="button"
@@ -42,7 +117,7 @@ export default function PatientApprove() {
                     >
                       <i className="fas fa-check-circle" />
                     </button>
-                    <div
+                    <form
                       className="modal fade"
                       id="staticBackdrop"
                       data-bs-backdrop="static"
@@ -50,6 +125,7 @@ export default function PatientApprove() {
                       tabIndex={-1}
                       aria-labelledby="staticBackdropLabel"
                       aria-hidden="true"
+                      onSubmit={updatePatient}
                     >
                       <div className="modal-dialog">
                         <div className="modal-content">
@@ -68,23 +144,21 @@ export default function PatientApprove() {
                             />
                           </div>
                           <div className="modal-body">
-                            <input type="date" required/>
+                            <input type="date" required id="dateappointment" />
                           </div>
                           <div className="modal-footer">
                             <button
                               type="Submit"
                               className="btn btn-success"
-                              data-bs-dismiss="modal"
                             >
                               Done
                             </button>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </form>
                   </td>
-                  <td></td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           </div>

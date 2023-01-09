@@ -4,9 +4,19 @@ import { useNavigate, Link } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "./Firebase/firebase-conf";
 
-import { ref, onValue, query, orderByChild, child } from "firebase/database";
+import { ref, onValue, set, push } from "firebase/database";
 
 export default function Appoinment() {
+  const navigate = useNavigate();
+
+  const [patientEmail, setpatientEmail] = useState("");
+  const [patientPassword, setpatientPassword] = useState("");
+  const [patientFirstName, setpatientFirstName] = useState("");
+  const [patientLastName, setpatientLastName] = useState("");
+  const [patientMobile, setpatientMobile] = useState("");
+  const [patientAge, setpatientAge] = useState("");
+  const [patientSymptoms, setpatientSymptoms] = useState("");
+  const [patientAddress, setpatientAddress] = useState("");
   // const getUser = async (e) => {
   //   const userdata = ref(db, 'clinic/');
   //   // onValue(userdata, (snapshot) => {
@@ -16,70 +26,111 @@ export default function Appoinment() {
   const getClinic = async (e) => {
     const Clinicdata = ref(db, "clinic");
     const clinicName = document.getElementById("clinicName");
-    const clinicAddress = document.getElementById("clinicaddress");
     var cName = '<option value="">Select Clinic</option>';
+    onValue(Clinicdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const clinicN = child.val()["profile"]["adminClinicName"];
+        cName += '<option value="' + clinicN + '">' + clinicN + "</option>";
+      });
+      clinicName.innerHTML = cName;
+    });
+  };
+
+  const getaddress = async (e) => {
+    const Clinicdata = ref(db, "clinic");
+    const clinicName = document.getElementById("clinicName").value;
+    const clinicAddress = document.getElementById("clinicaddress");
     var cAddress = '<option value="">Select Address</option>';
     onValue(Clinicdata, (snapshot) => {
       snapshot.forEach((child) => {
-        const clinicAddrss = child.val()["profile"]["adminAddress"];
-        const clinicN = child.val()["profile"]["adminClinicName"];
-        cName += '<option value="' + clinicN + '">' + clinicN + "</option>";
-        // cAddress +=
-        //   '<option value="' + clinicAddrss + '">' + clinicAddrss + "</option>";
+        if (clinicName === child.val()["profile"]["adminClinicName"]) {
+          const clinicAddrss = child.val()["profile"]["adminAddress"];
+          cAddress +=
+            '<option value="' +
+            clinicAddrss +
+            '">' +
+            clinicAddrss +
+            "</option>";
+        }
       });
-      clinicName.innerHTML = cName;
-      // clinicAddress.innerHTML = cAddress;
+      clinicAddress.innerHTML = cAddress;
     });
   };
+
+  const createUser = async (e) => {
+    const Clinicdata = ref(db, "clinic");
+    const patientGender = document.getElementById("gender").value;
+    const clinicAddress = document.getElementById("clinicaddress").value;
+    const clinicName = document.getElementById("clinicName").value;
+    const PEmail = patientEmail.replace(".", "");
+    await set(ref(db, "patient/" + PEmail + "/profile"), {
+      Patient_Email: patientEmail,
+      Patient_Password: patientPassword,
+      Patient_FirstName: patientFirstName,
+      Patient_LastName: patientLastName,
+      Patient_Mobile: patientMobile,
+      Patient_Age: patientAge,
+      Patient_Address: patientAddress,
+      Patient_Gender: patientGender,
+    });
+    await push(ref(db, "patient/" + PEmail + "/clinicstatus"), {
+      Patient_FirstName: patientFirstName,
+      Patient_LastName: patientLastName,
+      Patient_Mobile: patientMobile,
+      Patient_Age: patientAge,
+      Patient_Address: patientAddress,
+      Patient_Gender: patientGender,
+      Patient_Symptoms: patientSymptoms,
+      Patient_Clinic_name: clinicName,
+      Patient_Clinic_address: clinicAddress,
+      Patient_Clinic_Status: "0",
+    });
+    onValue(Clinicdata, (snapshot) => {
+      snapshot.forEach(async (child) => {
+        if (clinicName === child.val()["profile"]["adminClinicName"]) {
+          if (clinicAddress === child.val()["profile"]["adminAddress"]) {
+            const clinic = child
+              .val()
+              ["profile"]["adminEmail"].replace(".", "");
+            await set(ref(db, "clinic/" + clinic + "/clinicstatus/" + PEmail), {
+              Patient_FirstName: patientFirstName,
+              Patient_LastName: patientLastName,
+              Patient_Mobile: patientMobile,
+              Patient_Age: patientAge,
+              Patient_Symptoms: patientSymptoms,
+              Patient_Address: patientAddress,
+              Patient_Gender: patientGender,
+              Patient_Email: patientEmail,
+              Patient_Clinic_Status: "0",
+            });
+          }
+        }
+      });
+    });
+    window.location.reload(true);
+  };
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, patientEmail, patientPassword);
+      createUser();
+      navigate("/Patient/Login");
+    } catch (error) {
+      if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+        alert("Email Already Exsist");
+      } else if (error.message === "Firebase: Error (auth/invalid-email).") {
+        alert("Enter Correct Email");
+      }
+    }
+  };
+
+  localStorage.removeItem("adminEmail");
 
   useEffect(() => {
     getClinic();
-  }, []);
-
-  const getDepartment = async (e) => {
-    const AEmail = "dasrick269@gmailcom";
-    const departmentdata = ref(db, "clinic/" + AEmail + "/department");
-    const departmentName = document.getElementById("pDepartment");
-    var DName = '<option value="">Select Department</option>';
-    onValue(departmentdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const Department = child.val()["profile"]["adminAddress"];
-        DName +=
-          '<option value="' + Department + '">' + Department + "</option>";
-      });
-      departmentName.innerHTML = DName;
-    });
-  };
-
-  const [pin, SetPin] = useState({
-    district: "",
-    state: "",
   });
 
-  const getarea = (event) => {
-    let pincode = event.target;
-    if (pincode.value !== "" && pincode.value.length === 6) {
-      fetch("https://api.postalpincode.in/pincode/" + pincode.value)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data[0].PostOffice === null) {
-          } else {
-            for (let i = 0; i < data[0].PostOffice.length; i++) {
-              let info = data[0].PostOffice[i];
-              SetPin({
-                district: info.District,
-                state: info.State,
-              });
-            }
-          }
-        });
-    } else {
-      SetPin({
-        district: "",
-        state: "",
-      });
-    }
-  };
   return (
     <>
       <div className="p-3 text-bg-dark">
@@ -127,188 +178,190 @@ export default function Appoinment() {
           </div>
         </div>
       </div>
-      <form className="py-2 text-center container">
-        <div className="row py-lg-5 mb-3">
+      <div className="text-center container">
+        <div className="row">
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">Take Appointment</h1>
-            <p className="lead text-muted">
-              From Your Favourit Clinic, Register Yourself First
-            </p>
-            <select
-              className="btn btn-outline-success mb-2 mx-2"
-              id="clinicName"
-              required
-            >
-              <option value="">Select Clinic</option>
-            </select>
-            <select
-              className="btn btn-outline-success mb-2"
-              id="clinicaddress"
-              required
-            >
-              <option value="">Select Address</option>
-            </select>
-            <p className="lead text-muted">Register Yourself First</p>
+            <p className="lead text-muted">From Your Favourit Clinic</p>
           </div>
         </div>
-        <div className="row gy-2 gx-3 align-items-center">
-          <div className="row">
-            <div className="col-auto">
-              <label htmlFor="pEmail" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Email"
-                id="pEmail"
-                required
-              />
-            </div>
-            <div className="col-auto">
-              <label htmlFor="pPassword" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="pPassword"
-                placeholder="Password"
-                minLength={8}
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                required
-                autoComplete="on"
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-auto">
-              <label htmlFor="pFName" className="form-label">
-                First Name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="pFName"
-                placeholder="First Name"
-                required
-                pattern="[A-Za-z]{1,}"
-              />
-            </div>
-            <div className="col-auto">
-              <label htmlFor="pLName" className="form-label">
-                Last Name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="pLName"
-                placeholder="Last Name"
-                required
-                pattern="[A-Za-z]{1,}"
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-auto">
-              <label htmlFor="pPhone" className="form-label">
-                Mobile Number
-              </label>
-              <input
-                type="tel"
-                className="form-control"
-                placeholder="Contact"
-                id="pPhone"
-                maxLength={10}
-                minLength={10}
-                required
-                pattern="[6-9][0-9]{9}"
-              />
-            </div>
-            <div className="col-auto">
-              <label htmlFor="pPin" className="form-label">
-                Pincode
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Pincode"
-                pattern="[1-9][0-9]{5}"
-                maxLength={6}
-                minLength={6}
-                required
-                id="pPin"
-                onKeyUp={getarea}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-auto">
-              <label htmlFor="pDistrict" className="form-label">
-                District
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="District"
-                data-readonly
-                id="pDistrict"
-                value={pin.district}
-                required
-                onChange={getarea}
-              />
-            </div>
-            <div className="col-auto">
-              <label htmlFor="pState" className="form-label">
-                State
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="State"
-                data-readonly
-                id="pState"
-                value={pin.state}
-                required
-                onChange={getarea}
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-auto">
-              <label htmlFor="pSymptoms" className="form-label">
-                Symptoms
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Symptoms"
-                id="pSymptoms"
-                required
-              />
-            </div>
-            <div className="col-auto">
-              <label htmlFor="pDepartment" className="form-label">
-                Department
-              </label>
+      </div>
+      <form className="row mx-5" onSubmit={registerUser}>
+        <div className="col-sm-3 mb-3 mb-sm-0"></div>
+        <div className="col-sm-6 mb-3 mb-sm-0">
+          <div className="card" style={{ backgroundColor: "#59cbc0" }}>
+            <div className="card-header text-center">
               <select
-                id="pDepartment"
-                className="form-select btn btn-outline-success"
+                className="btn btn-warning mb-2 mx-2 btn-sm"
+                id="clinicName"
+                onClick={getaddress}
                 required
               >
-                <option value="">Select</option>
+                <option value="">Select Clinic</option>
+              </select>
+              <select
+                className="btn btn-success mb-2 btn-sm"
+                id="clinicaddress"
+                required
+              >
+                <option value="">Select Address</option>
               </select>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-auto">
-              <button type="submit" className="btn btn-primary">
-                Register
-              </button>
+            <div className="card-body">
+              <div className="row g-3">
+                <div className="col-md-6">
+                  <label htmlFor="pEmail" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Email"
+                    id="pEmail"
+                    required
+                    onChange={(event) => {
+                      setpatientEmail(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="pPassword" className="form-label">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="pPassword"
+                    placeholder="Password"
+                    minLength={8}
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                    required
+                    autoComplete="on"
+                    onChange={(event) => {
+                      setpatientPassword(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="pFName" className="form-label">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pFName"
+                    placeholder="First Name"
+                    required
+                    pattern="[A-Za-z]{1,}"
+                    onChange={(event) => {
+                      setpatientFirstName(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="pLName" className="form-label">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pLName"
+                    placeholder="Last Name"
+                    required
+                    pattern="[A-Za-z]{1,}"
+                    onChange={(event) => {
+                      setpatientLastName(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="pPhone" className="form-label">
+                    Mobile Number
+                  </label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    placeholder="Contact"
+                    id="pPhone"
+                    maxLength={10}
+                    minLength={10}
+                    required
+                    pattern="[6-9][0-9]{9}"
+                    onChange={(event) => {
+                      setpatientMobile(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Gender</label>
+                  <br />
+                  <select
+                    className="btn btn-warning mb-2 btn-md"
+                    id="gender"
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="pAge" className="form-label">
+                    Age
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Age"
+                    id="pAge"
+                    required
+                    onChange={(event) => {
+                      setpatientAge(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="pSymptoms" className="form-label">
+                    Symptoms
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Symptoms"
+                    id="pSymptoms"
+                    required
+                    onChange={(event) => {
+                      setpatientSymptoms(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-12">
+                  <label htmlFor="pAddress" className="form-label">
+                    Address
+                  </label>
+                  <textarea
+                    type="text"
+                    className="form-control"
+                    placeholder="Address"
+                    id="pAddress"
+                    required
+                    onChange={(event) => {
+                      setpatientAddress(event.target.value);
+                    }}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <button type="submit" className="btn btn-primary">
+                    BOOK
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <div className="col-sm-3 mb-3 mb-sm-0"></div>
       </form>
     </>
   );

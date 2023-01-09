@@ -31,10 +31,10 @@ export default function ProfileMain() {
 
   const addDepartment = async (e) => {
     const CEmail = clinicEmail.replace(".", "");
-    if (departmentname.startsWith(" ")) {
+    if (departmentname.length <= 1) {
+      alert("Enter Department Name");
+    } else if (departmentname.startsWith(" ")) {
       alert("Please Remove Front Space");
-    } else if (departmentname.length <= 0) {
-      alert("Correct Department Name");
     } else {
       await push(ref(db, "clinic/" + CEmail + "/department"), {
         departmentname,
@@ -59,7 +59,10 @@ export default function ProfileMain() {
           departmentName +
           "</option>";
         department.innerHTML = html;
-        html1 += "<tr><th scope='row' class='table-success'>" + departmentName + "</th></tr>";
+        html1 +=
+          "<tr><th scope='row' class='table-success'>" +
+          departmentName +
+          "</th></tr>";
         listofDepartment.innerHTML = html1;
       });
     });
@@ -111,7 +114,8 @@ export default function ProfileMain() {
           <div
             className="card text-bg-danger"
             data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop" onClick={getDepartment}
+            data-bs-target="#staticBackdrop"
+            onClick={getDepartment}
           >
             <div className="card-header">
               No Departments : {departmentcount}
@@ -390,7 +394,6 @@ export default function ProfileMain() {
                                   className="form-control"
                                   id="ProfielEEmail"
                                   placeholder="Email"
-                                  // value={profile.email}
                                 />
                               </div>
                               <div className="col-md-6">
@@ -408,7 +411,7 @@ export default function ProfileMain() {
                                   placeholder="Passowrd"
                                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                   title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                                  // value={profile.password}
+                                  autoComplete="on"
                                 />
                               </div>
                               <div className="col-md-6">

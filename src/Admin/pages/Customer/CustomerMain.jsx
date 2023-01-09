@@ -8,7 +8,7 @@ export default function CustomerMain() {
     <>
       <div className="row mx-5 my-3">
         <div className="col-sm-6 mb-3 mb-sm-0">
-          <Link to="/" style={{ "text-decoration": "none" }}>
+          <Link to="/" style={{ "textDecoration": "none" }}>
             <div className="card text-bg-danger ">
               <div className="card-header">
                 Total Customer : {appointmentcount}
@@ -16,14 +16,14 @@ export default function CustomerMain() {
               <div className="card-body">
                 <i
                   className="fas fa-calendar-alt"
-                  style={{ "font-size": "3rem" }}
+                  style={{ "fontSize": "3rem" }}
                 />
               </div>
             </div>
           </Link>
         </div>
         <div className="col-sm-6 mb-3 mb-sm-0">
-          <Link to="/" style={{ "text-decoration": "none" }}>
+          <Link to="/" style={{ "textDecoration": "none" }}>
             <div className="card text-bg-success">
               <div className="card-header">
                 Customer Bill
@@ -31,7 +31,7 @@ export default function CustomerMain() {
               <div className="card-body">
                 <i
                   className="fa fa-user-plus"
-                  style={{ "font-size": "3rem" }}
+                  style={{ "fontSize": "3rem" }}
                 />
               </div>
             </div>

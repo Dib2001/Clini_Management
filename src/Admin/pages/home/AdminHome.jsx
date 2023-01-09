@@ -5,7 +5,6 @@ import { db } from "../Firebase/firebase-conf";
 import { ref, onValue } from "firebase/database";
 
 export default function UHome() {
-
   const clinicEmail = localStorage.getItem("adminEmail");
 
   const [doctorcount, setdoctorcount] = useState(0);
@@ -34,8 +33,18 @@ export default function UHome() {
     });
   };
 
+  const listApprovePatient = async (e) => {
+    const CEmail = clinicEmail.replace(".", "");
+    const userdata = ref(db, "clinic/" + CEmail + "/clinicstatus");
+    onValue(userdata, (snapshot) => {
+      const nolist = snapshot.size;
+      setapproveappointmentcount(nolist);
+    });
+  };
+
   useEffect(() => {
     listDoctore();
+    listApprovePatient();
   }, []);
 
   return (
@@ -46,7 +55,7 @@ export default function UHome() {
             <div className="card-header">Total Doctor : {doctorcount}</div>
             <div className="card-body">
               <p className="card-text">Your Best Doctors</p>
-              <i className="fa fa-user-md" style={{ "fontSize": "3rem" }} />
+              <i className="fa fa-user-md" style={{ fontSize: "3rem" }} />
             </div>
           </div>
         </div>
@@ -55,20 +64,18 @@ export default function UHome() {
             <div className="card-header">Total Patient : {patientcount}</div>
             <div className="card-body">
               <p className="card-text">Today Patient : {todaypatientcount}</p>
-              <i className="fas fa-user-plus" style={{ "fontSize": "3rem" }} />
+              <i className="fas fa-user-plus" style={{ fontSize: "3rem" }} />
             </div>
           </div>
         </div>
         <div className="col-sm-3 mb-3 mb-sm-0">
           <div className="card text-bg-info ">
-            <div className="card-header">
-              Appointment
-            </div>
+            <div className="card-header">Appointment</div>
             <div className="card-body">
               <p className="card-text">
                 Approve Appointments : {approveappointmentcount}
               </p>
-              <i className="fa fa-calendar" style={{ "fontSize": "3rem" }} />
+              <i className="fa fa-calendar" style={{ fontSize: "3rem" }} />
             </div>
           </div>
         </div>
@@ -79,7 +86,7 @@ export default function UHome() {
               <p className="card-text">
                 Number of Medicine added today : {todaymedicinecount}
               </p>
-              <i className="fa fa-medkit" style={{ "fontSize": "3rem" }} />
+              <i className="fa fa-medkit" style={{ fontSize: "3rem" }} />
             </div>
           </div>
         </div>
