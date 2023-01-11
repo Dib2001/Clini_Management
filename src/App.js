@@ -19,6 +19,8 @@ import PatientRecord from "./Admin/pages/Patient/PatientRecord";
 import PatientAdmit from "./Admin/pages/Patient/PatientAdmit";
 import PatientApprove from "./Admin/pages/Patient/PatientApprove";
 import ProfileMain from "./Admin/pages/Profile/ProfileMain";
+import Preview from "./Admin/pages/Patient/Preview"
+import PatientrecordPreview from "./Admin/pages/Patient/PatientrecordPreview";
 
 function App() {
   return (
@@ -27,7 +29,27 @@ function App() {
         <Routes>
         <Route
             exact
-            path="/*"
+            path="/admin/patient/record/preview/:patientId"
+            element={
+              <>
+                <AdminMain />
+                <PatientrecordPreview />
+              </>
+            }
+          />
+        <Route
+            exact
+            path="/admin/patient/approve/preview/:patientId"
+            element={
+              <>
+                <AdminMain />
+                <Preview />
+              </>
+            }
+          />
+        <Route
+            exact
+            path="*"
             element={
               <>
                 <Appoinment/>

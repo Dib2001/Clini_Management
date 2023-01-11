@@ -52,8 +52,8 @@ export default function DoctorRegister() {
   return (
     <>
       <div className="row mx-5 my-3">
-        <div className="col-sm-4 mb-3 mb-sm-0"></div>
-        <div className="col-sm-4 mb-3 mb-sm-0">
+        <div className="col-sm-3 mb-3 mb-sm-0"></div>
+        <div className="col-sm-6 mb-3 mb-sm-0">
           <div className="card" style={{ backgroundColor: "#59cbc0" }}>
             <div className="card-header text-center">Register Doctor</div>
             <div className="card-body">
@@ -143,7 +143,7 @@ export default function DoctorRegister() {
             </div>
           </div>
         </div>
-        <div className="col-sm-4 mb-3 mb-sm-0"></div>
+        <div className="col-sm-3 mb-3 mb-sm-0"></div>
       </div>
     </>
   );

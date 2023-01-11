@@ -12,6 +12,10 @@ export default function UNavbar() {
   );
 
   const clinicEmail = localStorage.getItem('adminEmail')
+  const clear =() =>{
+    localStorage.removeItem("adminEmail");
+  } 
+
 
    const getUser = async (e) => {
     const CEmail = clinicEmail.replace(".", "");
@@ -111,7 +115,7 @@ export default function UNavbar() {
               </li>
             </ul>
             <Link to="/">
-              <button className="btn btn-danger" type="button">
+              <button className="btn btn-danger" type="button" onClick={clear}>
                 Log Out
               </button>
             </Link>

@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "./Firebase/firebase-conf";
 
-import { ref, onValue, set, push } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 
 export default function Appoinment() {
   const navigate = useNavigate();
@@ -17,12 +17,7 @@ export default function Appoinment() {
   const [patientAge, setpatientAge] = useState("");
   const [patientSymptoms, setpatientSymptoms] = useState("");
   const [patientAddress, setpatientAddress] = useState("");
-  // const getUser = async (e) => {
-  //   const userdata = ref(db, 'clinic/');
-  //   // onValue(userdata, (snapshot) => {
-  //   //   snapshot.hasChild();
-  //   });
-  // };
+
   const getClinic = async (e) => {
     const Clinicdata = ref(db, "clinic");
     const clinicName = document.getElementById("clinicName");
@@ -31,8 +26,8 @@ export default function Appoinment() {
       snapshot.forEach((child) => {
         const clinicN = child.val()["profile"]["adminClinicName"];
         cName += '<option value="' + clinicN + '">' + clinicN + "</option>";
+        clinicName.innerHTML = cName;
       });
-      clinicName.innerHTML = cName;
     });
   };
 
@@ -63,6 +58,27 @@ export default function Appoinment() {
     const clinicAddress = document.getElementById("clinicaddress").value;
     const clinicName = document.getElementById("clinicName").value;
     const PEmail = patientEmail.replace(".", "");
+    onValue(Clinicdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        if (clinicName === child.val()["profile"]["adminClinicName"]) {
+          if (clinicAddress === child.val()["profile"]["adminAddress"]) {
+            const clinic = child
+              .val()
+              ["profile"]["adminEmail"].replace(".", "");
+            set(ref(db, "clinic/" + clinic + "/clinicstatus/" + PEmail), {
+              Patient_FirstName: patientFirstName,
+              Patient_LastName: patientLastName,
+              Patient_Mobile: patientMobile,
+              Patient_Age: patientAge,
+              Patient_Symptoms: patientSymptoms,
+              Patient_Address: patientAddress,
+              Patient_Gender: patientGender,
+              Patient_Email: patientEmail,
+            });
+          }
+        }
+      });
+    });
     await set(ref(db, "patient/" + PEmail + "/profile"), {
       Patient_Email: patientEmail,
       Patient_Password: patientPassword,
@@ -73,7 +89,7 @@ export default function Appoinment() {
       Patient_Address: patientAddress,
       Patient_Gender: patientGender,
     });
-    await push(ref(db, "patient/" + PEmail + "/clinicstatus"), {
+    await set(ref(db, "patient/" + PEmail + "/clinicstatus/"+clinicName), {
       Patient_FirstName: patientFirstName,
       Patient_LastName: patientLastName,
       Patient_Mobile: patientMobile,
@@ -83,31 +99,9 @@ export default function Appoinment() {
       Patient_Symptoms: patientSymptoms,
       Patient_Clinic_name: clinicName,
       Patient_Clinic_address: clinicAddress,
-      Patient_Clinic_Status: "0",
-    });
-    onValue(Clinicdata, (snapshot) => {
-      snapshot.forEach(async (child) => {
-        if (clinicName === child.val()["profile"]["adminClinicName"]) {
-          if (clinicAddress === child.val()["profile"]["adminAddress"]) {
-            const clinic = child
-              .val()
-              ["profile"]["adminEmail"].replace(".", "");
-            await set(ref(db, "clinic/" + clinic + "/clinicstatus/" + PEmail), {
-              Patient_FirstName: patientFirstName,
-              Patient_LastName: patientLastName,
-              Patient_Mobile: patientMobile,
-              Patient_Age: patientAge,
-              Patient_Symptoms: patientSymptoms,
-              Patient_Address: patientAddress,
-              Patient_Gender: patientGender,
-              Patient_Email: patientEmail,
-              Patient_Clinic_Status: "0",
-            });
-          }
-        }
-      });
     });
     window.location.reload(true);
+    alert("Successful");
   };
 
   const registerUser = async (e) => {
@@ -124,8 +118,6 @@ export default function Appoinment() {
       }
     }
   };
-
-  localStorage.removeItem("adminEmail");
 
   useEffect(() => {
     getClinic();
