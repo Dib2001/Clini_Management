@@ -14,9 +14,10 @@ export default function AdminForgotpsw() {
       check.innerHTML =
         '<div class="uk-inline uk-width-1-1">' +
         '<span class="uk-form-icon" uk-icon="icon: lock"></span>' +
-        '<input class="uk-input uk-form-large" type="tel" maxlength=6 placeholder="OTP" pattern="[0-9]{6}" title="Enter Correct OTP" required="True" autoComplete="True" />' +
+        '<input class="uk-input uk-form-large form-control" type="tel" maxlength=6 placeholder="OTP" pattern="[0-9]{6}" title="Enter Correct OTP" required="True" autoComplete="True" />' +
         "</div>";
     } else {
+      check.innerHTML=""
       setWrong("uk-button-danger uk-button  uk-button-large uk-width-1-1");
     }
   };
@@ -34,12 +35,12 @@ export default function AdminForgotpsw() {
                     <h3>Don't Worry generate your new Password</h3>
                     <strong>LOCAL</strong>
                   </div>
-                  <form>
+                  <form className="was-validated">
                     <div className="uk-margin">
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: mail" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="uk-input uk-form-large form-control"
                           type="email"
                           placeholder="Email Address"
                           required

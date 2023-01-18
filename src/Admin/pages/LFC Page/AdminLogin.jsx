@@ -1,10 +1,8 @@
 import { React, useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../Firebase/firebase-conf";
-
-import { ref, set } from "firebase/database";
+import { auth } from "../Firebase/firebase-conf";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -12,16 +10,12 @@ export default function AdminLogin() {
   const [loginEmail, setloginEmail] = useState("");
   const [loginPassword, setloginPassword] = useState("");
 
-  localStorage.setItem('adminEmail',loginEmail)
+  localStorage.setItem("adminEmail", loginEmail);
 
   const login = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
-      );
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       navigate("/admin/dashboard");
     } catch (error) {
       if (error.message === "Firebase: Error (auth/user-not-found).") {
@@ -58,12 +52,12 @@ export default function AdminLogin() {
                     <br></br>
                     <strong>LOCAL</strong>
                   </h3>
-                  <form onSubmit={login}>
+                  <form className="was-validated" onSubmit={login}>
                     <div className="uk-margin">
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: mail" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="uk-input uk-form-large form-control"
                           type="email"
                           placeholder="Email Address"
                           onChange={(event) => {
@@ -77,7 +71,7 @@ export default function AdminLogin() {
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: lock" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="uk-input uk-form-large form-control"
                           type="password"
                           minLength={8}
                           onKeyUp={checkPassword}
@@ -98,7 +92,10 @@ export default function AdminLogin() {
                       </button>
                     </div>
                     <div className="uk-text-small uk-text-center">
-                    <Link to="/admin/forgot-password"><strong>Forgot Password?</strong><br></br></Link>
+                      <Link to="/admin/forgot-password">
+                        <strong>Forgot Password?</strong>
+                        <br></br>
+                      </Link>
                       Not registered?{" "}
                       <Link to="/admin/register">Create an account</Link>
                     </div>

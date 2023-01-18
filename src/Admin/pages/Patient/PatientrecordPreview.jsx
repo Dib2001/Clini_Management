@@ -37,8 +37,7 @@ export default function PatientrecordPreview() {
     onValue(userdata, (snapshot) => {
       const patient = snapshot.val();
       if (snapshot.hasChildren() === false) {
-        alert("Opps No Data Available");
-        navigate("/admin/patient/approve");
+        navigate("/admin/patient/record");
       } else {
         Setpatient({
           Email: patient.Email,
@@ -151,15 +150,24 @@ export default function PatientrecordPreview() {
             <div className="card-header text-center">Preview Patient</div>
             <div className="card-body">
               <form className="row g-3" onSubmit={updatePatient}>
-                <div className="col-md-12">
+                <div className="col-md-6">
                   <label htmlFor="PatientDate" className="form-label">
                     Date
                   </label>
                   <input
-                    required
                     type="date"
                     className="form-control"
                     id="PatientDate"
+                  />
+                </div>
+                <div className="col-md-6">
+                  <label htmlFor="PatientDate" className="form-label">
+                    Reports (*pdf)
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="PatientReports"
                   />
                 </div>
                 <div className="col-md-6">
@@ -271,7 +279,6 @@ export default function PatientrecordPreview() {
                     className="btn btn-secondary"
                     id="departmentlist"
                     onClick={getDoctor}
-                    required
                   >
                     <option value="">Select Department</option>
                   </select>
@@ -280,14 +287,13 @@ export default function PatientrecordPreview() {
                   <select
                     className="btn btn-secondary"
                     id="doctorlist"
-                    required
                   >
                     <option value="">Select Doctor</option>
                   </select>
                 </div>
                 <div className="col-md-6">
                   <button type="submit" className="btn btn-primary">
-                    Approve
+                    Update
                   </button>
                 </div>
               </form>

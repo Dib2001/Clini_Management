@@ -89,7 +89,7 @@ export default function Appoinment() {
       Patient_Address: patientAddress,
       Patient_Gender: patientGender,
     });
-    await set(ref(db, "patient/" + PEmail + "/clinicstatus/"+clinicName), {
+    await set(ref(db, "patient/" + PEmail + "/clinicstatus/" + clinicName), {
       Patient_FirstName: patientFirstName,
       Patient_LastName: patientLastName,
       Patient_Mobile: patientMobile,
@@ -150,7 +150,7 @@ export default function Appoinment() {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/about" className="nav-link px-2 text-white">
                   About
                 </Link>
               </li>
@@ -178,10 +178,10 @@ export default function Appoinment() {
           </div>
         </div>
       </div>
-      <form className="row mx-5" onSubmit={registerUser}>
+      <div className="row mx-5">
         <div className="col-sm-3 mb-3 mb-sm-0"></div>
-        <div className="col-sm-6 mb-3 mb-sm-0">
-          <div className="card" style={{ backgroundColor: "#59cbc0" }}>
+        <form className="col-sm-6 mb-3 mb-sm-0 was-validated" onSubmit={registerUser}>
+          <div className="card text-white" style={{ backgroundColor: "#254a52" }}>
             <div className="card-header text-center">
               <select
                 className="btn btn-warning mb-2 mx-2 btn-sm"
@@ -215,6 +215,9 @@ export default function Appoinment() {
                       setpatientEmail(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter an valid Email.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="pPassword" className="form-label">
@@ -234,6 +237,9 @@ export default function Appoinment() {
                       setpatientPassword(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter a Password.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="pFName" className="form-label">
@@ -250,6 +256,9 @@ export default function Appoinment() {
                       setpatientFirstName(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter First Name.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="pLName" className="form-label">
@@ -266,6 +275,9 @@ export default function Appoinment() {
                       setpatientLastName(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter Last Name.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="pPhone" className="form-label">
@@ -284,12 +296,15 @@ export default function Appoinment() {
                       setpatientMobile(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter Mobile Number.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label className="form-label">Gender</label>
                   <br />
                   <select
-                    className="btn btn-warning mb-2 btn-md"
+                    className="btn btn-warning mb-2 btn-md form-select"
                     id="gender"
                     required
                   >
@@ -298,6 +313,9 @@ export default function Appoinment() {
                     <option value="Female">Female</option>
                     <option value="Others">Others</option>
                   </select>
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please select Gender.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="pAge" className="form-label">
@@ -313,6 +331,9 @@ export default function Appoinment() {
                       setpatientAge(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter a Age.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="pSymptoms" className="form-label">
@@ -328,6 +349,9 @@ export default function Appoinment() {
                       setpatientSymptoms(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter Symptoms.
+                  </div>
                 </div>
                 <div className="col-12">
                   <label htmlFor="pAddress" className="form-label">
@@ -343,6 +367,9 @@ export default function Appoinment() {
                       setpatientAddress(event.target.value);
                     }}
                   />
+                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                    Please enter Address.
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <button type="submit" className="btn btn-primary">
@@ -352,9 +379,9 @@ export default function Appoinment() {
               </div>
             </div>
           </div>
-        </div>
+        </form>
         <div className="col-sm-3 mb-3 mb-sm-0"></div>
-      </form>
+      </div>
     </>
   );
 }

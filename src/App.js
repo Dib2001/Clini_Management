@@ -19,15 +19,26 @@ import PatientRecord from "./Admin/pages/Patient/PatientRecord";
 import PatientAdmit from "./Admin/pages/Patient/PatientAdmit";
 import PatientApprove from "./Admin/pages/Patient/PatientApprove";
 import ProfileMain from "./Admin/pages/Profile/ProfileMain";
-import Preview from "./Admin/pages/Patient/Preview"
+import Preview from "./Admin/pages/Patient/Preview";
 import PatientrecordPreview from "./Admin/pages/Patient/PatientrecordPreview";
+import Error404 from "./Error404";
+import About from "./Index/About";
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-        <Route
+          <Route
+            exact
+            path="/about"
+            element={
+              <>
+                <About/>
+              </>
+            }
+          />
+          <Route
             exact
             path="/admin/patient/record/preview/:patientId"
             element={
@@ -37,7 +48,7 @@ function App() {
               </>
             }
           />
-        <Route
+          <Route
             exact
             path="/admin/patient/approve/preview/:patientId"
             element={
@@ -47,16 +58,16 @@ function App() {
               </>
             }
           />
-        <Route
+          <Route
             exact
             path="*"
             element={
               <>
-                <Appoinment/>
+                <Error404 />
               </>
             }
           />
-        <Route
+          <Route
             exact
             path="/admin/profile"
             element={
