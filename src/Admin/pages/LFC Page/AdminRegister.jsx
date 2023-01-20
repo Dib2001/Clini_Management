@@ -41,7 +41,7 @@ export default function AdminRegister() {
             '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
             "<strong>Opps!</strong> Clinic Name Already Exist." +
             '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-            "</div>"
+            "</div>";
           checkclinic.innerHTML = html;
         } else {
           checkclinic.innerHTML = "";
@@ -74,6 +74,8 @@ export default function AdminRegister() {
 
   const register = async (e) => {
     e.preventDefault();
+    const checkclinic = document.getElementById("checkclinic");
+    var html = "";
     try {
       await createUserWithEmailAndPassword(
         auth,
@@ -84,9 +86,19 @@ export default function AdminRegister() {
       navigate("/admin");
     } catch (error) {
       if (error.message === "Firebase: Error (auth/email-already-in-use).") {
-        alert("Email Already Exsist");
+        html =
+          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+          "<strong>Opps!</strong> Email address already exist." +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          "</div>";
+        checkclinic.innerHTML = html;
       } else if (error.message === "Firebase: Error (auth/invalid-email).") {
-        alert("Enter Correct Email");
+        html =
+          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+          "<strong>Opps!</strong> Please Enter correct Email address." +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          "</div>";
+        checkclinic.innerHTML = html;
       }
     }
   };
