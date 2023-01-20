@@ -1,11 +1,22 @@
-import React from "react";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
-import "./Style.css";
 
-export default function About() {
+export default function Faqs() {
+  const [text, setText] = useState("");
+
+  const textonchange = (event) => {
+    setText(event.target.value);
+  };
+
+  const [Validation, setValidation] = useState("col-lg-6 mx-auto");
+
+  const validationcheck = () => {
+    setValidation("col-lg-6 mx-auto was-validated");
+  };
+
   return (
     <>
-      <div className="p-3" style={{ backgroundColor: "#032830" }}>
+      <div className="p-3" style={{ backgroundColor: "#094956" }}>
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -50,17 +61,46 @@ export default function About() {
           </div>
         </div>
       </div>
-      <figure className="text-center container">
+      <figure className="container">
         <div className="row">
-          <div className="col-lg-6 col-md-8 mx-auto">
-            <h1 className="fw-light">About Me</h1>
+          <form className={Validation}>
+            <h1 className="fw-light">FAQs -</h1>
             <blockquote className="blockquote">
-              <p className="lead text-center">Typing.....</p>
+              <div className="form-floating">
+                <input
+                  type="email"
+                  className="form-control"
+                  placeholder="Leave a comment here"
+                  id="floatingTextarea2"
+                  style={{ width: "fit-content" }}
+                  required
+                />
+                <label htmlFor="floatingTextarea2">Email</label>
+              </div>
+              <br />
+              <div className="form-floating">
+                <textarea
+                  className="form-control"
+                  placeholder="Leave a comment here"
+                  id="floatingTextarea2"
+                  value={text}
+                  style={{ minHeight: 100 }}
+                  onChange={textonchange}
+                  required
+                />
+                <label htmlFor="floatingTextarea2">Messages</label>
+              </div>
             </blockquote>
-            <figcaption className="blockquote-footer">
+            <figcaption className="footer">
+              {text.split(" ").length}{" "}
+            </figcaption>
+            <figcaption className="blockquote-footer text-end">
               Created By <cite title="Source Title">- D Chakraborty</cite>
             </figcaption>
-          </div>
+            <button type="submit" onClick={validationcheck} className="btn btn-primary">
+              Send
+            </button>
+          </form>
         </div>
       </figure>
       <div className="custom-shape-divider-bottom-1674155641">

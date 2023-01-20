@@ -1,29 +1,29 @@
 import { React, useState, useEffect } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { db } from "./Firebase/firebase-conf";
 
 import { ref, onValue } from "firebase/database";
 
 export default function UNavbar() {
+  const dbopen = window.indexedDB.open("firebaseLocalStorageDb", 1);
 
-  const [clinicname, Setclinicname] = useState(
-    ""
-  );
+  const [clinicname, Setclinicname] = useState("");
 
-  const clinicEmail = localStorage.getItem('adminEmail')
-  const clear =() =>{
+  const clinicEmail = localStorage.getItem("adminEmail");
+  const clear = () => {
     localStorage.removeItem("adminEmail");
-  } 
+    const db = dbopen.result;
+    db.transaction(["firebaseLocalStorage"], "readwrite").objectStore("firebaseLocalStorage").clear();
+  };
 
-
-   const getUser = async (e) => {
+  const getUser = async (e) => {
     const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/"+CEmail);
+    const userdata = ref(db, "clinic/" + CEmail);
     onValue(userdata, (snapshot) => {
       snapshot.forEach((child) => {
-        const clinicN = child.val()['adminClinicName'];
-        Setclinicname(clinicN)
+        const clinicN = child.val()["adminClinicName"];
+        Setclinicname(clinicN);
       });
     });
   };
@@ -36,13 +36,13 @@ export default function UNavbar() {
     <>
       <nav
         className="navbar navbar-expand-lg"
-        style={{ "backgroundColor": "#cddfed" }}
+        style={{ backgroundColor: "#cddfed" }}
       >
         <div className="container-fluid">
           <Link
             to="#"
             className="navbar-brand"
-            style={{ "textDecoration": "none" }}
+            style={{ textDecoration: "none" }}
           >
             {clinicname}
           </Link>
@@ -62,7 +62,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "textDecoration": "none" }}
+                  style={{ textDecoration: "none" }}
                   to="/admin/dashboard"
                 >
                   Home
@@ -71,7 +71,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "textDecoration": "none" }}
+                  style={{ textDecoration: "none" }}
                   to="/admin/doctor"
                 >
                   Doctor
@@ -80,7 +80,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "textDecoration": "none" }}
+                  style={{ textDecoration: "none" }}
                   to="/admin/patient"
                 >
                   Patient
@@ -89,7 +89,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "textDecoration": "none" }}
+                  style={{ textDecoration: "none" }}
                   to="/admin/customer"
                 >
                   Customer
@@ -98,7 +98,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "textDecoration": "none" }}
+                  style={{ textDecoration: "none" }}
                   to="/admin/dashboard"
                 >
                   Medicine
@@ -107,7 +107,7 @@ export default function UNavbar() {
               <li className="nav-item">
                 <Link
                   className="nav-link active"
-                  style={{ "textDecoration": "none" }}
+                  style={{ textDecoration: "none" }}
                   to="/admin/profile"
                 >
                   Profile

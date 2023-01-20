@@ -12,6 +12,12 @@ export default function AdminLogin() {
 
   localStorage.setItem("adminEmail", loginEmail);
 
+  const [Validation, setValidation] = useState("");
+
+  const validationcheck = () => {
+    setValidation("was-validated");
+  };
+
   const login = async (e) => {
     e.preventDefault();
     try {
@@ -52,7 +58,7 @@ export default function AdminLogin() {
                     <br></br>
                     <strong>LOCAL</strong>
                   </h3>
-                  <form className="was-validated" onSubmit={login}>
+                  <form className={Validation} onSubmit={login}>
                     <div className="uk-margin">
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: mail" />
@@ -87,7 +93,7 @@ export default function AdminLogin() {
                       </div>
                     </div>
                     <div className="uk-margin">
-                      <button className={wrong} type="submit">
+                      <button className={wrong} onClick={validationcheck} type="submit">
                         Login
                       </button>
                     </div>

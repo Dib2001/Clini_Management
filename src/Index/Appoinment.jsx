@@ -18,6 +18,12 @@ export default function Appoinment() {
   const [patientSymptoms, setpatientSymptoms] = useState("");
   const [patientAddress, setpatientAddress] = useState("");
 
+  const [Validation, setValidation] = useState("col-sm-6 mb-3 mb-sm-0");
+
+  const validationcheck = () => {
+    setValidation("col-sm-6 mb-3 mb-sm-0 was-validated");
+  };
+
   const getClinic = async (e) => {
     const Clinicdata = ref(db, "clinic");
     const clinicName = document.getElementById("clinicName");
@@ -135,17 +141,17 @@ export default function Appoinment() {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/feature" className="nav-link px-2 text-white">
                   Features
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/pricnig" className="nav-link px-2 text-white">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/faqs" className="nav-link px-2 text-white">
                   FAQs
                 </Link>
               </li>
@@ -180,8 +186,11 @@ export default function Appoinment() {
       </div>
       <div className="row mx-5">
         <div className="col-sm-3 mb-3 mb-sm-0"></div>
-        <form className="col-sm-6 mb-3 mb-sm-0 was-validated" onSubmit={registerUser}>
-          <div className="card text-white" style={{ backgroundColor: "#254a52" }}>
+        <form className={Validation} onSubmit={registerUser}>
+          <div
+            className="card text-white"
+            style={{ backgroundColor: "#254a52" }}
+          >
             <div className="card-header text-center">
               <select
                 className="btn btn-warning mb-2 mx-2 btn-sm"
@@ -215,7 +224,10 @@ export default function Appoinment() {
                       setpatientEmail(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter an valid Email.
                   </div>
                 </div>
@@ -237,7 +249,10 @@ export default function Appoinment() {
                       setpatientPassword(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter a Password.
                   </div>
                 </div>
@@ -256,7 +271,10 @@ export default function Appoinment() {
                       setpatientFirstName(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter First Name.
                   </div>
                 </div>
@@ -275,7 +293,10 @@ export default function Appoinment() {
                       setpatientLastName(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter Last Name.
                   </div>
                 </div>
@@ -296,7 +317,10 @@ export default function Appoinment() {
                       setpatientMobile(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter Mobile Number.
                   </div>
                 </div>
@@ -313,7 +337,10 @@ export default function Appoinment() {
                     <option value="Female">Female</option>
                     <option value="Others">Others</option>
                   </select>
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please select Gender.
                   </div>
                 </div>
@@ -331,7 +358,10 @@ export default function Appoinment() {
                       setpatientAge(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter a Age.
                   </div>
                 </div>
@@ -349,7 +379,10 @@ export default function Appoinment() {
                       setpatientSymptoms(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter Symptoms.
                   </div>
                 </div>
@@ -367,12 +400,19 @@ export default function Appoinment() {
                       setpatientAddress(event.target.value);
                     }}
                   />
-                  <div className="invalid-feedback" style={{ color: "#fbacb4" }}>
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
                     Please enter Address.
                   </div>
                 </div>
                 <div className="col-md-6">
-                  <button type="submit" className="btn btn-primary">
+                  <button
+                    type="submit"
+                    onClick={validationcheck}
+                    className="btn btn-primary"
+                  >
                     BOOK
                   </button>
                 </div>
@@ -381,6 +421,19 @@ export default function Appoinment() {
           </div>
         </form>
         <div className="col-sm-3 mb-3 mb-sm-0"></div>
+      </div>
+      <div className="custom-shape-divider-bottom-1674156302">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
+            className="shape-fill"
+          />
+        </svg>
       </div>
     </>
   );

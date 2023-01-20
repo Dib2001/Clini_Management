@@ -6,6 +6,12 @@ export default function AdminForgotpsw() {
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
   );
 
+  const [Validation, setValidation] = useState("");
+
+  const validationcheck = () => {
+    setValidation("was-validated");
+  };
+
   const checkEmail = (event) => {
     const passowrd = event.target;
     const check = document.getElementById("checked");
@@ -35,7 +41,7 @@ export default function AdminForgotpsw() {
                     <h3>Don't Worry generate your new Password</h3>
                     <strong>LOCAL</strong>
                   </div>
-                  <form className="was-validated">
+                  <form className={Validation}>
                     <div className="uk-margin">
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: mail" />
@@ -52,7 +58,7 @@ export default function AdminForgotpsw() {
                       <div id="checked"></div>
                     </div>
                     <div className="uk-margin">
-                      <button className={wrong} type="submit">
+                      <button className={wrong} onClick={validationcheck} type="submit">
                         Verify
                       </button>
                     </div>

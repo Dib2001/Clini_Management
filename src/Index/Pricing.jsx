@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Style.css";
 
-export default function About() {
+export default function Pricing() {
   return (
     <>
-      <div className="p-3" style={{ backgroundColor: "#032830" }}>
+      <div className="p-3" style={{ backgroundColor: "#26798b" }}>
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -52,10 +51,41 @@ export default function About() {
       </div>
       <figure className="text-center container">
         <div className="row">
-          <div className="col-lg-6 col-md-8 mx-auto">
-            <h1 className="fw-light">About Me</h1>
+          <div className="col-lg-8 mx-auto">
+            <h1 className="fw-light">Subscrption</h1>
             <blockquote className="blockquote">
-              <p className="lead text-center">Typing.....</p>
+              <div className="row mx-5 my-3">
+                <div className="col-sm-6 mb-3 mb-sm-0">
+                  <div className="card text-center border-danger">
+                    <div className="card-header">Offline</div>
+                    <div className="card-body">
+                      <h5 className="card-title">Save your on your pc</h5>
+                      <p className="card-text">
+                        You have to follow some steps to save your data on your pc. It is very simple to use.
+                      </p>
+                      <Link href="#" className="btn btn-info">
+                        Comming Soon
+                      </Link>
+                    </div>
+                    <div className="card-footer text-muted">Updating...</div>
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-3 mb-sm-0">
+                  <div className="card text-center border-info">
+                    <div className="card-header">Online</div>
+                    <div className="card-body">
+                      <h5 className="card-title">Save your data on Cloud</h5>
+                      <p className="card-text">
+                        Your data will be save on cloud. You can access your data over internet. It is very simple to use.
+                      </p>
+                      <Link href="#" className="btn btn-danger">
+                      Comming Soon
+                      </Link>
+                    </div>
+                    <div className="card-footer text-muted">Updating...</div>
+                  </div>
+                </div>
+              </div>
             </blockquote>
             <figcaption className="blockquote-footer">
               Created By <cite title="Source Title">- D Chakraborty</cite>

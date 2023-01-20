@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLogin from "./Admin/pages/LFC Page/AdminLogin";
 import AdminRegister from "./Admin/pages/LFC Page/AdminRegister";
 import AdminForgotpsw from "./Admin/pages/LFC Page/AdminForgotpsw";
-import Appoinment from "./Appoinment/Appoinment";
-import PatientLogin from "./Appoinment/patient/Patient lfc Page/PatientLogin";
-import PatientForgotpsw from "./Appoinment/patient/Patient lfc Page/PatientForgotpsw";
+import Appoinment from "./Index/Appoinment";
+import PatientLogin from "./Patient/Patient lfc Page/PatientLogin";
+import PatientForgotpsw from "./Patient/Patient lfc Page/PatientForgotpsw";
 import AdminMain from "./Admin/components/AdminMain";
 import AdminHome from "./Admin/pages/home/AdminHome";
 import DoctorMain from "./Admin/pages/Doctor/DoctorMain";
@@ -21,8 +21,11 @@ import PatientApprove from "./Admin/pages/Patient/PatientApprove";
 import ProfileMain from "./Admin/pages/Profile/ProfileMain";
 import Preview from "./Admin/pages/Patient/Preview";
 import PatientrecordPreview from "./Admin/pages/Patient/PatientrecordPreview";
-import Error404 from "./Error404";
+import Error404 from "./Index/Error404";
 import About from "./Index/About";
+import Faqs from "./Index/Faqs";
+import Pricing from "./Index/Pricing";
+import Feature from "./Index/Feature";
 
 function App() {
   return (
@@ -31,10 +34,37 @@ function App() {
         <Routes>
           <Route
             exact
+            path="/feature"
+            element={
+              <>
+                <Feature />
+              </>
+            }
+          />
+          <Route
+            exact
+            path="/pricnig"
+            element={
+              <>
+                <Pricing />
+              </>
+            }
+          />
+          <Route
+            exact
+            path="/faqs"
+            element={
+              <>
+                <Faqs />
+              </>
+            }
+          />
+          <Route
+            exact
             path="/about"
             element={
               <>
-                <About/>
+                <About />
               </>
             }
           />

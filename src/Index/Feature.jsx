@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Style.css";
 
-export default function About() {
+export default function Feature() {
+
+  // const dbopen = window.indexedDB.open("firebaseLocalStorageDb", 1);
+
+  // dbopen.onsuccess = (event) => {
+  //   const db = dbopen.result;
+  //   const object = db
+  //     .transaction(["firebaseLocalStorage"], "readonly")
+  //     .objectStore("firebaseLocalStorage");
+  //   object.openCursor().onsuccess = (event) => {
+  //     const cursor = event.target.result;
+  //     const value = cursor['value'].value
+  //     console.log(value['stsTokenManager']);
+  //   };
+  // };
+
   return (
     <>
-      <div className="p-3" style={{ backgroundColor: "#032830" }}>
+      <div className="p-3" style={{ backgroundColor: "#355e66" }}>
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -53,9 +67,12 @@ export default function About() {
       <figure className="text-center container">
         <div className="row">
           <div className="col-lg-6 col-md-8 mx-auto">
-            <h1 className="fw-light">About Me</h1>
+            <h1 className="fw-light">Features</h1>
             <blockquote className="blockquote">
               <p className="lead text-center">Typing.....</p>
+              <br />
+              <p className="lead text-center">Under Maintenance.....😶‍🌫️🫡</p>
+              <br />
             </blockquote>
             <figcaption className="blockquote-footer">
               Created By <cite title="Source Title">- D Chakraborty</cite>

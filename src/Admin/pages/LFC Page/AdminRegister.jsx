@@ -19,6 +19,12 @@ export default function AdminRegister() {
   const [registerPincode, setregisterPincode] = useState("");
   const [registerAddress, setregisterAddress] = useState("");
 
+  const [Validation, setValidation] = useState("");
+
+  const validationcheck = () => {
+    setValidation("was-validated");
+  };
+
   const [wrong, setWrong] = useState(
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
   );
@@ -167,13 +173,13 @@ export default function AdminRegister() {
                     <strong>LOCAL</strong>
                     <div id="checkclinic"></div>
                   </h3>
-                  <form onSubmit={register}>
+                  <form className={Validation} onSubmit={register}>
                     <div className="uk-margin">
                       {/*Email */}
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: mail" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="email"
                           placeholder="Email Address"
                           required
@@ -188,7 +194,7 @@ export default function AdminRegister() {
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: lock" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="password"
                           minLength={8}
                           onKeyUp={checkPassword}
@@ -209,7 +215,7 @@ export default function AdminRegister() {
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: home" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="text"
                           onKeyUp={(event) => {
                             setregisterClinicName(event.target.value);
@@ -230,7 +236,7 @@ export default function AdminRegister() {
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: user" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           onKeyUp={checkPassword}
                           type="text"
                           placeholder="Owner-name"
@@ -249,7 +255,7 @@ export default function AdminRegister() {
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: phone" />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="tel"
                           placeholder="Mobile Number"
                           maxLength={10}
@@ -273,7 +279,7 @@ export default function AdminRegister() {
                           uk-icon="icon: file-text"
                         />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="text"
                           placeholder="Licensee No"
                           required="True"
@@ -294,7 +300,7 @@ export default function AdminRegister() {
                           uk-icon="icon: location"
                         />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="text"
                           placeholder="Pincode"
                           maxLength={6}
@@ -319,7 +325,7 @@ export default function AdminRegister() {
                           uk-icon="icon: location"
                         />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="text"
                           placeholder="District"
                           value={pin.district}
@@ -338,7 +344,7 @@ export default function AdminRegister() {
                           uk-icon="icon: location"
                         />
                         <input
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="text"
                           placeholder="State"
                           value={pin.state}
@@ -357,7 +363,7 @@ export default function AdminRegister() {
                           uk-icon="icon: location"
                         />
                         <select
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           id="pos"
                           required
                         >
@@ -374,10 +380,10 @@ export default function AdminRegister() {
                           uk-icon="icon: location"
                         />
                         <textarea
-                          className="uk-input uk-form-large"
+                          className="form-control uk-input uk-form-large"
                           type="text"
                           placeholder="Address"
-                          required="True"
+                          required
                           autoComplete="True"
                           onChange={(event) => {
                             setregisterAddress(event.target.value);
@@ -387,7 +393,7 @@ export default function AdminRegister() {
                     </div>
 
                     <div className="uk-margin">
-                      <button className={wrong} type="submit">
+                      <button className={wrong} onClick={validationcheck} type="submit">
                         Create an account
                       </button>
                     </div>

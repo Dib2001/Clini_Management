@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Error404() {
   return (
     <>
-      <div className="p-3 fixed-top text-bg-dark">
+      <div className="p-3 fixed-top" style={{ backgroundColor: "#0c3833" }}>
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -14,22 +14,22 @@ export default function Error404() {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/feature" className="nav-link px-2 text-white">
                   Features
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/pricnig" className="nav-link px-2 text-white">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/faqs" className="nav-link px-2 text-white">
                   FAQs
                 </Link>
               </li>
               <li>
-                <Link to="/" className="nav-link px-2 text-white">
+                <Link to="/about" className="nav-link px-2 text-white">
                   About
                 </Link>
               </li>
