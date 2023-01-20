@@ -20,14 +20,26 @@ export default function AdminLogin() {
 
   const login = async (e) => {
     e.preventDefault();
+    var html = "";
+    const checkclinic = document.getElementById("checkclinic");
     try {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       navigate("/admin/dashboard");
     } catch (error) {
       if (error.message === "Firebase: Error (auth/user-not-found).") {
-        alert("Email Not Exsist");
+        html =
+          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+          "<strong>Opps!</strong> Email address not exist." +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          "</div>";
+        checkclinic.innerHTML = html;
       } else if (error.message === "Firebase: Error (auth/wrong-password).") {
-        alert("Enter Correct Password");
+        html =
+          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+          "<strong>Opps!</strong> Please Enter correct Password." +
+          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+          "</div>";
+        checkclinic.innerHTML = html;
       }
     }
   };
@@ -57,6 +69,7 @@ export default function AdminLogin() {
                     Welcome back!
                     <br></br>
                     <strong>LOCAL</strong>
+                    <div id="checkclinic"></div>
                   </h3>
                   <form className={Validation} onSubmit={login}>
                     <div className="uk-margin">
