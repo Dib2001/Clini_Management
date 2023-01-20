@@ -38,9 +38,10 @@ export default function AdminRegister() {
         var html = "";
         if (registerClinicName === clinicName) {
           html =
-            ' <div class="alert alert-danger" role="alert">' +
-            "Clinic Name Already Exist" +
-            "</div>";
+            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+            "<strong>Opps!</strong> Clinic Name Already Exist." +
+            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+            "</div>"
           checkclinic.innerHTML = html;
         } else {
           checkclinic.innerHTML = "";
@@ -48,11 +49,6 @@ export default function AdminRegister() {
       });
     });
   };
-
-  useEffect(() => {
-    clinicCheck();
-  }, []);
-  
 
   const createUser = async (e) => {
     const REmail = registerEmail.replace(".", "");
@@ -217,9 +213,7 @@ export default function AdminRegister() {
                         <input
                           className="form-control uk-input uk-form-large"
                           type="text"
-                          onKeyUp={(event) => {
-                            setregisterClinicName(event.target.value);
-                          }}
+                          onKeyUp={clinicCheck}
                           placeholder="Clinic-Name"
                           required="True"
                           autoComplete="True"
@@ -393,7 +387,11 @@ export default function AdminRegister() {
                     </div>
 
                     <div className="uk-margin">
-                      <button className={wrong} onClick={validationcheck} type="submit">
+                      <button
+                        className={wrong}
+                        onClick={validationcheck}
+                        type="submit"
+                      >
                         Create an account
                       </button>
                     </div>
