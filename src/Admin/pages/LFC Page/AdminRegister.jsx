@@ -52,11 +52,15 @@ export default function AdminRegister() {
 
   const createUser = async (e) => {
     const REmail = registerEmail.replace(".", "");
+    const date = new Date().getDate();
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
     await set(ref(db, "clinic/" + REmail + "/profile"), {
       adminEmail: registerEmail,
       adminPassword: registerPassword,
       adminClinicName: registerClinicName,
       adminOwnerName: registerOwnerName,
+      adminCreated:date+","+month+","+year,
       adminMobile: registerMobile,
       adminLicensee: registerLicensee,
       adminAddress:

@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { db } from "./Firebase/firebase-conf";
+import { auth,db } from "./Firebase/firebase-conf";
 
 import { ref, onValue } from "firebase/database";
 
@@ -15,6 +15,7 @@ export default function UNavbar() {
     localStorage.removeItem("adminEmail");
     const db = dbopen.result;
     db.transaction(["firebaseLocalStorage"], "readwrite").objectStore("firebaseLocalStorage").clear();
+    auth.signOut();
   };
 
   const getUser = async (e) => {

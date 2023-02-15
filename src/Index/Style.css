@@ -19,9 +19,13 @@
     fill: #e74d4d;
 }
 .custom-shape-divider-bottom-1674156302 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
     overflow: hidden;
     line-height: 0;
+    z-index: -1;
 }
 
 .custom-shape-divider-bottom-1674156302 svg {
@@ -32,5 +36,5 @@
 }
 
 .custom-shape-divider-bottom-1674156302 .shape-fill {
-    fill: #e74d4d;
+    fill: #1a8882;
 }

@@ -49,12 +49,12 @@ export default function Faqs() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic
+                  Clinic Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
                 <button type="button" className="btn btn-warning">
-                  Patient
+                  Patient Portal
                 </button>
               </Link>
             </div>
@@ -97,7 +97,11 @@ export default function Faqs() {
             <figcaption className="blockquote-footer text-end">
               Created By <cite title="Source Title">- D Chakraborty</cite>
             </figcaption>
-            <button type="submit" onClick={validationcheck} className="btn btn-primary">
+            <button
+              type="submit"
+              onClick={validationcheck}
+              className="btn btn-primary"
+            >
               Send
             </button>
           </form>

@@ -38,12 +38,12 @@ export default function About() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic
+                  Clinic Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
                 <button type="button" className="btn btn-warning">
-                  Patient
+                  Patient Portal
                 </button>
               </Link>
             </div>

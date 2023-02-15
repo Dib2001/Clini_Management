@@ -37,12 +37,12 @@ export default function Pricing() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic
+                  Clinic Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
                 <button type="button" className="btn btn-warning">
-                  Patient
+                  Patient Portal
                 </button>
               </Link>
             </div>
@@ -61,7 +61,8 @@ export default function Pricing() {
                     <div className="card-body">
                       <h5 className="card-title">Save your on your pc</h5>
                       <p className="card-text">
-                        You have to follow some steps to save your data on your pc. It is very simple to use.
+                        You have to follow some steps to save your data on your
+                        pc. It is very simple to use.
                       </p>
                       <Link href="#" className="btn btn-info">
                         Comming Soon
@@ -76,10 +77,11 @@ export default function Pricing() {
                     <div className="card-body">
                       <h5 className="card-title">Save your data on Cloud</h5>
                       <p className="card-text">
-                        Your data will be save on cloud. You can access your data over internet. It is very simple to use.
+                        Your data will be save on cloud. You can access your
+                        data over internet. It is very simple to use.
                       </p>
                       <Link href="#" className="btn btn-danger">
-                      Comming Soon
+                        Comming Soon
                       </Link>
                     </div>
                     <div className="card-footer text-muted">Updating...</div>

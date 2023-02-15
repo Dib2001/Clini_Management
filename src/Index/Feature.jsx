@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Chart } from "react-google-charts";
+import { db } from "./Firebase/firebase-conf";
+import { ref, onValue } from "firebase/database";
 
 export default function Feature() {
-
   // const dbopen = window.indexedDB.open("firebaseLocalStorageDb", 1);
 
   // dbopen.onsuccess = (event) => {
@@ -16,6 +18,61 @@ export default function Feature() {
   //     console.log(value['stsTokenManager']);
   //   };
   // };
+  const users = () => {
+    const Clinicdata = ref(db, "clinic");
+    onValue(Clinicdata, (snapshot) => {
+      snapshot.forEach((child) => {
+        const created = child.val()["profile"]["adminCreated"];
+        console.log(created);
+      });
+    });
+    // const date = new Date().getDate();
+    // const month = new Date().getMonth();
+    // const year = new Date().getFullYear();
+    // console.log(date,month,year)
+  };
+
+  useEffect(() => {
+    users();
+  });
+
+  const [Clinics, setClinics] = useState({
+    Jan: 0,
+    Feb: 0,
+    Mar: 0,
+    Apr: 0,
+    May: 0,
+    Jun: 0,
+    Jul: 0,
+    Aug: 0,
+    Sep: 0,
+    Oct: 0,
+    Nov: 0,
+    Dec: 0,
+  });
+
+  const data = [
+    ["Month", "Clinics"],
+    [new Date(2023, 0), Clinics.Jan],
+    [new Date(2023, 1), Clinics.Feb],
+    [new Date(2023, 2), Clinics.Mar],
+    [new Date(2023, 3), Clinics.Apr],
+    [new Date(2023, 4), Clinics.May],
+    [new Date(2023, 5), Clinics.Jun],
+    [new Date(2023, 6), Clinics.Jul],
+    [new Date(2023, 7), Clinics.Aug],
+    [new Date(2023, 8), Clinics.Sep],
+    [new Date(2023, 9), Clinics.Oct],
+    [new Date(2023, 10), Clinics.Nov],
+    [new Date(2023, 11), Clinics.Dec],
+  ];
+
+  const options = {
+    title: "Clinics Added",
+    curveType: "function",
+    legend: { position: "bottom" },
+    colors: ["#e0440e"],
+  };
 
   return (
     <>
@@ -52,12 +109,12 @@ export default function Feature() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic
+                  Clinic Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
                 <button type="button" className="btn btn-warning">
-                  Patient
+                  Patient Portal
                 </button>
               </Link>
             </div>
@@ -66,13 +123,26 @@ export default function Feature() {
       </div>
       <figure className="text-center container">
         <div className="row">
-          <div className="col-lg-6 col-md-8 mx-auto">
+          <div className="col-lg-8 mx-auto">
             <h1 className="fw-light">Features</h1>
             <blockquote className="blockquote">
-              <p className="lead text-center">Typing.....</p>
-              <br />
-              <p className="lead text-center">Under Maintenance.....😶‍🌫️🫡</p>
-              <br />
+              <div className="row mx-5 my-3">
+                <div className="col-sm-12 mb-3 mb-sm-0">
+                  <div className="card text-center border-danger">
+                    <div className="card-header">Regular Clinics</div>
+                    <div className="card-body">
+                      <Chart
+                        chartType="LineChart"
+                        width="100%"
+                        height="400px"
+                        data={data}
+                        options={options}
+                      />
+                    </div>
+                    <div className="card-footer text-muted">Updating...</div>
+                  </div>
+                </div>
+              </div>
             </blockquote>
             <figcaption className="blockquote-footer">
               Created By <cite title="Source Title">- D Chakraborty</cite>

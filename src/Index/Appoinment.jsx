@@ -164,12 +164,17 @@ export default function Appoinment() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic
+                  Clinic Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
-                <button type="button" className="btn btn-warning">
-                  Patient
+                <button type="button" className="btn btn-warning me-2">
+                  Patient Portal
+                </button>
+              </Link>
+              <Link to="/blood">
+                <button type="button" className="btn btn-danger">
+                  Blood Finder Portal
                 </button>
               </Link>
             </div>
@@ -179,7 +184,7 @@ export default function Appoinment() {
       <div className="text-center container">
         <div className="row">
           <div className="col-lg-6 col-md-8 mx-auto">
-            <h1 className="fw-light">Take Appointment</h1>
+            <h1 className="fw-light">Appointment For New User</h1>
             <p className="lead text-muted">From Your Favourit Clinic</p>
           </div>
         </div>
@@ -231,75 +236,7 @@ export default function Appoinment() {
                     Please enter an valid Email.
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <label htmlFor="pPassword" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="pPassword"
-                    placeholder="Password"
-                    minLength={8}
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                    required
-                    autoComplete="on"
-                    onChange={(event) => {
-                      setpatientPassword(event.target.value);
-                    }}
-                  />
-                  <div
-                    className="invalid-feedback"
-                    style={{ color: "#fbacb4" }}
-                  >
-                    Please enter a Password.
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="pFName" className="form-label">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="pFName"
-                    placeholder="First Name"
-                    required
-                    pattern="[A-Za-z]{1,}"
-                    onChange={(event) => {
-                      setpatientFirstName(event.target.value);
-                    }}
-                  />
-                  <div
-                    className="invalid-feedback"
-                    style={{ color: "#fbacb4" }}
-                  >
-                    Please enter First Name.
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="pLName" className="form-label">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="pLName"
-                    placeholder="Last Name"
-                    required
-                    pattern="[A-Za-z]{1,}"
-                    onChange={(event) => {
-                      setpatientLastName(event.target.value);
-                    }}
-                  />
-                  <div
-                    className="invalid-feedback"
-                    style={{ color: "#fbacb4" }}
-                  >
-                    Please enter Last Name.
-                  </div>
-                </div>
+
                 <div className="col-md-6">
                   <label htmlFor="pPhone" className="form-label">
                     Mobile Number
@@ -324,6 +261,79 @@ export default function Appoinment() {
                     Please enter Mobile Number.
                   </div>
                 </div>
+
+                {/* <div className="col-md-6">
+                  <label htmlFor="pPassword" className="form-label">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="pPassword"
+                    placeholder="Password"
+                    minLength={8}
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                    required
+                    autoComplete="on"
+                    onChange={(event) => {
+                      setpatientPassword(event.target.value);
+                    }}
+                  />
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
+                    Please enter a Password.
+                  </div>
+                </div> */}
+
+                <div className="col-md-6">
+                  <label htmlFor="pFName" className="form-label">
+                    Patient First Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pFName"
+                    placeholder="First Name"
+                    required
+                    pattern="[A-Za-z]{1,}"
+                    onChange={(event) => {
+                      setpatientFirstName(event.target.value);
+                    }}
+                  />
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
+                    Please enter First Name.
+                  </div>
+                </div>
+
+                <div className="col-md-6">
+                  <label htmlFor="pLName" className="form-label">
+                    Patient Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="pLName"
+                    placeholder="Last Name"
+                    required
+                    pattern="[A-Za-z]{1,}"
+                    onChange={(event) => {
+                      setpatientLastName(event.target.value);
+                    }}
+                  />
+                  <div
+                    className="invalid-feedback"
+                    style={{ color: "#fbacb4" }}
+                  >
+                    Please enter Last Name.
+                  </div>
+                </div>
+
                 <div className="col-md-6">
                   <label className="form-label">Gender</label>
                   <br />
@@ -344,16 +354,18 @@ export default function Appoinment() {
                     Please select Gender.
                   </div>
                 </div>
+
                 <div className="col-md-6">
                   <label htmlFor="pAge" className="form-label">
                     Age
                   </label>
                   <input
-                    type="text"
+                    type="tel"
                     className="form-control"
                     placeholder="Age"
                     id="pAge"
                     required
+                    maxLength={3}
                     onChange={(event) => {
                       setpatientAge(event.target.value);
                     }}
@@ -365,6 +377,7 @@ export default function Appoinment() {
                     Please enter a Age.
                   </div>
                 </div>
+
                 <div className="col-md-6">
                   <label htmlFor="pSymptoms" className="form-label">
                     Symptoms
@@ -386,7 +399,8 @@ export default function Appoinment() {
                     Please enter Symptoms.
                   </div>
                 </div>
-                <div className="col-12">
+
+                <div className="col-md-6">
                   <label htmlFor="pAddress" className="form-label">
                     Address
                   </label>
@@ -407,6 +421,7 @@ export default function Appoinment() {
                     Please enter Address.
                   </div>
                 </div>
+
                 <div className="col-md-6">
                   <button
                     type="submit"
