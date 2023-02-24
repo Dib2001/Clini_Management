@@ -23,7 +23,6 @@ export default function Appoinment() {
 
   const unique_id = uuid();
   const patientPassword = unique_id.slice(0, 8);
-  console.log(patientPassword);
 
   const validationcheck = () => {
     setValidation("col-sm-6 mb-3 mb-sm-0 was-validated");
@@ -36,16 +35,10 @@ export default function Appoinment() {
     onValue(Clinicdata, (snapshot) => {
       snapshot.forEach((child) => {
         const clinicN = child.val()["profile"]["adminClinicName"];
-        cName += 
-        "<option value="+
-        clinicN+
-        ">"+
-        clinicN+
-        "</option>";
+        cName += "<option value=" + clinicN + ">" + clinicN + "</option>";
         clinicName.innerHTML = cName;
       });
     });
-    alert("Your Password:" + patientPassword)
   };
 
   const getaddress = async (e) => {
@@ -127,7 +120,7 @@ export default function Appoinment() {
       await createUserWithEmailAndPassword(auth, patientEmail, patientPassword);
       createUser();
       navigate("/Patient/Login");
-      alert("Your Password:" + patientPassword)
+      alert("Your Password:" + patientPassword);
     } catch (error) {
       if (error.message === "Firebase: Error (auth/email-already-in-use).") {
         alert("Email Already Exsist");
@@ -139,7 +132,7 @@ export default function Appoinment() {
 
   useEffect(() => {
     getClinic();
-  },[1]);
+  }, []);
 
   return (
     <>

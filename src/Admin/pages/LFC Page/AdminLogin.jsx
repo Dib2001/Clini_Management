@@ -4,13 +4,17 @@ import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../Firebase/firebase-conf";
 
+import { v4 as uuid } from "uuid";
+
 export default function AdminLogin() {
   const navigate = useNavigate();
 
+  const unique_id = uuid();
+  const token = unique_id.slice(0, 8);
+  const refresh = unique_id.slice(9, 13);
+
   const [loginEmail, setloginEmail] = useState("");
   const [loginPassword, setloginPassword] = useState("");
-
-  localStorage.setItem("adminEmail", loginEmail);
 
   const [Validation, setValidation] = useState("");
 
@@ -25,6 +29,9 @@ export default function AdminLogin() {
     try {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       navigate("/admin/dashboard");
+      localStorage.setItem("token",token);
+      localStorage.setItem("refresh",refresh);
+      localStorage.setItem("adminEmail", loginEmail);
     } catch (error) {
       if (error.message === "Firebase: Error (auth/user-not-found).") {
         html =

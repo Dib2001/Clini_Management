@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Error404() {
+  
   return (
     <>
       <div className="p-3 fixed-top" style={{ backgroundColor: "#0c3833" }}>

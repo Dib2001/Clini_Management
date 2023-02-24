@@ -1,5 +1,9 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 import AdminLogin from "./Admin/pages/LFC Page/AdminLogin";
 import AdminRegister from "./Admin/pages/LFC Page/AdminRegister";
@@ -26,48 +30,18 @@ import About from "./Index/About";
 import Faqs from "./Index/Faqs";
 import Pricing from "./Index/Pricing";
 import Feature from "./Index/Feature";
+import Error404Copy from "./Index/Error404Copy";
 
-function App() {
-  return (
-    <>
+const App = () => {
+  
+  if (
+    localStorage.getItem("token") &&
+    localStorage.getItem("refresh") &&
+    localStorage.getItem("adminEmail")
+  ) {
+    return (
       <Router>
         <Routes>
-          <Route
-            exact
-            path="/feature"
-            element={
-              <>
-                <Feature />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/pricnig"
-            element={
-              <>
-                <Pricing />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/faqs"
-            element={
-              <>
-                <Faqs />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/about"
-            element={
-              <>
-                <About />
-              </>
-            }
-          />
           <Route
             exact
             path="/admin/patient/record/preview/:patientId"
@@ -93,7 +67,8 @@ function App() {
             path="*"
             element={
               <>
-                <Error404 />
+                <AdminMain />
+                <Error404Copy />
               </>
             }
           />
@@ -207,64 +182,117 @@ function App() {
               </>
             }
           />
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <Appoinment />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/Patient/Forgot"
-            element={
-              <>
-                <PatientForgotpsw />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/Patient/Login"
-            element={
-              <>
-                <PatientLogin />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin"
-            element={
-              <>
-                <AdminLogin />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/forgot-password"
-            element={
-              <>
-                <AdminForgotpsw />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/register"
-            element={
-              <>
-                <AdminRegister />
-              </>
-            }
-          />
         </Routes>
       </Router>
-    </>
-  );
-}
-
+    );
+  } else {
+    return (
+      <>
+        <Router>
+          <Routes>
+            <Route
+              exact
+              path="*"
+              element={
+                <>
+                  <Error404 />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/feature"
+              element={
+                <>
+                  <Feature />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/pricnig"
+              element={
+                <>
+                  <Pricing />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/faqs"
+              element={
+                <>
+                  <Faqs />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/about"
+              element={
+                <>
+                  <About />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/"
+              element={
+                <>
+                  <Appoinment />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/Patient/Forgot"
+              element={
+                <>
+                  <PatientForgotpsw />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/Patient/Login"
+              element={
+                <>
+                  <PatientLogin />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/admin"
+              element={
+                <>
+                  <AdminLogin />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/admin/forgot-password"
+              element={
+                <>
+                  <AdminForgotpsw />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/admin/register"
+              element={
+                <>
+                  <AdminRegister />
+                </>
+              }
+            />
+          </Routes>
+        </Router>
+      </>
+    );
+  }
+};
 export default App;
