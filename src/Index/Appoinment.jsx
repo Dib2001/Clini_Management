@@ -5,12 +5,13 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "./Firebase/firebase-conf";
 
 import { ref, onValue, set } from "firebase/database";
+import { v4 as uuid } from "uuid";
 
 export default function Appoinment() {
   const navigate = useNavigate();
 
   const [patientEmail, setpatientEmail] = useState("");
-  const [patientPassword, setpatientPassword] = useState("");
+  // const [patientPassword, setpatientPassword] = useState("");
   const [patientFirstName, setpatientFirstName] = useState("");
   const [patientLastName, setpatientLastName] = useState("");
   const [patientMobile, setpatientMobile] = useState("");
@@ -20,21 +21,31 @@ export default function Appoinment() {
 
   const [Validation, setValidation] = useState("col-sm-6 mb-3 mb-sm-0");
 
+  const unique_id = uuid();
+  const patientPassword = unique_id.slice(0, 8);
+  console.log(patientPassword);
+
   const validationcheck = () => {
     setValidation("col-sm-6 mb-3 mb-sm-0 was-validated");
   };
 
   const getClinic = async (e) => {
-    const Clinicdata = ref(db, "clinic");
+    const Clinicdata = ref(db, "clinic/");
     const clinicName = document.getElementById("clinicName");
     var cName = '<option value="">Select Clinic</option>';
     onValue(Clinicdata, (snapshot) => {
       snapshot.forEach((child) => {
         const clinicN = child.val()["profile"]["adminClinicName"];
-        cName += '<option value="' + clinicN + '">' + clinicN + "</option>";
+        cName += 
+        "<option value="+
+        clinicN+
+        ">"+
+        clinicN+
+        "</option>";
         clinicName.innerHTML = cName;
       });
     });
+    alert("Your Password:" + patientPassword)
   };
 
   const getaddress = async (e) => {
@@ -116,6 +127,7 @@ export default function Appoinment() {
       await createUserWithEmailAndPassword(auth, patientEmail, patientPassword);
       createUser();
       navigate("/Patient/Login");
+      alert("Your Password:" + patientPassword)
     } catch (error) {
       if (error.message === "Firebase: Error (auth/email-already-in-use).") {
         alert("Email Already Exsist");
@@ -127,7 +139,7 @@ export default function Appoinment() {
 
   useEffect(() => {
     getClinic();
-  });
+  },[1]);
 
   return (
     <>
