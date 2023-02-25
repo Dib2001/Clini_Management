@@ -31,13 +31,12 @@ import Faqs from "./Index/Faqs";
 import Pricing from "./Index/Pricing";
 import Feature from "./Index/Feature";
 import Error404Copy from "./Index/Error404Copy";
+import AuthHandle from "./utils/AuthHandel";
 
-const App = () => {
-  
+function App () {
+
   if (
-    localStorage.getItem("token") &&
-    localStorage.getItem("refresh") &&
-    localStorage.getItem("adminEmail")
+    AuthHandle.loggedIn()
   ) {
     return (
       <Router>
@@ -187,7 +186,6 @@ const App = () => {
     );
   } else {
     return (
-      <>
         <Router>
           <Routes>
             <Route
@@ -291,7 +289,6 @@ const App = () => {
             />
           </Routes>
         </Router>
-      </>
     );
   }
 };

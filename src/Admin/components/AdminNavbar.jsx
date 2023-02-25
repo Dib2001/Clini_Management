@@ -1,23 +1,36 @@
 import { React, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { auth,db } from "./Firebase/firebase-conf";
+import { db } from "./Firebase/firebase-conf";
 
 import { ref, onValue } from "firebase/database";
 
-export default function UNavbar() {
-  const dbopen = window.indexedDB.open("firebaseLocalStorageDb", 1);
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import { Modal } from "antd";
 
+export default function UNavbar() {
   const navigate = useNavigate();
 
   const [clinicname, Setclinicname] = useState("");
 
   const clinicEmail = localStorage.getItem("adminEmail");
+
   const clear = () => {
     localStorage.removeItem("adminEmail");
     localStorage.removeItem("token");
     localStorage.removeItem("refresh");
-    navigate("/");
+  };
+
+  const showPromiseConfirm = () => {
+    clear();
+    Modal.info({
+      title: "Information",
+      icon: <ExclamationCircleFilled />,
+      content: "Successfully Logged Out",
+      onOk() {
+        navigate("/");
+      },
+    });
   };
 
   const getUser = async (e) => {
@@ -117,11 +130,13 @@ export default function UNavbar() {
                 </Link>
               </li>
             </ul>
-            <Link to="/">
-              <button className="btn btn-danger" type="button" onClick={clear}>
-                Log Out
-              </button>
-            </Link>
+            <button
+              className="btn btn-danger"
+              type="button"
+              onClick={showPromiseConfirm}
+            >
+              Log Out
+            </button>
           </div>
         </div>
       </nav>

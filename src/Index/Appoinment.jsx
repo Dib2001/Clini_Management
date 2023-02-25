@@ -67,6 +67,7 @@ export default function Appoinment() {
     const patientGender = document.getElementById("gender").value;
     const clinicAddress = document.getElementById("clinicaddress").value;
     const clinicName = document.getElementById("clinicName").value;
+    console.log(clinicName);
     const PEmail = patientEmail.replace(".", "");
     onValue(Clinicdata, (snapshot) => {
       snapshot.forEach((child) => {
@@ -132,7 +133,7 @@ export default function Appoinment() {
 
   useEffect(() => {
     getClinic();
-  }, []);
+  }, [1]);
 
   return (
     <>
@@ -371,6 +372,8 @@ export default function Appoinment() {
                     id="pAge"
                     required
                     maxLength={3}
+                    minLength={1}
+                    pattern="[0-9]{1,3}"
                     onChange={(event) => {
                       setpatientAge(event.target.value);
                     }}
