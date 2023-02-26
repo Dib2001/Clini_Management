@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from "react";
 
-import { db } from "../Firebase/firebase-conf";
-
 import { ref, onValue } from "firebase/database";
+import { db } from "../../../Firebase/firebase-conf";
 
 export default function UHome() {
   const clinicEmail = localStorage.getItem("adminEmail");

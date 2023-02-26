@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
-import { db } from "../Firebase/firebase-conf";
+import { db } from "../../../Firebase/firebase-conf";
 
 import { ref, onValue, push, remove, set } from "firebase/database";
 

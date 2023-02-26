@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 
-import { db } from "../Firebase/firebase-conf";
+import { db } from "../../../Firebase/firebase-conf";
 
-import { ref, push, onValue, orderByChild } from "firebase/database";
+import { ref, push, onValue } from "firebase/database";
 
 export default function ProfileMain() {
   const [departmentcount, setdepartmentcount] = useState(0);

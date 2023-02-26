@@ -6,6 +6,7 @@ import { auth, db } from "./Firebase/firebase-conf";
 
 import { ref, onValue, set } from "firebase/database";
 import { v4 as uuid } from "uuid";
+import AuthHandle from "../utils/AuthHandel";
 
 export default function Appoinment() {
   const navigate = useNavigate();

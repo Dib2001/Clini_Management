@@ -2,9 +2,9 @@ import { React, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../Firebase/firebase-conf";
 
 import { v4 as uuid } from "uuid";
+import { auth } from "../../../Firebase/firebase-conf";
 
 export default function AdminLogin() {
   const navigate = useNavigate();

@@ -1,8 +1,6 @@
 import { React, useEffect } from "react";
 
-import { Link } from "react-router-dom";
-
-import { db } from "../Firebase/firebase-conf";
+import { db } from "../../../Firebase/firebase-conf";
 
 import { ref, onValue } from "firebase/database";
 

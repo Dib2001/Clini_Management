@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 
-import { db } from "../Firebase/firebase-conf";
+import { db } from "../../../Firebase/firebase-conf";
 
 import { ref, push, onValue } from "firebase/database";
 export default function DoctorRegister() {

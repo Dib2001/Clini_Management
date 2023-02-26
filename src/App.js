@@ -1,9 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AdminLogin from "./Admin/pages/LFC Page/AdminLogin";
 import AdminRegister from "./Admin/pages/LFC Page/AdminRegister";
@@ -31,265 +27,40 @@ import Faqs from "./Index/Faqs";
 import Pricing from "./Index/Pricing";
 import Feature from "./Index/Feature";
 import Error404Copy from "./Index/Error404Copy";
-import AuthHandle from "./utils/AuthHandel";
+import ProtectedAdmin from "./utils/ProtectedAdmin";
+import ProtectedPublic from "./utils/ProtectedPublic";
 
-function App () {
-
-  if (
-    AuthHandle.loggedIn()
-  ) {
-    return (
-      <Router>
-        <Routes>
-          <Route
-            exact
-            path="/admin/patient/record/preview/:patientId"
-            element={
-              <>
-                <AdminMain />
-                <PatientrecordPreview />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/patient/approve/preview/:patientId"
-            element={
-              <>
-                <AdminMain />
-                <Preview />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="*"
-            element={
-              <>
-                <AdminMain />
-                <Error404Copy />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/profile"
-            element={
-              <>
-                <AdminMain />
-                <ProfileMain />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/patient/approve"
-            element={
-              <>
-                <AdminMain />
-                <PatientApprove />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/patient/admit"
-            element={
-              <>
-                <AdminMain />
-                <PatientAdmit />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/patient/record"
-            element={
-              <>
-                <AdminMain />
-                <PatientRecord />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/doctor/specialisation"
-            element={
-              <>
-                <AdminMain />
-                <DoctorSpecialisation />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/doctor/register"
-            element={
-              <>
-                <AdminMain />
-                <DoctorRegister />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/doctor/record"
-            element={
-              <>
-                <AdminMain />
-                <DoctorRecord />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/customer"
-            element={
-              <>
-                <AdminMain />
-                <CustomerMain />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/patient"
-            element={
-              <>
-                <AdminMain />
-                <PatientMain />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/doctor"
-            element={
-              <>
-                <AdminMain />
-                <DoctorMain />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/admin/dashboard"
-            element={
-              <>
-                <AdminMain />
-                <AdminHome />
-              </>
-            }
-          />
-        </Routes>
-      </Router>
-    );
-  } else {
-    return (
-        <Router>
-          <Routes>
-            <Route
-              exact
-              path="*"
-              element={
-                <>
-                  <Error404 />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/feature"
-              element={
-                <>
-                  <Feature />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/pricnig"
-              element={
-                <>
-                  <Pricing />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/faqs"
-              element={
-                <>
-                  <Faqs />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/about"
-              element={
-                <>
-                  <About />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/"
-              element={
-                <>
-                  <Appoinment />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/Patient/Forgot"
-              element={
-                <>
-                  <PatientForgotpsw />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/Patient/Login"
-              element={
-                <>
-                  <PatientLogin />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/admin"
-              element={
-                <>
-                  <AdminLogin />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/admin/forgot-password"
-              element={
-                <>
-                  <AdminForgotpsw />
-                </>
-              }
-            />
-            <Route
-              exact
-              path="/admin/register"
-              element={
-                <>
-                  <AdminRegister />
-                </>
-              }
-            />
-          </Routes>
-        </Router>
-    );
-  }
-};
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/admin/patient/record/preview/:patientId" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientrecordPreview} /> } />
+        <Route exact path="/admin/patient/approve/preview/:patientId" element={<ProtectedAdmin Component1={AdminMain} Component2={Preview} />} />
+        {/* <Route exact path="*" element={<ProtectedAdmin Component1={AdminMain} Component2={Error404Copy} /> } /> */}
+        <Route exact path="/admin/profile" element={<ProtectedAdmin Component1={AdminMain} Component2={ProfileMain} />} />
+        <Route exact path="/admin/patient/approve" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientApprove} /> } />
+        <Route exact path="/admin/patient/admit" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientAdmit} />  } />
+        <Route exact path="/admin/patient/record" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientRecord} />  } />
+        <Route exact path="/admin/doctor/specialisation" element={<ProtectedAdmin Component1={AdminMain} Component2={DoctorSpecialisation} />  } />
+        <Route exact path="/admin/doctor/register" element={<ProtectedAdmin Component1={AdminMain} Component2={DoctorRegister} /> }/>
+        <Route exact path="/admin/doctor/record" element={<ProtectedAdmin Component1={AdminMain} Component2={DoctorRecord} />} />
+        <Route exact path="/admin/customer" element={<ProtectedAdmin Component1={AdminMain} Component2={CustomerMain} />} />
+        <Route exact path="/admin/patient" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientMain} />} />
+        <Route exact path="/admin/doctor" element={<ProtectedAdmin Component1={AdminMain} Component2={DoctorMain} />} />
+        <Route exact path="/admin/dashboard" element={<ProtectedAdmin Component1={AdminMain} Component2={AdminHome} />} />
+        {/* <Route exact path="*" element={<ProtectedPublic Component1={Error404}/>} /> */}
+        <Route exact path="/feature" element={<ProtectedPublic Component1={Feature}/>} />
+        <Route exact path="/pricnig" element={<ProtectedPublic Component1={Pricing}/>} />
+        <Route exact path="/faqs" element={<ProtectedPublic Component1={Faqs}/>} />
+        <Route exact path="/about" element={<ProtectedPublic Component1={About}/>} />
+        <Route exact path="/" element={<ProtectedPublic Component1={Appoinment}/>} />
+        <Route exact path="/Patient/Forgot" element={<PatientForgotpsw />} />
+        <Route exact path="/Patient/Login" element={<PatientLogin />} />
+        <Route exact path="/admin" element={<ProtectedPublic Component1={AdminLogin}/>} />
+        <Route exact path="/admin/forgot-password" element={<ProtectedPublic Component1={AdminForgotpsw}/>} />
+        <Route exact path="/admin/register" element={<ProtectedPublic Component1={AdminRegister}/>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 export default App;

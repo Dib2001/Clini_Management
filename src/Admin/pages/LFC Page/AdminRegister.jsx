@@ -3,9 +3,9 @@ import { useNavigate, Link } from "react-router-dom";
 import "./readonly.css";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../Firebase/firebase-conf";
 
 import { ref, set, onValue } from "firebase/database";
+import { auth, db } from "../../../Firebase/firebase-conf";
 
 export default function AdminRegister() {
   const navigate = useNavigate();
