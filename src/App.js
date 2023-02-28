@@ -26,7 +26,6 @@ import About from "./Index/About";
 import Faqs from "./Index/Faqs";
 import Pricing from "./Index/Pricing";
 import Feature from "./Index/Feature";
-import Error404Copy from "./Index/Error404Copy";
 import ProtectedAdmin from "./utils/ProtectedAdmin";
 import ProtectedPublic from "./utils/ProtectedPublic";
 
@@ -36,7 +35,7 @@ function App() {
       <Routes>
         <Route exact path="/admin/patient/record/preview/:patientId" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientrecordPreview} /> } />
         <Route exact path="/admin/patient/approve/preview/:patientId" element={<ProtectedAdmin Component1={AdminMain} Component2={Preview} />} />
-        {/* <Route exact path="*" element={<ProtectedAdmin Component1={AdminMain} Component2={Error404Copy} /> } /> */}
+        <Route exact path="*" element={<ProtectedPublic Component1={Error404}/>} />
         <Route exact path="/admin/profile" element={<ProtectedAdmin Component1={AdminMain} Component2={ProfileMain} />} />
         <Route exact path="/admin/patient/approve" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientApprove} /> } />
         <Route exact path="/admin/patient/admit" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientAdmit} />  } />
@@ -48,7 +47,6 @@ function App() {
         <Route exact path="/admin/patient" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientMain} />} />
         <Route exact path="/admin/doctor" element={<ProtectedAdmin Component1={AdminMain} Component2={DoctorMain} />} />
         <Route exact path="/admin/dashboard" element={<ProtectedAdmin Component1={AdminMain} Component2={AdminHome} />} />
-        {/* <Route exact path="*" element={<ProtectedPublic Component1={Error404}/>} /> */}
         <Route exact path="/feature" element={<ProtectedPublic Component1={Feature}/>} />
         <Route exact path="/pricnig" element={<ProtectedPublic Component1={Pricing}/>} />
         <Route exact path="/faqs" element={<ProtectedPublic Component1={Faqs}/>} />
