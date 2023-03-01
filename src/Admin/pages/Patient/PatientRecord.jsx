@@ -52,7 +52,7 @@ export default function PatientRecord() {
           PatientDepartment +
           "</td>" +
           "<td>" +
-          PatientDate +
+          PatientDate.replace("T", " ") +
           "</td>" +
           "<td class='text-center'>" +
           "<a href='/admin/patient/record/preview/"+PatientKey+"'style='text-decoration: none;'>" +

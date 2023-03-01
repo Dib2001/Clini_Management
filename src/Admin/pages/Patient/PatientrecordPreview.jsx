@@ -77,6 +77,7 @@ export default function PatientrecordPreview() {
       Age: patient.Age,
       Symptoms: patient.Symptoms,
       Address: patient.Address,
+      Date:currentDateTime
     });
     await set(
       ref(db, "patient/" + PEmail + "/clinicstatus/" + patientclinicName),
@@ -93,6 +94,7 @@ export default function PatientrecordPreview() {
         Patient_Symptoms: patient.Symptoms,
         Patient_Clinic_name: patientclinicName,
         Patient_Clinic_address: patientclinicAddress,
+        Patient_Date:currentDateTime
       }
     );
     alert("Patient Updated");
@@ -136,9 +138,29 @@ export default function PatientrecordPreview() {
     });
   };
 
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const min = date.getMinutes();
+  const [currentDateTime, setcurrentDateTime] = useState("");
+  const DateTime = () => {
+    if (month < 10 || day < 10 || hour<10) {
+      setcurrentDateTime(
+        year  + "-" + '0'+month + "-"+'0'+day+ " " +"0"+ hour + ":" + min
+      );
+    }else{
+      setcurrentDateTime(
+        year  + "-" + month + "-" + day+ " " + hour + ":" + min
+      );
+    }
+  };
+  
   useEffect(() => {
     getDepartment();
     getPatient();
+    DateTime();
   }, []);
 
   return (
@@ -155,9 +177,11 @@ export default function PatientrecordPreview() {
                     Date
                   </label>
                   <input
-                    type="date"
+                    type="datetime-local"
                     className="form-control"
                     id="PatientDate"
+                    min={currentDateTime}
+                    required
                   />
                 </div>
                 <div className="col-md-6">
@@ -168,6 +192,7 @@ export default function PatientrecordPreview() {
                     type="file"
                     className="form-control"
                     id="PatientReports"
+                    accept=".pdf"
                   />
                 </div>
                 <div className="col-md-6">
@@ -279,6 +304,7 @@ export default function PatientrecordPreview() {
                     className="btn btn-secondary"
                     id="departmentlist"
                     onClick={getDoctor}
+                    required
                   >
                     <option value="">Select Department</option>
                   </select>
@@ -287,6 +313,7 @@ export default function PatientrecordPreview() {
                   <select
                     className="btn btn-secondary"
                     id="doctorlist"
+                    required
                   >
                     <option value="">Select Doctor</option>
                   </select>

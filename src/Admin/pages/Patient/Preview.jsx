@@ -28,6 +28,25 @@ export default function Preview() {
     Address: "",
   });
 
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const min = date.getMinutes();
+  const [currentDateTime, setcurrentDateTime] = useState("");
+  const DateTime = () => {
+    if (month < 10 || day < 10 || hour<10) {
+      setcurrentDateTime(
+        year  + "-" + '0'+month + "-"+'0'+day+ " " +"0"+ hour + ":" + min
+      );
+    }else{
+      setcurrentDateTime(
+        year  + "-" + month + "-" + day+ " " + hour + ":" + min
+      );
+    }
+  };
+
   const getPatient = async (e) => {
     const CEmail = clinicEmail.replace(".", "");
     const userdata = ref(
@@ -141,6 +160,7 @@ export default function Preview() {
   useEffect(() => {
     getDepartment();
     getPatient();
+    DateTime();
   }, []);
 
   return (
@@ -158,9 +178,10 @@ export default function Preview() {
                   </label>
                   <input
                     required
-                    type="date"
+                    type="datetime-local"
                     className="form-control"
                     id="PatientDate"
+                    min={currentDateTime}
                   />
                 </div>
                 <div className="col-md-6">

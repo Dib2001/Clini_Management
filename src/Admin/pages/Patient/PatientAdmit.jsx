@@ -23,6 +23,25 @@ export default function PatientAdmit() {
   const [patientclinicName, setclinicName] = useState("");
   const [patientclinicAddress, setclinicAddresss] = useState("");
 
+  const date = new Date();
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  const hour = date.getHours();
+  const min = date.getMinutes();
+  const [currentDateTime, setcurrentDateTime] = useState("");
+  const DateTime = () => {
+    if (month < 10 || day < 10 || hour<10) {
+      setcurrentDateTime(
+        year  + "-" + '0'+month + "-"+'0'+day+ " " +"0"+ hour + ":" + min
+      );
+    }else{
+      setcurrentDateTime(
+        year  + "-" + month + "-" + day+ " " + hour + ":" + min
+      );
+    }
+  };
+
   const getDepartment = async (e) => {
     const departmentlist = document.getElementById("departmentlist");
     const CEmail = clinicEmail.replace(".", "");
@@ -130,6 +149,7 @@ export default function PatientAdmit() {
 
   useEffect(() => {
     getDepartment();
+    DateTime();
   }, []);
 
   return (
@@ -147,9 +167,10 @@ export default function PatientAdmit() {
                   </label>
                   <input
                     required
-                    type="date"
+                    type='datetime-local'
                     className="form-control"
                     id="PatientDate"
+                    min={currentDateTime}
                   />
                 </div>
 
