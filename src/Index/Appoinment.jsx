@@ -2,11 +2,10 @@ import { React, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "./Firebase/firebase-conf";
+import { auth, db } from "../../src/Firebase/firebase-conf";
 
 import { ref, onValue, set } from "firebase/database";
 import { v4 as uuid } from "uuid";
-import AuthHandle from "../utils/AuthHandel";
 
 export default function Appoinment() {
   const navigate = useNavigate();

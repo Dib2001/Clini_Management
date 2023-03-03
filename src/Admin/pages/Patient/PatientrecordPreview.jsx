@@ -138,23 +138,21 @@ export default function PatientrecordPreview() {
     });
   };
 
-  const date = new Date();
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
-  const hour = date.getHours();
-  const min = date.getMinutes();
   const [currentDateTime, setcurrentDateTime] = useState("");
-  const DateTime = () => {
-    if (month < 10 || day < 10 || hour<10) {
-      setcurrentDateTime(
-        year  + "-" + '0'+month + "-"+'0'+day+ " " +"0"+ hour + ":" + min
-      );
-    }else{
-      setcurrentDateTime(
-        year  + "-" + month + "-" + day+ " " + hour + ":" + min
-      );
-    }
+  const DateTime = (props) => {
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    if(day<10) day ='0'+day;
+    if(month<10) month ='0'+month;
+    if(hour<10) hour ='0'+hour;
+    if(min<10) min ='0'+min;
+    setcurrentDateTime(
+      year + "-" + month + "-" + day + " " + hour + ":" + min
+    );
   };
   
   useEffect(() => {
