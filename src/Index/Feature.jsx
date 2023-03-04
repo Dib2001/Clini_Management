@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Chart } from "react-google-charts";
-import { db } from "./Firebase/firebase-conf";
+import { db } from "../../src/Firebase/firebase-conf";
 import { ref, onValue } from "firebase/database";
 
 export default function Feature() {
@@ -23,13 +23,9 @@ export default function Feature() {
     onValue(Clinicdata, (snapshot) => {
       snapshot.forEach((child) => {
         const created = child.val()["profile"]["adminCreated"];
-        console.log(created);
+        // setClinics({Jan:created})
       });
     });
-    // const date = new Date().getDate();
-    // const month = new Date().getMonth();
-    // const year = new Date().getFullYear();
-    // console.log(date,month,year)
   };
 
   useEffect(() => {
