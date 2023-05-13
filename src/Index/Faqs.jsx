@@ -95,7 +95,7 @@ export default function Faqs() {
               {text.split(" ").length}{" "}
             </figcaption>
             <figcaption className="blockquote-footer text-end">
-              Created By <cite title="Source Title">- D Chakraborty</cite>
+              Created By <cite title="Source Title">- S Mandal</cite>
             </figcaption>
             <button
               type="submit"

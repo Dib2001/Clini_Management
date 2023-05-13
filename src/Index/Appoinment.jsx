@@ -178,11 +178,11 @@ export default function Appoinment() {
                   Patient Portal
                 </button>
               </Link>
-              <Link to="/blood">
+              {/* <Link to="/blood">
                 <button type="button" className="btn btn-danger">
                   Blood Finder Portal
                 </button>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

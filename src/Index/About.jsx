@@ -53,12 +53,18 @@ export default function About() {
       <figure className="text-center container">
         <div className="row">
           <div className="col-lg-6 col-md-8 mx-auto">
-            <h1 className="fw-light">About Me</h1>
+            <h1 className="fw-light">About us</h1>
             <blockquote className="blockquote">
               <p className="lead text-center">Typing.....</p>
             </blockquote>
             <figcaption className="blockquote-footer">
-              Created By <cite title="Source Title">- D Chakraborty</cite>
+              Created By <cite title="Source Title">
+                <p>
+                  - D Chakraborty <br />
+                  - B Biswas <br />
+                  - S Mandal
+                  </p>
+                </cite>
             </figcaption>
           </div>
         </div>

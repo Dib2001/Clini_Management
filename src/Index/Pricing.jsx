@@ -90,7 +90,7 @@ export default function Pricing() {
               </div>
             </blockquote>
             <figcaption className="blockquote-footer">
-              Created By <cite title="Source Title">- D Chakraborty</cite>
+              Created By <cite title="Source Title">- B Biswas</cite>
             </figcaption>
           </div>
         </div>
