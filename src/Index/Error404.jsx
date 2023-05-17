@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Error404() {
-  
   return (
     <>
-      <div className="p-3 fixed-top" style={{ backgroundColor: "#0c3833" }}>
+      <div className="p-3" style={{ backgroundColor: "#0c3833" }}>
         <div className="container">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -50,14 +49,14 @@ export default function Error404() {
           </div>
         </div>
       </div>
-      <div className="d-flex align-items-center justify-content-center vh-100">
+      <div className="align-items-center justify-content-center">
         <div className="text-center">
-          <h1 className="display-1 fw-bold">404</h1>
-          <p className="fs-3">
-            {" "}
-            <span className="text-danger">Opps!</span> Page not found.
-          </p>
-          <p className="lead">The page you’re looking for doesn’t exist.</p>
+          <div id="media-viewer">
+            <img className="object-fit-none border rounded"
+              title="maintenance.gif"
+              src="https://designerapp.officeapps.live.com/designerapp/Media.ashx/?id=89327a1f-870b-4d81-934f-857cd67e149a.gif&fileToken=918a9633-eed0-4c95-a4d1-b550d780142a&dcHint=IndiaCentral"
+            />
+          </div>
         </div>
       </div>
     </>

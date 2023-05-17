@@ -49,6 +49,7 @@ export default function UHome() {
   return (
     <>
       <div className="row mx-5 my-3">
+      <p className="fs-1 text-center">Dashbord</p>
         <div className="col-sm-3 mb-3 mb-sm-0">
           <div className="card text-bg-danger ">
             <div className="card-header">Total Doctor : {doctorcount}</div>
@@ -89,7 +90,7 @@ export default function UHome() {
             </div>
           </div>
         </div>
-        <div className="col-sm-6">
+        {/* <div className="col-sm-6">
           <div className="table-responsive">
             <table className="table table-sm caption-top table-bordered border-success">
               <caption>Recent Patient</caption>
@@ -144,7 +145,7 @@ export default function UHome() {
               </tbody>
             </table>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

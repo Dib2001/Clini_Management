@@ -7,8 +7,9 @@ export default function CustomerMain() {
   return (
     <>
       <div className="row mx-5 my-3">
+      <p className="fs-1 text-center">Customer</p>
         <div className="col-sm-6 mb-3 mb-sm-0">
-          <Link to="/" style={{ "textDecoration": "none" }}>
+          <Link to="/admin/commingsoon" style={{ "textDecoration": "none" }}>
             <div className="card text-bg-danger ">
               <div className="card-header">
                 Total Customer : {appointmentcount}
@@ -23,7 +24,7 @@ export default function CustomerMain() {
           </Link>
         </div>
         <div className="col-sm-6 mb-3 mb-sm-0">
-          <Link to="/" style={{ "textDecoration": "none" }}>
+          <Link to="/admin/commingsoon" style={{ "textDecoration": "none" }}>
             <div className="card text-bg-success">
               <div className="card-header">
                 Customer Bill

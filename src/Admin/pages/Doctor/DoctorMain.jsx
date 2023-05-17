@@ -26,6 +26,7 @@ export default function DoctorMain() {
   return (
     <>
       <div className="row mx-5 my-3">
+      <p className="fs-1 text-center">Doctor</p>
         <div className="col-sm-4 mb-3 mb-sm-0">
           <Link to="/admin/doctor/record" style={{ "textDecoration": "none" }}>
             <div className="card text-bg-danger ">

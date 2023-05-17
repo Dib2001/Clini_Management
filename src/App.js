@@ -28,6 +28,8 @@ import Pricing from "./Index/Pricing";
 import Feature from "./Index/Feature";
 import ProtectedAdmin from "./utils/ProtectedAdmin";
 import ProtectedPublic from "./utils/ProtectedPublic";
+import MadicineHome from "./Admin/pages/Madicine/MadicineHome";
+import CommingSoon from "./Admin/pages/CommingSoon";
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
         <Route exact path="/admin/patient/approve/preview/:patientId" element={<ProtectedAdmin Component1={AdminMain} Component2={Preview} />} />
         <Route exact path="*" element={<ProtectedPublic Component1={Error404}/>} />
         <Route exact path="/admin/profile" element={<ProtectedAdmin Component1={AdminMain} Component2={ProfileMain} />} />
+        <Route exact path="/admin/commingsoon" element={<ProtectedAdmin Component1={AdminMain} Component2={CommingSoon} />} />
         <Route exact path="/admin/patient/approve" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientApprove} /> } />
         <Route exact path="/admin/patient/admit" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientAdmit} />  } />
         <Route exact path="/admin/patient/record" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientRecord} />  } />
@@ -47,6 +50,7 @@ function App() {
         <Route exact path="/admin/patient" element={<ProtectedAdmin Component1={AdminMain} Component2={PatientMain} />} />
         <Route exact path="/admin/doctor" element={<ProtectedAdmin Component1={AdminMain} Component2={DoctorMain} />} />
         <Route exact path="/admin/dashboard" element={<ProtectedAdmin Component1={AdminMain} Component2={AdminHome} />} />
+        <Route exact path="/admin/madicine" element={<ProtectedAdmin Component1={AdminMain} Component2={MadicineHome} />} />
         <Route exact path="/feature" element={<ProtectedPublic Component1={Feature}/>} />
         <Route exact path="/pricnig" element={<ProtectedPublic Component1={Pricing}/>} />
         <Route exact path="/faqs" element={<ProtectedPublic Component1={Faqs}/>} />

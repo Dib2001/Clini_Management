@@ -115,7 +115,7 @@ export default function UNavbar() {
                 <Link
                   className="nav-link active"
                   style={{ textDecoration: "none" }}
-                  to="/admin/dashboard"
+                  to="/admin/madicine"
                 >
                   Medicine
                 </Link>
