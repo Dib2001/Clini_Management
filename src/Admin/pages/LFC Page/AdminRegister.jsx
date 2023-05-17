@@ -182,7 +182,7 @@ export default function AdminRegister() {
                     Looks like you're new here!
                     <br></br>
                     Register now and join with us....<br></br>
-                    <strong>LOCAL</strong>
+                    <strong>Clinic Portal</strong>
                     <div id="checkclinic"></div>
                   </h3>
                   <form className={Validation} onSubmit={register}>

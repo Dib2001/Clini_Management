@@ -1,29 +1,35 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {sendPasswordResetEmail, updateCurrentUser} from "firebase/auth"
+import { auth } from "../../../Firebase/firebase-conf";
+
 
 export default function AdminForgotpsw() {
   const [wrong, setWrong] = useState(
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
   );
 
-  const [Validation, setValidation] = useState("");
+  const navigate = useNavigate();
 
-  const validationcheck = () => {
+  const [Validation, setValidation] = useState("");
+  const [ForgetEmail, setEmail] = useState("");
+
+  const validationcheck = async () => {
     setValidation("was-validated");
+    try {
+      await sendPasswordResetEmail(auth,ForgetEmail)
+      alert("A link has been sent to your email for reset password")
+      navigate('/admin')
+    } catch (error) {
+      alert("Email not found")
+    }
   };
 
   const checkEmail = (event) => {
-    const passowrd = event.target;
-    const check = document.getElementById("checked");
-    if (passowrd.checkValidity()) {
+    const email = event.target;
+    if (email.checkValidity()) {
       setWrong("uk-button-primary uk-button  uk-button-large uk-width-1-1");
-      check.innerHTML =
-        '<div class="uk-inline uk-width-1-1">' +
-        '<span class="uk-form-icon" uk-icon="icon: lock"></span>' +
-        '<input class="uk-input uk-form-large form-control" type="tel" maxlength=6 placeholder="OTP" pattern="[0-9]{6}" title="Enter Correct OTP" required="True" autoComplete="True" />' +
-        "</div>";
     } else {
-      check.innerHTML=""
       setWrong("uk-button-danger uk-button  uk-button-large uk-width-1-1");
     }
   };
@@ -39,7 +45,7 @@ export default function AdminForgotpsw() {
                   <div className="uk-card-title uk-text-center">
                     <h4>Oh!</h4>
                     <h3>Don't Worry generate your new Password</h3>
-                    <strong>LOCAL</strong>
+                    <strong>Clinic Portal</strong>
                   </div>
                   <form className={Validation}>
                     <div className="uk-margin">
@@ -51,14 +57,18 @@ export default function AdminForgotpsw() {
                           placeholder="Email Address"
                           required
                           onKeyUp={checkEmail}
+                          onChange={(event) => {
+                            setEmail(event.target.value);
+                          }}
                         />
                       </div>
                     </div>
                     <div className="uk-margin">
-                      <div id="checked"></div>
-                    </div>
-                    <div className="uk-margin">
-                      <button className={wrong} onClick={validationcheck} type="submit">
+                      <button
+                        className={wrong}
+                        onClick={validationcheck}
+                        type="button"
+                      >
                         Verify
                       </button>
                     </div>

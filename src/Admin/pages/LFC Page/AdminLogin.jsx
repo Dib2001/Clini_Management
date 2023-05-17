@@ -75,7 +75,7 @@ export default function AdminLogin() {
                   <h3 className="uk-card-title uk-text-center">
                     Welcome back!
                     <br></br>
-                    <strong>LOCAL</strong>
+                    <strong>Clinic Portal</strong>
                     <div id="checkclinic"></div>
                   </h3>
                   <form className={Validation} onSubmit={login}>
