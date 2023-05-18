@@ -54,7 +54,7 @@ export default function Error404() {
           <div id="media-viewer">
             <img className="object-fit-none border rounded"
               title="maintenance.gif"
-              src="https://designerapp.officeapps.live.com/designerapp/Media.ashx/?id=89327a1f-870b-4d81-934f-857cd67e149a.gif&fileToken=918a9633-eed0-4c95-a4d1-b550d780142a&dcHint=IndiaCentral"
+              src="error404.gif"
             />
           </div>
         </div>

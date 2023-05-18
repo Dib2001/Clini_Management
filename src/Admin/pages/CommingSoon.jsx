@@ -12,7 +12,7 @@ export default function CommingSoon() {
             <div id="media-viewer">
               <img
                 title="maintenance.gif"
-                src="https://designerapp.officeapps.live.com/designerapp/Media.ashx/?id=50645710-5425-4bfd-8523-e26331579be8.gif&fileToken=73a033dc-1a14-4929-9db3-431f4a1b1d98&dcHint=IndiaCentral"
+                src="../error503.gif"
               />
             </div>
           </blockquote>
