@@ -1,10 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { db } from "./Firebase/firebase-conf";
-
-import { ref, onValue } from "firebase/database";
-
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
 
@@ -12,8 +8,6 @@ export default function UNavbar() {
   const navigate = useNavigate();
 
   const [clinicname, Setclinicname] = useState("");
-
-  const clinicEmail = localStorage.getItem("adminEmail");
 
   const clear = () => {
     localStorage.removeItem("adminEmail");
@@ -34,14 +28,6 @@ export default function UNavbar() {
   };
 
   const getUser = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail);
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const clinicN = child.val()["adminClinicName"];
-        Setclinicname(clinicN);
-      });
-    });
   };
 
   useEffect(() => {

@@ -1,10 +1,7 @@
 import { React, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
-
 import { v4 as uuid } from "uuid";
-import { auth } from "../../../Firebase/firebase-conf";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -24,31 +21,6 @@ export default function AdminLogin() {
 
   const login = async (e) => {
     e.preventDefault();
-    var html = "";
-    const checkclinic = document.getElementById("checkclinic");
-    try {
-      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      navigate("/admin/dashboard");
-      localStorage.setItem("token",token);
-      localStorage.setItem("refresh",refresh);
-      localStorage.setItem("adminEmail", loginEmail);
-    } catch (error) {
-      if (error.message === "Firebase: Error (auth/user-not-found).") {
-        html =
-          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-          "<strong>Opps!</strong> Email address not exist." +
-          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-          "</div>";
-        checkclinic.innerHTML = html;
-      } else if (error.message === "Firebase: Error (auth/wrong-password).") {
-        html =
-          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-          "<strong>Opps!</strong> Please Enter correct Password." +
-          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-          "</div>";
-        checkclinic.innerHTML = html;
-      }
-    }
   };
 
   const [wrong, setWrong] = useState(

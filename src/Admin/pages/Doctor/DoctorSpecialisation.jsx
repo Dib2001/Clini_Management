@@ -1,35 +1,10 @@
 import { React, useEffect } from "react";
 
-import { db } from "../../../Firebase/firebase-conf";
-
-import { ref, onValue } from "firebase/database";
-
 export default function DoctorSpecialisation() {
   const clinicEmail = localStorage.getItem("adminEmail");
 
   const getDoctor = async (e) => {
-    const Doctor = document.getElementById("Doctorlist");
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/doctors");
-    var html = "";
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const DoctorName = child.val()["doctorName"];
-        const DoctorMobile = child.val()["doctorContact"];
-        const DoctorAddress = child.val()["doctorAddress"];
-        const DoctorDepartment = child.val()["doctorDepartment"];
-        html +=
-          "<tr>" +
-          "<td>" +
-          DoctorName +
-          "</td>" +
-          "<td>" +
-          DoctorDepartment +
-          "</td>" +
-          "</tr>";
-        Doctor.innerHTML = html;
-      });
-    });
+    
   };
 
   useEffect(() => {

@@ -1,8 +1,5 @@
 import { React, useState, useEffect } from "react";
 
-import { ref, onValue } from "firebase/database";
-import { db } from "../../../Firebase/firebase-conf";
-
 export default function UHome() {
   const clinicEmail = localStorage.getItem("adminEmail");
 
@@ -24,21 +21,11 @@ export default function UHome() {
   const [patientStatusNamecount, setpatientStatusNamecount] = useState();
 
   const listDoctore = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/doctors");
-    onValue(userdata, (snapshot) => {
-      const nolist = snapshot.size;
-      setdoctorcount(nolist);
-    });
+    
   };
 
   const listApprovePatient = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/clinicstatus");
-    onValue(userdata, (snapshot) => {
-      const nolist = snapshot.size;
-      setapproveappointmentcount(nolist);
-    });
+    
   };
 
   useEffect(() => {

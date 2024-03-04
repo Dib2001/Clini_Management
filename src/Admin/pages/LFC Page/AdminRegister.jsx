@@ -2,11 +2,6 @@ import { React, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./readonly.css";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
-import { ref, set, onValue } from "firebase/database";
-import { auth, db } from "../../../Firebase/firebase-conf";
-
 export default function AdminRegister() {
   const navigate = useNavigate();
 
@@ -30,81 +25,15 @@ export default function AdminRegister() {
   );
 
   const clinicCheck = async (e) => {
-    const checkclinic = document.getElementById("checkclinic");
-    const userdata = ref(db, "clinic");
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const clinicName = child.toJSON()["profile"]["adminClinicName"];
-        var html = "";
-        if (registerClinicName === clinicName) {
-          html =
-            '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-            "<strong>Opps!</strong> Clinic Name Already Exist." +
-            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-            "</div>";
-          checkclinic.innerHTML = html;
-        } else {
-          checkclinic.innerHTML = "";
-        }
-      });
-    });
+    
   };
 
   const createUser = async (e) => {
-    const REmail = registerEmail.replace(".", "");
-    const date = new Date().getDate();
-    const month = new Date().getMonth()+1;
-    const year = new Date().getFullYear();
-    await set(ref(db, "clinic/" + REmail + "/profile"), {
-      adminEmail: registerEmail,
-      adminPassword: registerPassword,
-      adminClinicName: registerClinicName,
-      adminOwnerName: registerOwnerName,
-      adminCreated:date+","+month+","+year,
-      adminMobile: registerMobile,
-      adminLicensee: registerLicensee,
-      adminAddress:
-        registerAddress +
-        ", " +
-        document.getElementById("pos").value +
-        ", " +
-        document.getElementById("district").value +
-        ", " +
-        registerPincode +
-        ", " +
-        document.getElementById("state").value,
-    });
+    
   };
 
   const register = async (e) => {
     e.preventDefault();
-    const checkclinic = document.getElementById("checkclinic");
-    var html = "";
-    try {
-      await createUserWithEmailAndPassword(
-        auth,
-        registerEmail,
-        registerPassword
-      );
-      createUser();
-      navigate("/admin");
-    } catch (error) {
-      if (error.message === "Firebase: Error (auth/email-already-in-use).") {
-        html =
-          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-          "<strong>Opps!</strong> Email address already exist." +
-          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-          "</div>";
-        checkclinic.innerHTML = html;
-      } else if (error.message === "Firebase: Error (auth/invalid-email).") {
-        html =
-          '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
-          "<strong>Opps!</strong> Please Enter correct Email address." +
-          '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
-          "</div>";
-        checkclinic.innerHTML = html;
-      }
-    }
   };
 
   const checkPassword = (event) => {

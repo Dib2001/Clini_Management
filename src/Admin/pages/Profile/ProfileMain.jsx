@@ -1,9 +1,5 @@
 import { React, useState, useEffect } from "react";
 
-import { db } from "../../../Firebase/firebase-conf";
-
-import { ref, push, onValue } from "firebase/database";
-
 export default function ProfileMain() {
   const [departmentcount, setdepartmentcount] = useState(0);
   const [departmentname, setdepartmentname] = useState(" ");
@@ -18,88 +14,18 @@ export default function ProfileMain() {
     address: "",
   });
 
-  const clinicEmail = localStorage.getItem("adminEmail");
-
-  // const [CliniEmail, setCliniEmail] = useState("");
-  // const [CliniPassword, setCliniPassword] = useState("");
-  // const [CliniClinicName, setCliniClinicName] = useState("");
-  // const [CliniOwnerName, setCliniOwnerName] = useState("");
-  // const [CliniMobile, setCliniMobile] = useState("");
-  // const [CliniLicensee, setCliniLicensee] = useState("");
-  // const [CliniPincode, setCliniPincode] = useState("");
-  // const [CliniAddress, setCliniAddress] = useState("");
-
   const addDepartment = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    if (departmentname.length <= 1) {
-      alert("Enter Department Name");
-    } else if (departmentname.startsWith(" ")) {
-      alert("Please Remove Front Space");
-    } else {
-      await push(ref(db, "clinic/" + CEmail + "/department"), {
-        departmentname,
-      });
-    }
+   
   };
 
   const getDepartment = async (e) => {
-    const department = document.getElementById("departmentlist");
-    const listofDepartment = document.getElementById("listofDepartment");
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/department");
-    var html = "";
-    var html1 = "";
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const departmentName = child.val()["departmentname"];
-        html +=
-          "<option value=" +
-          departmentName +
-          ">" +
-          departmentName +
-          "</option>";
-        department.innerHTML = html;
-        html1 +=
-          "<tr><th scope='row' class='table-success'>" +
-          departmentName +
-          "</th></tr>";
-        listofDepartment.innerHTML = html1;
-      });
-    });
   };
 
   const listDepartment = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/department");
-    onValue(userdata, (snapshot) => {
-      const nolist = snapshot.size;
-      setdepartmentcount(nolist);
-    });
+    
   };
 
   const getProfile = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail);
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const adminOwnerName = child.val()["adminOwnerName"];
-        const adminMobile = child.val()["adminMobile"];
-        const adminEmail = child.val()["adminEmail"];
-        const adminPassword = child.val()["adminPassword"];
-        const adminClinicName = child.val()["adminClinicName"];
-        const adminLicensee = child.val()["adminLicensee"];
-        const adminAddress = child.val()["adminAddress"];
-        setprofile({
-          ownerName: adminOwnerName,
-          conatct: adminMobile,
-          email: adminEmail,
-          password: adminPassword,
-          shopname: adminClinicName,
-          licensee: adminLicensee,
-          address: adminAddress,
-        });
-      });
-    });
   };
 
   useEffect(() => {

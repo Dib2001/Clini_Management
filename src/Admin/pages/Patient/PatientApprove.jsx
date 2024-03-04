@@ -1,67 +1,11 @@
 import { React, useEffect } from "react";
 
-import { db } from "../../../Firebase/firebase-conf";
-
-import { ref, onValue } from "firebase/database";
-
 export default function PatientApprove() {
 
   const clinicEmail = localStorage.getItem("adminEmail");
 
   const getPatient = async (e) => {
-    const needApprove = document.getElementById("needApprove");
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/clinicstatus");
-    var html = "";
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const PatientName =
-          child.val()["Patient_FirstName"] +
-          " " +
-          child.val()["Patient_LastName"];
-        const PatientMobile = child.val()["Patient_Mobile"];
-        const PatientAddress = child.val()["Patient_Address"];
-        const PatientSymptoms = child.val()["Patient_Symptoms"];
-        const PatientAge = child.val()["Patient_Age"];
-        const PatientSex = child.val()["Patient_Gender"];
-        const PatientKey = child.key;
-        html +=
-          "<tr>" +
-          "<td>" +
-          PatientName +
-          "</td>" +
-          "<td>" +
-          PatientMobile +
-          "</td>" +
-          "<td>" +
-          PatientAddress +
-          "</td>" +
-          "<td>" +
-          PatientSymptoms +
-          "</td>" +
-          "<td>" +
-          PatientAge +
-          "</td>" +
-          "<td>" +
-          PatientSex +
-          "</td>" +
-          "<td class='text-center'>" +
-          "<a href='/admin/patient/approve/preview/"+PatientKey+"'style='text-decoration: none;'>" +
-          "<button type='button' class='btn btn-success'>" +
-          "<i class='fas fa-check-circle'>" +
-          "</i>" +
-          "</button>" +
-          "</a>" +
-          "</td> " +
-          "<td class='text-center'>" +
-          "<button type='button' class='btn btn-danger'>" +
-          "<i class='fas fa-trash-alt'></i>" +
-          "</button>" +
-          "</td>" +
-          "</tr>";
-      });
-      needApprove.innerHTML = html;
-    });
+    
   };
 
   useEffect(() => {

@@ -1,8 +1,5 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {sendPasswordResetEmail, updateCurrentUser} from "firebase/auth"
-import { auth } from "../../../Firebase/firebase-conf";
-
 
 export default function AdminForgotpsw() {
   const [wrong, setWrong] = useState(
@@ -16,13 +13,7 @@ export default function AdminForgotpsw() {
 
   const validationcheck = async () => {
     setValidation("was-validated");
-    try {
-      await sendPasswordResetEmail(auth,ForgetEmail)
-      alert("A link has been sent to your email for reset password")
-      navigate('/admin')
-    } catch (error) {
-      alert("Email not found")
-    }
+    
   };
 
   const checkEmail = (event) => {

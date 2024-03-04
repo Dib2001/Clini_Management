@@ -1,31 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Chart } from "react-google-charts";
-import { db } from "../../src/Firebase/firebase-conf";
-import { ref, onValue } from "firebase/database";
 
 export default function Feature() {
-  // const dbopen = window.indexedDB.open("firebaseLocalStorageDb", 1);
-
-  // dbopen.onsuccess = (event) => {
-  //   const db = dbopen.result;
-  //   const object = db
-  //     .transaction(["firebaseLocalStorage"], "readonly")
-  //     .objectStore("firebaseLocalStorage");
-  //   object.openCursor().onsuccess = (event) => {
-  //     const cursor = event.target.result;
-  //     const value = cursor['value'].value
-  //     console.log(value['stsTokenManager']);
-  //   };
-  // };
   const users = () => {
-    const Clinicdata = ref(db, "clinic");
-    onValue(Clinicdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const created = child.val()["profile"]["adminCreated"];
-        // setClinics({Jan:created})
-      });
-    });
   };
 
   useEffect(() => {

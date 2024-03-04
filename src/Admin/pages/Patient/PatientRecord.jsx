@@ -1,76 +1,11 @@
 import { React, useEffect } from "react";
 
-import { db } from "../../../Firebase/firebase-conf";
-
-import { ref, onValue } from "firebase/database";
-
 export default function PatientRecord() {
 
   const clinicEmail = localStorage.getItem("adminEmail");
 
   const getPatient = async (e) => {
-    const Approve = document.getElementById("Approved");
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/patients");
-    var html = "";
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const PatientName =child.val()["FName"] +" "+child.val()["LName"];
-        const PatientMobile = child.val()["Contact"];
-        const PatientAddress = child.val()["Address"];
-        const PatientSymptoms = child.val()["Symptoms"];
-        const PatientDepartment = child.val()["departmentlist"];
-        const PatientDoctor = child.val()["doctorlist"];
-        const PatientAge = child.val()["Age"];
-        const PatientSex = child.val()["Sex"];
-        const PatientDate = child.val()["date"];
-        const PatientKey = child.key;
-        html +=
-          "<tr>" +
-          "<td>" +
-          PatientName +
-          "</td>" +
-          "<td>" +
-          PatientAge +
-          "</td>" +
-          "<td>" +
-          PatientSex +
-          "</td>" +
-          "<td>" +
-          PatientMobile +
-          "</td>" +
-          "<td>" +
-          PatientAddress +
-          "</td>" +
-          "<td>" +
-          PatientSymptoms +
-          "</td>" +
-          "<td>" +
-          PatientDoctor +
-          "</td>" +
-          "<td>" +
-          PatientDepartment +
-          "</td>" +
-          "<td>" +
-          PatientDate.replace("T", " ") +
-          "</td>" +
-          "<td class='text-center'>" +
-          "<a href='/admin/patient/record/preview/"+PatientKey+"'style='text-decoration: none;'>" +
-          "<button type='button' class='btn btn-success'>" +
-          "<i class='fas fa-user-edit'>" +
-          "</i>" +
-          "</button>" +
-          "</a>" +
-          "</td> " +
-          "<td class='text-center'>" +
-          "<button type='button' class='btn btn-danger'>" +
-          "<i class='fas fa-trash-alt'></i>" +
-          "</button>" +
-          "</td>" +
-          "</tr>";
-      });
-      Approve.innerHTML = html;
-    });
+    
   };
 
   useEffect(() => {

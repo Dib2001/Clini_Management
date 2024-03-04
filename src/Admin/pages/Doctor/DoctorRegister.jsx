@@ -1,8 +1,4 @@
 import { React, useState, useEffect } from "react";
-
-import { db } from "../../../Firebase/firebase-conf";
-
-import { ref, push, onValue } from "firebase/database";
 export default function DoctorRegister() {
 
   const [doctorName, setdoctorName] = useState("");
@@ -15,34 +11,11 @@ export default function DoctorRegister() {
 
   const addDoctor = async (e) => {
     e.preventDefault();
-    const CEmail = clinicEmail.replace(".", "");
-    await push(ref(db, "clinic/" + CEmail + "/doctors"), {
-      doctorName: doctorName,
-      doctorEmail: doctorEmail,
-      doctorContact: doctorContact,
-      doctorAddress: doctorAddress,
-      doctorDepartment: doctorDepartment,
-    });
     alert("Doctor Successfully added")
   };
 
   const getDepartment = async (e) => {
-    const department = document.getElementById("departmentlist");
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/department");
-    var html = "<option value=''>Select Department</option>";
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const departmentName = child.val()["departmentname"];
-        html +=
-          "<option value=" +
-          departmentName +
-          ">" +
-          departmentName +
-          "</option>";
-        department.innerHTML = html;
-      });
-    });
+    
   };
 
   useEffect(() => {

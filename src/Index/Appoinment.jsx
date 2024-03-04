@@ -1,9 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../src/Firebase/firebase-conf";
-
 import { ref, onValue, set } from "firebase/database";
 import { v4 as uuid } from "uuid";
 
@@ -29,106 +26,20 @@ export default function Appoinment() {
   };
 
   const getClinic = async (e) => {
-    const Clinicdata = ref(db, "clinic/");
-    const clinicName = document.getElementById("clinicName");
-    var cName = '<option value="">Select Clinic</option>';
-    onValue(Clinicdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        const clinicN = child.val()["profile"]["adminClinicName"];
-        cName += "<option value=" + clinicN + ">" + clinicN + "</option>";
-        clinicName.innerHTML = cName;
-      });
-    });
+    
   };
 
   const getaddress = async (e) => {
-    const Clinicdata = ref(db, "clinic");
-    const clinicName = document.getElementById("clinicName").value;
-    const clinicAddress = document.getElementById("clinicaddress");
-    var cAddress = '<option value="">Select Address</option>';
-    onValue(Clinicdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        if (clinicName === child.val()["profile"]["adminClinicName"]) {
-          const clinicAddrss = child.val()["profile"]["adminAddress"];
-          cAddress +=
-            '<option value="' +
-            clinicAddrss +
-            '">' +
-            clinicAddrss +
-            "</option>";
-        }
-      });
-      clinicAddress.innerHTML = cAddress;
-    });
+    
   };
 
   const createUser = async (e) => {
-    const Clinicdata = ref(db, "clinic");
-    const patientGender = document.getElementById("gender").value;
-    const clinicAddress = document.getElementById("clinicaddress").value;
-    const clinicName = document.getElementById("clinicName").value;
-    console.log(clinicName);
-    const PEmail = patientEmail.replace(".", "");
-    onValue(Clinicdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        if (clinicName === child.val()["profile"]["adminClinicName"]) {
-          if (clinicAddress === child.val()["profile"]["adminAddress"]) {
-            const clinic = child
-              .val()
-              ["profile"]["adminEmail"].replace(".", "");
-            set(ref(db, "clinic/" + clinic + "/clinicstatus/" + PEmail), {
-              Patient_FirstName: patientFirstName,
-              Patient_LastName: patientLastName,
-              Patient_Mobile: patientMobile,
-              Patient_Age: patientAge,
-              Patient_Symptoms: patientSymptoms,
-              Patient_Address: patientAddress,
-              Patient_Gender: patientGender,
-              Patient_Email: patientEmail,
-            });
-          }
-        }
-      });
-    });
-    await set(ref(db, "patient/" + PEmail + "/profile"), {
-      Patient_Email: patientEmail,
-      Patient_Password: patientPassword,
-      Patient_FirstName: patientFirstName,
-      Patient_LastName: patientLastName,
-      Patient_Mobile: patientMobile,
-      Patient_Age: patientAge,
-      Patient_Address: patientAddress,
-      Patient_Gender: patientGender,
-    });
-    await set(ref(db, "patient/" + PEmail + "/clinicstatus/" + clinicName), {
-      Patient_FirstName: patientFirstName,
-      Patient_LastName: patientLastName,
-      Patient_Mobile: patientMobile,
-      Patient_Age: patientAge,
-      Patient_Address: patientAddress,
-      Patient_Gender: patientGender,
-      Patient_Symptoms: patientSymptoms,
-      Patient_Clinic_name: clinicName,
-      Patient_Clinic_address: clinicAddress,
-    });
-    window.location.reload(true);
-    alert("Successful");
+    
   };
 
   const registerUser = async (e) => {
     e.preventDefault();
-    try {
-      await createUserWithEmailAndPassword(auth, patientEmail, patientPassword);
-      createUser();
-      navigate("/Patient/Login");
-      alert("Your Password:" + patientPassword);
-    } catch (error) {
-      if (error.message === "Firebase: Error (auth/email-already-in-use).") {
-        alert("Email Already Exsist");
-      } else if (error.message === "Firebase: Error (auth/invalid-email).") {
-        alert("Enter Correct Email");
-      }
-    }
+    
   };
 
   useEffect(() => {

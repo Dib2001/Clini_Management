@@ -1,22 +1,12 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { db } from "../../../Firebase/firebase-conf";
-
-import { ref, onValue } from "firebase/database";
-
 export default function DoctorMain() {
   const [doctorcount, setdoctorcount] = useState(0);
 
   const clinicEmail = localStorage.getItem("adminEmail");
 
   const listDoctore = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail + "/doctors");
-    onValue(userdata, (snapshot) => {
-      const nolist = snapshot.size;
-      setdoctorcount(nolist);
-    });
   };
 
   useEffect(() => {

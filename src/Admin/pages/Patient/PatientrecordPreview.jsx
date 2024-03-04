@@ -2,10 +2,6 @@ import { React, useState, useEffect } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
-import { db } from "../../../Firebase/firebase-conf";
-
-import { ref, onValue, set } from "firebase/database";
-
 export default function PatientrecordPreview() {
   const navigate = useNavigate();
 
@@ -29,113 +25,20 @@ export default function PatientrecordPreview() {
   });
 
   const getPatient = async (e) => {
-    const CEmail = clinicEmail.replace(".", "");
-    const userdata = ref(
-      db,
-      "clinic/" + CEmail + "/patients/" + PatientKey.patientId
-    );
-    onValue(userdata, (snapshot) => {
-      const patient = snapshot.val();
-      if (snapshot.hasChildren() === false) {
-        navigate("/admin/patient/record");
-      } else {
-        Setpatient({
-          Email: patient.Email,
-          Contact: patient.Contact,
-          FName: patient.FName,
-          LName: patient.LName,
-          Sex: patient.Sex,
-          Age: patient.Age,
-          Symptoms: patient.Symptoms,
-          Address: patient.Address,
-        });
-      }
-    });
+   
   };
 
   const updatePatient = async (e) => {
     e.preventDefault();
-    const CEmail = clinicEmail.replace(".", "");
-    const PEmail = patient.Email.replace(".", "");
-    const userdata = ref(db, "clinic/" + CEmail);
-    onValue(userdata, (snapshot) => {
-      snapshot.forEach((child) => {
-        setclinicName(child.val()["adminClinicName"]);
-        setclinicAddresss(child.val()["adminAddress"]);
-      });
-    });
-    console.log(patientclinicName);
-    await set(ref(db, "clinic/" + CEmail + "/patients/"+PatientKey.patientId), {
-      date: document.getElementById("PatientDate").value,
-      departmentlist: document.getElementById("departmentlist").value,
-      doctorlist: document.getElementById("doctorlist").value,
-      Email: patient.Email,
-      Contact: patient.Contact,
-      FName: patient.FName,
-      LName: patient.LName,
-      Sex: patient.Sex,
-      Age: patient.Age,
-      Symptoms: patient.Symptoms,
-      Address: patient.Address,
-      Date:currentDateTime
-    });
-    await set(
-      ref(db, "patient/" + PEmail + "/clinicstatus/" + patientclinicName),
-      {
-        date: document.getElementById("PatientDate").value,
-        departmentlist: document.getElementById("departmentlist").value,
-        doctorlist: document.getElementById("doctorlist").value,
-        Patient_FirstName: patient.FName,
-        Patient_LastName: patient.LName,
-        Patient_Mobile: patient.Contact,
-        Patient_Age: patient.Age,
-        Patient_Address: patient.Address,
-        Patient_Gender: patient.Sex,
-        Patient_Symptoms: patient.Symptoms,
-        Patient_Clinic_name: patientclinicName,
-        Patient_Clinic_address: patientclinicAddress,
-        Patient_Date:currentDateTime
-      }
-    );
-    alert("Patient Updated");
-    navigate("/admin/patient/record");
+    
   };
 
   const getDepartment = async (e) => {
-    const departmentlist = document.getElementById("departmentlist");
-    const CEmail = clinicEmail.replace(".", "");
-    const department = ref(db, "clinic/" + CEmail + "/department");
-    var html = "<option value=''>Select Department</option>";
-    onValue(department, (snapshot) => {
-      snapshot.forEach((child) => {
-        const departmentName = child.val()["departmentname"];
-        html +=
-          "<option value=" +
-          departmentName +
-          ">" +
-          departmentName +
-          "</option>";
-        departmentlist.innerHTML = html;
-      });
-    });
+   
   };
 
   const getDoctor = async (e) => {
-    const doctorlist = document.getElementById("doctorlist");
-    const department = document.getElementById("departmentlist").value;
-    const CEmail = clinicEmail.replace(".", "");
-    const doctors = ref(db, "clinic/" + CEmail + "/doctors");
-    var html = "<option value=''>Select Doctor</option>";
-    onValue(doctors, (snapshot) => {
-      snapshot.forEach((child) => {
-        if (department === child.val()["doctorDepartment"]) {
-          const doctorName = child.val()["doctorName"];
-          html +=
-            "<option value=" + doctorName + ">" + doctorName + "</option>";
-        }
-      });
-      doctorlist.innerHTML = html;
-    });
+    
   };
 
   const [currentDateTime, setcurrentDateTime] = useState("");
