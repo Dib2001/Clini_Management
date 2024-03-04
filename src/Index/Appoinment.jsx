@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { ref, onValue, set } from "firebase/database";
 import { v4 as uuid } from "uuid";
 
 export default function Appoinment() {
