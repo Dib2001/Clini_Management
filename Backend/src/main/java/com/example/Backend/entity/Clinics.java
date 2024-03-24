@@ -32,13 +32,13 @@ public class Clinics {
     private String ownerName;
 
     @Column(name = "mobile")
-    private Long mobile;
+    private String mobile;
 
     @Column(name = "license",nullable = false, unique = true)
     private String license;
 
     @Column(name = "pin")
-    private Integer pin;
+    private String pin;
 
     @Column(name = "district")
     private String district;
