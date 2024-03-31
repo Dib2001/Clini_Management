@@ -8,8 +8,7 @@ export default function Appoinment() {
 
   const [patientEmail, setpatientEmail] = useState("");
   // const [patientPassword, setpatientPassword] = useState("");
-  const [patientFirstName, setpatientFirstName] = useState("");
-  const [patientLastName, setpatientLastName] = useState("");
+  const [patientName, setpatientName] = useState("");
   const [patientMobile, setpatientMobile] = useState("");
   const [patientAge, setpatientAge] = useState("");
   const [patientSymptoms, setpatientSymptoms] = useState("");
@@ -204,19 +203,19 @@ export default function Appoinment() {
                   </div>
                 </div> */}
 
-                <div className="col-md-6">
-                  <label htmlFor="pFName" className="form-label">
-                    Patient First Name
+                <div className="col-md-12">
+                  <label htmlFor="pName" className="form-label">
+                    Patient Name
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="pFName"
-                    placeholder="First Name"
+                    id="pName"
+                    placeholder="Name"
                     required
                     pattern="[A-Za-z]{1,}"
                     onChange={(event) => {
-                      setpatientFirstName(event.target.value);
+                      setpatientName(event.target.value);
                     }}
                   />
                   <div
@@ -224,29 +223,6 @@ export default function Appoinment() {
                     style={{ color: "#fbacb4" }}
                   >
                     Please enter First Name.
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="pLName" className="form-label">
-                    Patient Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="pLName"
-                    placeholder="Last Name"
-                    required
-                    pattern="[A-Za-z]{1,}"
-                    onChange={(event) => {
-                      setpatientLastName(event.target.value);
-                    }}
-                  />
-                  <div
-                    className="invalid-feedback"
-                    style={{ color: "#fbacb4" }}
-                  >
-                    Please enter Last Name.
                   </div>
                 </div>
 

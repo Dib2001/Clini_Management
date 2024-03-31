@@ -21,6 +21,6 @@ public class Department {
     private String name;
 
     @Column(name = "clinicID", nullable = false)
-    private Long clinicsId;
+    private Long clinicsId; //Fk clinic id
 }
 

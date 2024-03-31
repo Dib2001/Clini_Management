@@ -11,6 +11,7 @@ public class DoctorMapper {
                 doctors.getEmail(),
                 doctors.getName(),
                 doctors.getClinicsId(),
+                doctors.getDepartmentID(),
                 doctors.getMobile(),
                 doctors.getAddress()
         );
@@ -22,6 +23,7 @@ public class DoctorMapper {
                 doctorsDto.getEmail(),
                 doctorsDto.getName(),
                 doctorsDto.getClinicId(),
+                doctorsDto.getDepartmentID(),
                 doctorsDto.getMobile(),
                 doctorsDto.getAddress()
         );

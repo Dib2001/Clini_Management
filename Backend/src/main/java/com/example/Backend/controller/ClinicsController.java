@@ -4,9 +4,11 @@ package com.example.Backend.controller;
 import com.example.Backend.dto.ClinicsDto;
 import com.example.Backend.dto.DepartmentDto;
 import com.example.Backend.dto.DoctorsDto;
+import com.example.Backend.dto.PatientsDto;
 import com.example.Backend.service.ClinicsService;
 import com.example.Backend.service.DepartmentService;
 import com.example.Backend.service.DoctorsService;
+import com.example.Backend.service.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +23,20 @@ public class ClinicsController {
     private ClinicsService clinicsService;
     private DoctorsService doctorsService;
     private DepartmentService departmentService;
+    private PatientService patientService;
 
     //Post clinic REST API
     @PostMapping
     public ResponseEntity<ClinicsDto> createClinics(@RequestBody ClinicsDto clinicsDto){
         ClinicsDto savedClinics = clinicsService.createClinics(clinicsDto);
         return new ResponseEntity<>(savedClinics, HttpStatus.CREATED);
+    }
+
+    //Get all Clinics REST API
+    @GetMapping
+    public ResponseEntity<List<ClinicsDto>>getAllClinics(){
+        List<ClinicsDto> clinics = clinicsService.getAllClinics();
+        return ResponseEntity.ok(clinics);
     }
 
     //Post doctors REST API
@@ -71,10 +81,17 @@ public class ClinicsController {
         return ResponseEntity.ok(clinicsDto);
     }
 
-    //Get all Clinics REST API
-    @GetMapping
-    public ResponseEntity<List<ClinicsDto>>getAllClinics(){
-        List<ClinicsDto> clinics = clinicsService.getAllClinics();
-        return ResponseEntity.ok(clinics);
+    //Post patients REST API
+    @PostMapping("patients/")
+    public ResponseEntity<PatientsDto> createPatients(@RequestBody PatientsDto patientsDto){
+        PatientsDto savedPatients = patientService.createPatients(patientsDto);
+        return new ResponseEntity<>(savedPatients, HttpStatus.CREATED);
+    }
+
+    // Get patient by ID REST API
+    @GetMapping("patients/{id}")
+    public ResponseEntity<PatientsDto> getPatientById(@PathVariable("id") Long patientId){
+        PatientsDto patientsDto = patientService.getPatientById(patientId);
+        return ResponseEntity.ok(patientsDto);
     }
 }

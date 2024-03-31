@@ -17,7 +17,7 @@ public class Clinics {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; //primary key
 
     @Column(name = "email",nullable = false, unique = true)
     private String email;
