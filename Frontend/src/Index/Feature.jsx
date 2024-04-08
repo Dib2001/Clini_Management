@@ -10,7 +10,7 @@ export default function Feature() {
     users();
   });
 
-  const [Clinics, setClinics] = useState({
+  const [Hospitals, setHospitals] = useState({
     Jan: 0,
     Feb: 0,
     Mar: 0,
@@ -26,23 +26,23 @@ export default function Feature() {
   });
 
   const data = [
-    ["Month", "Clinics"],
-    [new Date(2023, 0), Clinics.Jan],
-    [new Date(2023, 1), Clinics.Feb],
-    [new Date(2023, 2), Clinics.Mar],
-    [new Date(2023, 3), Clinics.Apr],
-    [new Date(2023, 4), Clinics.May],
-    [new Date(2023, 5), Clinics.Jun],
-    [new Date(2023, 6), Clinics.Jul],
-    [new Date(2023, 7), Clinics.Aug],
-    [new Date(2023, 8), Clinics.Sep],
-    [new Date(2023, 9), Clinics.Oct],
-    [new Date(2023, 10), Clinics.Nov],
-    [new Date(2023, 11), Clinics.Dec],
+    ["Month", "Hospitals"],
+    [new Date(2024, 0), Hospitals.Jan],
+    [new Date(2024, 1), Hospitals.Feb],
+    [new Date(2024, 2), Hospitals.Mar],
+    [new Date(2024, 3), Hospitals.Apr],
+    [new Date(2024, 4), Hospitals.May],
+    [new Date(2024, 5), Hospitals.Jun],
+    [new Date(2024, 6), Hospitals.Jul],
+    [new Date(2024, 7), Hospitals.Aug],
+    [new Date(2024, 8), Hospitals.Sep],
+    [new Date(2024, 9), Hospitals.Oct],
+    [new Date(2024, 10), Hospitals.Nov],
+    [new Date(2024, 11), Hospitals.Dec],
   ];
 
   const options = {
-    title: "Clinics Added",
+    title: "Hospitals Added",
     curveType: "function",
     legend: { position: "bottom" },
     colors: ["#e0440e"],
@@ -83,7 +83,7 @@ export default function Feature() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic Portal
+                  Hospital Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
@@ -103,7 +103,7 @@ export default function Feature() {
               <div className="row mx-5 my-3">
                 <div className="col-sm-12 mb-3 mb-sm-0">
                   <div className="card text-center border-danger">
-                    <div className="card-header">Regular Clinics</div>
+                    <div className="card-header">Regular Hospitals</div>
                     <div className="card-body">
                       <Chart
                         chartType="LineChart"
@@ -118,9 +118,6 @@ export default function Feature() {
                 </div>
               </div>
             </blockquote>
-            <figcaption className="blockquote-footer">
-              Created By <cite title="Source Title">- D Chakraborty</cite>
-            </figcaption>
           </div>
         </div>
       </figure>

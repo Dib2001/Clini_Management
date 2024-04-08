@@ -46,5 +46,11 @@ public class Patients {
 
     @Column(name = "addr")
     private String addr;
+
+    @Column(name = "date")
+    private String date;
+
+    @Column(name = "approvereject")
+    private String approvereject;
 }
 

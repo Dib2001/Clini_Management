@@ -36,7 +36,7 @@ export default function AdminForgotpsw() {
                   <div className="uk-card-title uk-text-center">
                     <h4>Oh!</h4>
                     <h3>Don't Worry generate your new Password</h3>
-                    <strong>Clinic Portal</strong>
+                    <strong>Hospital Portal</strong>
                   </div>
                   <form className={Validation}>
                     <div className="uk-margin">

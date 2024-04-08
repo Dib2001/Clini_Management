@@ -47,8 +47,8 @@ export default function AdminLogin() {
                   <h3 className="uk-card-title uk-text-center">
                     Welcome back!
                     <br></br>
-                    <strong>Clinic Portal</strong>
-                    <div id="checkclinic"></div>
+                    <strong>Hospital Portal</strong>
+                    <div id="checkHospital"></div>
                   </h3>
                   <form className={Validation} onSubmit={login}>
                     <div className="uk-margin">

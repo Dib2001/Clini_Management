@@ -37,7 +37,7 @@ export default function Pricing() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic Portal
+                  Hospital Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">

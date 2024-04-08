@@ -38,7 +38,7 @@ export default function About() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic Portal
+                  Hospital Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
@@ -56,25 +56,9 @@ export default function About() {
             <h1 className="fw-light">About us</h1>
             <blockquote className="blockquote">
               <p className="lead text-center">
-              <strong>Health Ca (Health Care Management System) </strong>is complete Clinic
-                Management integrated website. The website covers all details of
-                clinics. The project is developed to manage the clinics regular
-                details. Our main aim to connect all clinics in this website. It
-                will be helpful for all patients. If all clinics register here
-                so, every public can get appointment to their choice clinic at
-                anytime from anywhere. They don’t have to wait in a queue for
-                long time to get appointment from clinic.
+              <strong>Health Ca </strong>
               </p>
             </blockquote>
-            <figcaption className="blockquote-footer">
-              Created By{" "}
-              <cite title="Source Title">
-                <p>
-                  - D Chakraborty <br />
-                  - B Biswas <br />- S Mandal
-                </p>
-              </cite>
-            </figcaption>
           </div>
         </div>
       </figure>

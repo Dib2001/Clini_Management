@@ -49,7 +49,7 @@ export default function Faqs() {
             <div className="text-end">
               <Link to="/admin">
                 <button type="button" className="btn btn-success me-2">
-                  Clinic Portal
+                  Hospital Portal
                 </button>
               </Link>
               <Link to="/Patient/Login">
@@ -93,9 +93,6 @@ export default function Faqs() {
             </blockquote>
             <figcaption className="footer">
               {text.split(" ").length}{" "}
-            </figcaption>
-            <figcaption className="blockquote-footer text-end">
-              Created By <cite title="Source Title">- S Mandal</cite>
             </figcaption>
             <button
               type="submit"

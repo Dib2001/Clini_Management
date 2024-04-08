@@ -16,7 +16,9 @@ public class PatientMapper {
                 patients.getSex(),
                 patients.getAge(),
                 patients.getSymp(),
-                patients.getAddr()
+                patients.getAddr(),
+                patients.getDate(),
+                patients.getApprovereject()
         );
     }
 
@@ -32,7 +34,9 @@ public class PatientMapper {
                 patientsDto.getSex(),
                 patientsDto.getAge(),
                 patientsDto.getSymp(),
-                patientsDto.getAddr()
+                patientsDto.getAddr(),
+                patientsDto.getDate(),
+                patientsDto.getApprovereject()
         );
     }
 }

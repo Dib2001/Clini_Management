@@ -21,4 +21,6 @@ public class PatientsDto {
     private String age;
     private String symp;
     private String addr;
+    private String date;
+    private String approvereject;
 }

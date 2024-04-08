@@ -7,7 +7,7 @@ export default function AdminRegister() {
 
   const [registerEmail, setregisterEmail] = useState("");
   const [registerPassword, setregisterPassword] = useState("");
-  const [registerClinicName, setregisterClinicName] = useState("");
+  const [registerHospitalName, setregisterHospitalName] = useState("");
   const [registerOwnerName, setregisterOwnerName] = useState("");
   const [registerMobile, setregisterMobile] = useState("");
   const [registerLicensee, setregisterLicensee] = useState("");
@@ -24,7 +24,7 @@ export default function AdminRegister() {
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
   );
 
-  const clinicCheck = async (e) => {
+  const HospitalCheck = async (e) => {
     
   };
 
@@ -111,8 +111,8 @@ export default function AdminRegister() {
                     Looks like you're new here!
                     <br></br>
                     Register now and join with us....<br></br>
-                    <strong>Clinic Portal</strong>
-                    <div id="checkclinic"></div>
+                    <strong>Hospital Portal</strong>
+                    <div id="checkHospital"></div>
                   </h3>
                   <form className={Validation} onSubmit={register}>
                     <div className="uk-margin">
@@ -152,19 +152,19 @@ export default function AdminRegister() {
                     </div>
 
                     <div className="uk-margin">
-                      {/*Clinic Name */}
+                      {/*Hospital Name */}
                       <div className="uk-inline uk-width-1-1">
                         <span className="uk-form-icon" uk-icon="icon: home" />
                         <input
                           className="form-control uk-input uk-form-large"
                           type="text"
-                          onKeyUp={clinicCheck}
-                          placeholder="Clinic-Name"
+                          onKeyUp={HospitalCheck}
+                          placeholder="Hospital-Name"
                           required="True"
                           autoComplete="True"
                           pattern="[A-Za-z-A-Za-z]{1,}"
                           onChange={(event) => {
-                            setregisterClinicName(event.target.value);
+                            setregisterHospitalName(event.target.value);
                           }}
                         />
                       </div>
