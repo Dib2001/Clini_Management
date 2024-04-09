@@ -17,8 +17,8 @@ public class Patients {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "clinicID", nullable = false)
-    private Long clinicsId; //Fk clinic id
+    @Column(name = "hospitalID", nullable = false)
+    private Long hospitalsId; //Fk hospitals id
 
     @Column(name = "departmentID", nullable = false)
     private Long departmentID; //Fk department id
@@ -52,5 +52,8 @@ public class Patients {
 
     @Column(name = "approvereject")
     private String approvereject;
+
+    @Column(name = "remarks")
+    private String remarks;
 }
 

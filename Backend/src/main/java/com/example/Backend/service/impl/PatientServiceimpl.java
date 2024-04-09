@@ -3,6 +3,7 @@ package com.example.Backend.service.impl;
 import com.example.Backend.dto.PatientsDto;
 import com.example.Backend.entity.Patients;
 import com.example.Backend.exception.ResourceFoundException;
+import com.example.Backend.exception.ResourceNotFoundException;
 import com.example.Backend.mapper.PatientMapper;
 import com.example.Backend.repository.PatientReprository;
 import com.example.Backend.service.PatientService;
@@ -26,5 +27,27 @@ public class PatientServiceimpl implements PatientService {
                 orElseThrow(()->
                         new ResourceFoundException("Patients is not exist with given Id: "+ id));
         return PatientMapper.mapToPatientDto(patients);
+    }
+
+    @Override
+    public PatientsDto updatePatients(Long ID, PatientsDto updatedPatients) {
+        Patients patients = patientReprository.findById(ID).orElseThrow(
+                ()-> new ResourceNotFoundException("Patients is not exists with given id:"+ID)
+        );
+        patients.setDate(updatedPatients.getDate());
+        patients.setDepartmentID(updatedPatients.getDepartmentID());
+        patients.setDoctorID(updatedPatients.getDoctorID());
+        patients.setRemarks(updatedPatients.getRemarks());
+
+        Patients updatePatientsObj = patientReprository.save(patients);
+        return PatientMapper.mapToPatientDto(updatePatientsObj);
+    }
+
+    @Override
+    public void deletePatient(Long ID) {
+        Patients patients = patientReprository.findById(ID).orElseThrow(
+                ()-> new ResourceNotFoundException("Patients is not exists with given id:"+ID)
+        );
+        patientReprository.deleteById(ID);
     }
 }

@@ -23,8 +23,8 @@ public class Doctors {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "clinicID", nullable = false)
-    private Long clinicsId; //Fk clinic id
+    @Column(name = "hospitalID", nullable = false)
+    private Long hospitalsId; //Fk hospitals id
 
     @Column(name = "departmentID", nullable = false)
     private Long departmentID;

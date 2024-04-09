@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClinicsDto {
+public class HospitalsDto {
     private Long id;
     private String email;
     private String password;
-    private String clinicName;
+    private String hospitalName;
     private String ownerName;
     private String mobile;
     private String license;

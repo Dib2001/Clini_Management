@@ -20,7 +20,7 @@ public class Department {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "clinicID", nullable = false)
-    private Long clinicsId; //Fk clinic id
+    @Column(name = "hospitalID", nullable = false)
+    private Long hospitalsId; //Fk hospitals id
 }
 

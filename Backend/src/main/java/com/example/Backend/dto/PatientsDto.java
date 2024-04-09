@@ -23,4 +23,5 @@ public class PatientsDto {
     private String addr;
     private String date;
     private String approvereject;
+    private String remarks;
 }

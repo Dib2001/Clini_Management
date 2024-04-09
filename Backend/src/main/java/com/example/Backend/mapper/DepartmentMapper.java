@@ -8,7 +8,7 @@ public class DepartmentMapper {
         return new DepartmentDto(
                 department.getId(),
                 department.getName(),
-                department.getClinicsId()
+                department.getHospitalsId()
         );
     }
 
@@ -16,7 +16,7 @@ public class DepartmentMapper {
         return new Department(
                 departmentDto.getId(),
                 departmentDto.getName(),
-                departmentDto.getClinicId()
+                departmentDto.getHospitalId()
         );
     }
 }

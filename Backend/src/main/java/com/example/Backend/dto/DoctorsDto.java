@@ -13,7 +13,7 @@ public class DoctorsDto {
     private Long id;
     private String email;
     private String name;
-    private Long clinicId;
+    private Long hospitalId;
     private Long departmentID;
     private String mobile;
     private String address;

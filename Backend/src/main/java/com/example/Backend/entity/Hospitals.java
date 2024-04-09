@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Clinics")
+@Table(name = "Hospitals")
 
-public class Clinics {
+public class Hospitals {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +25,8 @@ public class Clinics {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "clinicName")
-    private String clinicName;
+    @Column(name = "hospitalName")
+    private String hospitalName;
 
     @Column(name = "ownerName")
     private String ownerName;

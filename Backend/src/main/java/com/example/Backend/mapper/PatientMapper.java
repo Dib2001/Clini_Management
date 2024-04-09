@@ -7,7 +7,7 @@ public class PatientMapper {
     public static PatientsDto mapToPatientDto(Patients patients){
         return new PatientsDto(
                 patients.getId(),
-                patients.getClinicsId(),
+                patients.getHospitalsId(),
                 patients.getDepartmentID(),
                 patients.getDoctorID(),
                 patients.getName(),
@@ -18,7 +18,8 @@ public class PatientMapper {
                 patients.getSymp(),
                 patients.getAddr(),
                 patients.getDate(),
-                patients.getApprovereject()
+                patients.getApprovereject(),
+                patients.getRemarks()
         );
     }
 
@@ -36,7 +37,8 @@ public class PatientMapper {
                 patientsDto.getSymp(),
                 patientsDto.getAddr(),
                 patientsDto.getDate(),
-                patientsDto.getApprovereject()
+                patientsDto.getApprovereject(),
+                patientsDto.getRemarks()
         );
     }
 }

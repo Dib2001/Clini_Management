@@ -29,4 +29,12 @@ public class DoctorServiceimpl implements DoctorsService {
                         new ResourceFoundException("Doctor is not exist with given Id: " + doctorID));
         return DoctorMapper.mapToDoctorDto(doctors);
     }
+
+    @Override
+    public void deleteDoctor(Long ID) {
+        Doctors doctors = doctorReprository.findById(ID)
+                .orElseThrow(() ->
+                        new ResourceFoundException("Doctor is not exist with given Id: " + ID));
+        doctorReprository.deleteById(ID);
+    }
 }

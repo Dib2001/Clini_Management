@@ -6,4 +6,6 @@ public interface DoctorsService {
     DoctorsDto createDoctors(DoctorsDto doctorsDto);
 
     DoctorsDto getDoctorById(Long id);
+
+    void deleteDoctor(Long ID);
 }

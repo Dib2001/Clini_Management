@@ -95,24 +95,6 @@ export default function PatientAdmit() {
                 </div>
 
                 <div className="col-md-6">
-                  <label htmlFor="pPassword" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="pPassword"
-                    placeholder="Password"
-                    required
-                    autoComplete="on"
-                    minLength={6}
-                    onChange={(event) => {
-                      setpatientPassword(event.target.value);
-                    }}
-                  />
-                </div>
-
-                <div className="col-md-6">
                   <label htmlFor="pFName" className="form-label">
                     First Name
                   </label>
@@ -125,23 +107,6 @@ export default function PatientAdmit() {
                     pattern="[A-Za-z]{1,}"
                     onChange={(event) => {
                       setpatientFirstName(event.target.value);
-                    }}
-                  />
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="pLName" className="form-label">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="pLName"
-                    placeholder="Last Name"
-                    required
-                    pattern="[A-Za-z]{1,}"
-                    onChange={(event) => {
-                      setpatientLastName(event.target.value);
                     }}
                   />
                 </div>

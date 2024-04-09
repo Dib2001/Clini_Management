@@ -22,6 +22,7 @@ export default function PatientrecordPreview() {
     Age: "",
     Symptoms: "",
     Address: "",
+    Remarks:""
   });
 
   const getPatient = async (e) => {
@@ -73,7 +74,7 @@ export default function PatientrecordPreview() {
             <div className="card-header text-center">Preview Patient</div>
             <div className="card-body">
               <form className="row g-3" onSubmit={updatePatient}>
-                <div className="col-md-6">
+                <div className="col-md-12">
                   <label htmlFor="PatientDate" className="form-label">
                     Date
                   </label>
@@ -83,17 +84,6 @@ export default function PatientrecordPreview() {
                     id="PatientDate"
                     min={currentDateTime}
                     required
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="PatientDate" className="form-label">
-                    Reports (*pdf)
-                  </label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="PatientReports"
-                    accept=".pdf"
                   />
                 </div>
                 <div className="col-md-6">
@@ -187,7 +177,7 @@ export default function PatientrecordPreview() {
                     id="pSymptoms"
                   />
                 </div>
-                <div className="col-12">
+                <div className="col-6">
                   <label htmlFor="pAddress" className="form-label">
                     Address
                   </label>
@@ -198,6 +188,18 @@ export default function PatientrecordPreview() {
                     className="form-control"
                     placeholder="Address"
                     id="pAddress"
+                  />
+                </div>
+                <div className="col-12">
+                  <label htmlFor="pRemarks" className="form-label">
+                    Remarks
+                  </label>
+                  <input
+                    value={patient.Remarks}
+                    type="text"
+                    className="form-control"
+                    placeholder="Remarks"
+                    id="pRemarks"
                   />
                 </div>
                 <div className="col-sm-12">
