@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/hospitals/")
@@ -37,6 +38,27 @@ public class HospitalController {
     public ResponseEntity<List<HospitalsDto>>getAllClinics(){
         List<HospitalsDto> clinics = hospitalsService.getAllHospitals();
         return ResponseEntity.ok(clinics);
+    }
+
+    // Get hospitals by license REST API
+    @GetMapping("license/{license}")
+    public ResponseEntity<HospitalsDto> getClinicsByLic(@PathVariable("license") String hospitalsLic){
+        HospitalsDto hospitalsDto = hospitalsService.getHospitalsByLic(hospitalsLic);
+        return ResponseEntity.ok(hospitalsDto);
+    }
+
+    //Get hospitals by email REST API
+    @GetMapping("email/{email}")
+    public ResponseEntity<HospitalsDto> getClinicsByEmail(@PathVariable("email") String hospitalsEmail){
+        HospitalsDto hospitalsDto = hospitalsService.getHospitalsByEmail(hospitalsEmail);
+        return ResponseEntity.ok(hospitalsDto);
+    }
+
+    //Get hospitals by password REST API
+    @GetMapping("password/{password}")
+    public ResponseEntity<HospitalsDto> getClinicsByPassword(@PathVariable("password") String hospitalsPassword){
+        HospitalsDto hospitalsDto = hospitalsService.getHospitalsByPassword(hospitalsPassword);
+        return ResponseEntity.ok(hospitalsDto);
     }
 
     //Post doctors REST API
@@ -65,20 +87,6 @@ public class HospitalController {
     public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable("id") Long departmentId){
         DepartmentDto departmentDto = departmentService.getDepartmentById(departmentId);
         return ResponseEntity.ok(departmentDto);
-    }
-
-    // Get hospitals by license REST API
-    @GetMapping("license/{license}")
-    public ResponseEntity<HospitalsDto> getClinicsByLic(@PathVariable("license") String hospitalsLic){
-        HospitalsDto hospitalsDto = hospitalsService.getHospitalsByLic(hospitalsLic);
-        return ResponseEntity.ok(hospitalsDto);
-    }
-
-    //Get hospitals by email REST API
-    @GetMapping("email/{email}")
-    public ResponseEntity<HospitalsDto> getClinicsByEmail(@PathVariable("email") String hospitalsEmail){
-        HospitalsDto hospitalsDto = hospitalsService.getHospitalsByEmail(hospitalsEmail);
-        return ResponseEntity.ok(hospitalsDto);
     }
 
     //Post patients REST API

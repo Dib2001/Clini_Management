@@ -1,9 +1,15 @@
-import { React, useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { React, useState } from "react";
+import { Link } from "react-router-dom";
 import "./readonly.css";
+import {
+  CreateHospitals,
+  listHospitalEmail,
+  listHospitalLicense,
+} from "./AdminService";
+import Select from "react-select";
+import { message } from "antd";
 
 export default function AdminRegister() {
-  const navigate = useNavigate();
 
   const [registerEmail, setregisterEmail] = useState("");
   const [registerPassword, setregisterPassword] = useState("");
@@ -12,6 +18,9 @@ export default function AdminRegister() {
   const [registerMobile, setregisterMobile] = useState("");
   const [registerLicensee, setregisterLicensee] = useState("");
   const [registerPincode, setregisterPincode] = useState("");
+  const [district, setDistrict] = useState("");
+  const [state, setState] = useState("");
+  const [post, setPost] = useState("");
   const [registerAddress, setregisterAddress] = useState("");
 
   const [Validation, setValidation] = useState("");
@@ -24,16 +33,62 @@ export default function AdminRegister() {
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
   );
 
-  const HospitalCheck = async (e) => {
-    
+  let emailExists = false;
+  const EmailCheck = async (e) => {
+    const email = e.target.value;
+    try {
+      const res = await listHospitalEmail(email);
+      if (res.data) {
+        message.warning("Email already exists");
+        emailExists = true;
+      } else {
+        emailExists = false;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  let licenseExists = false;
+  const LicenseCheck = async (e) => {
+    const license = e.target.value;
+    try {
+      const res = await listHospitalLicense(license);
+      if (res.data) {
+        message.warning("License already exists");
+        licenseExists = true;
+      } else {
+        licenseExists = false;
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const createUser = async (e) => {
-    
+    const data = {
+      email: registerEmail,
+      password: registerPassword,
+      hospitalName: registerHospitalName,
+      ownerName: registerOwnerName,
+      mobile: registerMobile,
+      license: registerLicensee,
+      pin: registerPincode,
+      district: district,
+      state: state,
+      post: post,
+      registerAddress: registerAddress,
+    };
+    CreateHospitals(data).then((res) => {
+      message.success("User Created Successfully");
+    });
   };
 
   const register = async (e) => {
     e.preventDefault();
+    if (!emailExists && !licenseExists) {
+      createUser();
+    }
   };
 
   const checkPassword = (event) => {
@@ -54,48 +109,36 @@ export default function AdminRegister() {
     }
   };
 
-  const [pin, SetPin] = useState({
-    district: "",
-    state: "",
-  });
+  const [Options, setOptions] = useState([]);
 
-  const getarea = (event) => {
+  const getArea = (event) => {
     let pincode = event.target;
-    let pos = document.getElementById("pos");
     if (pincode.value !== "" && pincode.value.length === 6) {
       fetch("https://api.postalpincode.in/pincode/" + pincode.value)
         .then((response) => response.json())
         .then((data) => {
-          var html = "";
           if (data[0].PostOffice === null) {
-            setWrong(
-              "uk-button-danger uk-button  uk-button-large uk-width-1-1"
-            );
+            setOptions([]);
+            setWrong("uk-button-danger uk-button uk-button-large uk-width-1-1");
           } else {
+            let newOptions = [];
             for (let i = 0; i < data[0].PostOffice.length; i++) {
               let info = data[0].PostOffice[i];
-              html +=
-                '<option value="' + info.Name + '">' + info.Name + "</option>";
-              SetPin({
-                district: info.District,
-                state: info.State,
-                postoffice: (pos.innerHTML = html),
-              });
-              setWrong(
-                "uk-button-primary uk-button  uk-button-large uk-width-1-1"
-              );
+              newOptions.push({ value: info.Name, label: info.Name });
+              setDistrict(info.District);
+              setState(info.State);
             }
+            setOptions(newOptions);
+            setWrong(
+              "uk-button-primary uk-button uk-button-large uk-width-1-1"
+            );
           }
         });
     } else {
-      var html1 = "";
-      html1 = '<option value="">Select</option>';
-      SetPin({
-        district: "",
-        state: "",
-        postoffice: (pos.innerHTML = html1),
-      });
-      setWrong("uk-button-danger uk-button  uk-button-large uk-width-1-1");
+      setOptions([]);
+      setDistrict("");
+      setState("");
+      setWrong("uk-button-danger uk-button uk-button-large uk-width-1-1");
     }
   };
 
@@ -112,7 +155,6 @@ export default function AdminRegister() {
                     <br></br>
                     Register now and join with us....<br></br>
                     <strong>Hospital Portal</strong>
-                    <div id="checkHospital"></div>
                   </h3>
                   <form className={Validation} onSubmit={register}>
                     <div className="uk-margin">
@@ -121,6 +163,7 @@ export default function AdminRegister() {
                         <span className="uk-form-icon" uk-icon="icon: mail" />
                         <input
                           className="form-control uk-input uk-form-large"
+                          onKeyUp={EmailCheck}
                           type="email"
                           placeholder="Email Address"
                           required
@@ -158,7 +201,6 @@ export default function AdminRegister() {
                         <input
                           className="form-control uk-input uk-form-large"
                           type="text"
-                          onKeyUp={HospitalCheck}
                           placeholder="Hospital-Name"
                           required="True"
                           autoComplete="True"
@@ -223,6 +265,7 @@ export default function AdminRegister() {
                           placeholder="Licensee No"
                           required="True"
                           autoComplete="True"
+                          onKeyUp={LicenseCheck}
                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                           onChange={(event) => {
                             setregisterLicensee(event.target.value);
@@ -248,7 +291,7 @@ export default function AdminRegister() {
                           title="Enter Correct Pincode"
                           required="True"
                           autoComplete="True"
-                          onKeyUp={getarea}
+                          onKeyUp={getArea}
                           onChange={(event) => {
                             setregisterPincode(event.target.value);
                           }}
@@ -267,7 +310,7 @@ export default function AdminRegister() {
                           className="form-control uk-input uk-form-large"
                           type="text"
                           placeholder="District"
-                          value={pin.district}
+                          value={district}
                           required
                           disabled="True"
                           id="district"
@@ -286,7 +329,7 @@ export default function AdminRegister() {
                           className="form-control uk-input uk-form-large"
                           type="text"
                           placeholder="State"
-                          value={pin.state}
+                          value={state}
                           required="True"
                           disabled="True"
                           id="state"
@@ -301,13 +344,11 @@ export default function AdminRegister() {
                           className="uk-form-icon"
                           uk-icon="icon: location"
                         />
-                        <select
-                          className="form-control uk-input uk-form-large"
-                          id="pos"
-                          required
-                        >
-                          <option value="">Select</option>
-                        </select>
+                        <Select
+                          options={Options}
+                          isClearable
+                          onChange={(e) => setPost(e.value)}
+                        />
                       </div>
                     </div>
 

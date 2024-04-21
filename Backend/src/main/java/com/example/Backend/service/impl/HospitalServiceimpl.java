@@ -42,6 +42,14 @@ public class HospitalServiceimpl implements HospitalsService {
     }
 
     @Override
+    public HospitalsDto getHospitalsByPassword(String clinicsPassword) {
+        Hospitals hospitals = hospitalReprository.findByPassword(clinicsPassword)
+                .orElseThrow(() ->
+                        new ResourceFoundException("" + clinicsPassword));
+        return HospitalMapper.mapToClinicDto(hospitals);
+    }
+
+    @Override
     public List<HospitalsDto> getAllHospitals() {
         List<Hospitals> clinics = hospitalReprository.findAll();
         return clinics.stream().map((clinic) -> HospitalMapper.mapToClinicDto(clinic))

@@ -1,14 +1,10 @@
 import { React, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
-import { v4 as uuid } from "uuid";
+import { listHospitalEmail, listHospitalPassword } from "./AdminService";
+import { message } from "antd";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-
-  const unique_id = uuid();
-  const token = unique_id.slice(0, 8);
-  const refresh = unique_id.slice(9, 13);
 
   const [loginEmail, setloginEmail] = useState("");
   const [loginPassword, setloginPassword] = useState("");
@@ -21,6 +17,17 @@ export default function AdminLogin() {
 
   const login = async (e) => {
     e.preventDefault();
+    try {
+      const HospitalEmail = await listHospitalEmail(loginEmail);
+      const HospitalPassword = await listHospitalPassword(loginPassword);
+      if(HospitalEmail.data && HospitalPassword.data){
+        message.success("Successfully Login").then(()=>{
+          navigate("/dashboard")
+        })
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const [wrong, setWrong] = useState(
