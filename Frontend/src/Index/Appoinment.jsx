@@ -30,6 +30,7 @@ export default function Appoinment() {
 
   const registerUser = async (e) => {
     e.preventDefault();
+
   };
 
   useEffect(() => {
@@ -83,6 +84,10 @@ export default function Appoinment() {
           </div>
         </div>
       </div>
+
+      
+
+{/* ekhane bad */}
       <div className="text-center container">
         <div className="row">
           <div className="col-lg-6 col-md-8 mx-auto">
@@ -111,7 +116,7 @@ export default function Appoinment() {
                 aria-label="Close"
               />
             </div>
-            <form className={Validation} onSubmit={registerUser}>
+            <form className={Validation}>
               <div className="modal-body">
                 <div
                   className="card text-white"
@@ -301,6 +306,115 @@ export default function Appoinment() {
               </div>
               <div className="modal-footer">
                 <button
+                  onClick={validationcheck}
+                  className="btn btn-primary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#PayModal"
+                >
+                  BOOK
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        className="modal fade"
+        id="PayModal"
+        tabIndex={-1}
+        aria-labelledby="PayModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="PayModalLabel">
+                Pay Amount 400/-
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+            </div>
+            <form className={Validation} onSubmit={registerUser}>
+              <div className="modal-body">
+                <div
+                  className="card text-white"
+                  style={{ backgroundColor: "#254a52" }}
+                >
+                  <div className="card-body">
+                    <div className="row g-3">
+                      <div className="col-md-6">
+                        <label htmlFor="pEmail" className="form-label">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          placeholder="Email"
+                          id="pEmail"
+                          disabled
+                          value={patientEmail}
+                        />
+                        <div
+                          className="invalid-feedback"
+                          style={{ color: "#fbacb4" }}
+                        >
+                          Please enter an valid Email.
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <label htmlFor="pPhone" className="form-label">
+                          Mobile Number
+                        </label>
+                        <input
+                          type="tel"
+                          className="form-control"
+                          placeholder="Contact"
+                          id="pPhone"
+                          disabled
+                          pattern="[6-9][0-9]{9}"
+                          value={patientMobile}
+                        />
+                        <div
+                          className="invalid-feedback"
+                          style={{ color: "#fbacb4" }}
+                        >
+                          Please enter Mobile Number.
+                        </div>
+                      </div>
+
+                      <div className="col-md-12">
+                        <label htmlFor="pName" className="form-label">
+                          Patient Name
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="pName"
+                          placeholder="Name"
+                          disabled
+                          pattern="[A-Za-z]{1,}"
+                          value={patientName}
+                        />
+                        <div
+                          className="invalid-feedback"
+                          style={{ color: "#fbacb4" }}
+                        >
+                          Please enter First Name.
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
                   type="submit"
                   onClick={validationcheck}
                   className="btn btn-primary"
@@ -312,6 +426,7 @@ export default function Appoinment() {
           </div>
         </div>
       </div>
+{/* ekhane bad */}
 
       <div className="row mx-5">
         <div className="col-sm-4 mb-4 mb-sm-0"></div>
