@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { listHospitalEmail, listHospitalPassword } from "./AdminService";
+import { listHospitalEmail, listHospitalLogin } from "../../Database/AdminService";
 import { message } from "antd";
 
 export default function AdminLogin() {
@@ -18,15 +18,17 @@ export default function AdminLogin() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      const HospitalEmail = await listHospitalEmail(loginEmail);
-      const HospitalPassword = await listHospitalPassword(loginPassword);
-      if(HospitalEmail.data && HospitalPassword.data){
+      const HospitalLogin = await listHospitalLogin({loginEmail,loginPassword});
+      if(HospitalLogin){
         message.success("Successfully Login").then(()=>{
-          navigate("/dashboard")
+          // navigate("/admin/dashboard")
+          console.log(listHospitalEmail(loginEmail).data);
+        // localStorage.setItem("Hospital",JSON.stringify(await listHospitalEmail(loginEmail).data))
         })
       }
     } catch (error) {
       console.error(error);
+      message.error("Something Wrong")
     }
   };
 

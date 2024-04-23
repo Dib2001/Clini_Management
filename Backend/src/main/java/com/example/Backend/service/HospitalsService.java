@@ -10,7 +10,8 @@ public interface HospitalsService {
     HospitalsDto getHospitalsByLic(String clinicsLic);
 
     HospitalsDto getHospitalsByEmail(String clinicsEmail);
-    HospitalsDto getHospitalsByPassword(String clinicsPassword);
+
+    boolean authenticateUser(String email, String password);
 
     List<HospitalsDto> getAllHospitals();
 

@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-
-import { v4 as uuid } from "uuid";
+import { useNavigate } from "react-router-dom";
+import { CreatePatients, listHospitals } from "../Admin/Database/AdminService";
+import Select from "react-select";
+import { message } from "antd";
 
 export default function Appoinment() {
   const navigate = useNavigate();
@@ -12,82 +13,58 @@ export default function Appoinment() {
   const [patientAge, setpatientAge] = useState("");
   const [patientSymptoms, setpatientSymptoms] = useState("");
   const [patientAddress, setpatientAddress] = useState("");
+  const [hospitalId, sethospitalId] = useState("");
 
   const [Validation, setValidation] = useState("col-sm-12 mb-12 mb-sm-0");
-
-  const unique_id = uuid();
-  const patientPassword = unique_id.slice(0, 8);
 
   const validationcheck = () => {
     setValidation("col-sm-12 mb-12 mb-sm-0 was-validated");
   };
 
-  const getHospital = async (e) => {};
-
-  const getaddress = async (e) => {};
-
-  const createUser = async (e) => {};
+  const [Hospital, setHospital] = useState([]);
+  useEffect(() => {
+    const getHospital = async () => {
+      try {
+        const res = await listHospitals();
+        const formattedData = res.data.map((hospital) => ({
+          value: hospital.id,
+          label: `${hospital.hospitalName}, ${hospital.address}`,
+          address: hospital.address,
+        }));
+        setHospital(formattedData);
+      } catch (error) {
+        console.error("Error fetching hospital data:", error);
+      }
+    };
+    getHospital(); // Call getHospital when the component mounts
+  }, []);
 
   const registerUser = async (e) => {
     e.preventDefault();
-
+    const gender = document.getElementById("gender").value;
+    const data = {
+      clinicId: hospitalId,
+      departmentID: null,
+      doctorID: null,
+      name: patientName,
+      email: patientEmail,
+      phn: patientMobile,
+      sex: gender,
+      age: patientAge,
+      symp: patientSymptoms,
+      addr: patientAddress,
+      date: new Date().toLocaleDateString(),
+      approvereject: "N",
+      remarks: null
+    }
+    CreatePatients(data).then((res) => {
+      message.success("User Created Successfully");
+    });
   };
-
-  useEffect(() => {
-    getHospital();
-  }, [1]);
 
   return (
     <>
-      <div className="p-3 text-bg-dark">
-        <div className="container">
-          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li>
-                <Link to="/" className="nav-link px-2 text-white">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/feature" className="nav-link px-2 text-white">
-                  Features
-                </Link>
-              </li>
-              <li>
-                <Link to="/pricnig" className="nav-link px-2 text-white">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link to="/faqs" className="nav-link px-2 text-white">
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="nav-link px-2 text-white">
-                  About
-                </Link>
-              </li>
-            </ul>
-            <div className="text-end">
-              <Link to="/admin">
-                <button type="button" className="btn btn-success me-2">
-                  Hospital Portal
-                </button>
-              </Link>
-              <Link to="/Patient/Login">
-                <button type="button" className="btn btn-warning me-2">
-                  Patient Portal
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-
-{/* ekhane bad */}
+      {/* ekhane bad */}
       <div className="text-center container">
         <div className="row">
           <div className="col-lg-6 col-md-8 mx-auto">
@@ -123,21 +100,10 @@ export default function Appoinment() {
                   style={{ backgroundColor: "#254a52" }}
                 >
                   <div className="card-header text-center">
-                    <select
-                      className="btn btn-warning mb-2 mx-2 btn-sm"
-                      id="HospitalName"
-                      onClick={getaddress}
-                      required
-                    >
-                      <option value="">Select Hospital</option>
-                    </select>
-                    <select
-                      className="btn btn-success mb-2 btn-sm"
-                      id="Hospitaladdress"
-                      required
-                    >
-                      <option value="">Select Address</option>
-                    </select>
+                    <Select
+                      options={Hospital}
+                      onChange={(e) => sethospitalId(e.value)}
+                    />
                   </div>
                   <div className="card-body">
                     <div className="row g-3">
@@ -408,7 +374,6 @@ export default function Appoinment() {
                           Please enter First Name.
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -426,7 +391,7 @@ export default function Appoinment() {
           </div>
         </div>
       </div>
-{/* ekhane bad */}
+      {/* ekhane bad */}
 
       <div className="row mx-5">
         <div className="col-sm-4 mb-4 mb-sm-0"></div>

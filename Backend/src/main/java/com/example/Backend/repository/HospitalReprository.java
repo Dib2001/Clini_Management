@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface HospitalReprository extends JpaRepository<Hospitals, Long> {
     Optional<Hospitals> findByLicense(String license);
     Optional<Hospitals> findByEmail(String email);
-    Optional<Hospitals> findByPassword(String password);
 }

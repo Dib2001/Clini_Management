@@ -29,35 +29,34 @@ public class HospitalController {
     //Post clinic REST API
     @PostMapping
     public ResponseEntity<HospitalsDto> createHospitals(@RequestBody HospitalsDto hospitalsDto){
-        HospitalsDto savedClinics = hospitalsService.createHospitals(hospitalsDto);
-        return new ResponseEntity<>(savedClinics, HttpStatus.CREATED);
+        HospitalsDto savedHospital = hospitalsService.createHospitals(hospitalsDto);
+        return new ResponseEntity<>(savedHospital, HttpStatus.CREATED);
     }
 
     //Get all Hospitals REST API
     @GetMapping
-    public ResponseEntity<List<HospitalsDto>>getAllClinics(){
-        List<HospitalsDto> clinics = hospitalsService.getAllHospitals();
-        return ResponseEntity.ok(clinics);
+    public ResponseEntity<List<HospitalsDto>>getAllHospital(){
+        List<HospitalsDto> Hospital = hospitalsService.getAllHospitals();
+        return ResponseEntity.ok(Hospital);
     }
 
     // Get hospitals by license REST API
     @GetMapping("license/{license}")
-    public ResponseEntity<HospitalsDto> getClinicsByLic(@PathVariable("license") String hospitalsLic){
+    public ResponseEntity<HospitalsDto> getHospitalByLic(@PathVariable("license") String hospitalsLic){
         HospitalsDto hospitalsDto = hospitalsService.getHospitalsByLic(hospitalsLic);
         return ResponseEntity.ok(hospitalsDto);
     }
 
     //Get hospitals by email REST API
     @GetMapping("email/{email}")
-    public ResponseEntity<HospitalsDto> getClinicsByEmail(@PathVariable("email") String hospitalsEmail){
+    public ResponseEntity<HospitalsDto> getHospitalByEmail(@PathVariable("email") String hospitalsEmail){
         HospitalsDto hospitalsDto = hospitalsService.getHospitalsByEmail(hospitalsEmail);
         return ResponseEntity.ok(hospitalsDto);
     }
 
-    //Get hospitals by password REST API
-    @GetMapping("password/{password}")
-    public ResponseEntity<HospitalsDto> getClinicsByPassword(@PathVariable("password") String hospitalsPassword){
-        HospitalsDto hospitalsDto = hospitalsService.getHospitalsByPassword(hospitalsPassword);
+    @PostMapping("login/")
+    public ResponseEntity<Boolean> loginUser(@RequestBody HospitalsDto hospitalDTO) {
+        boolean hospitalsDto = hospitalsService.authenticateUser(hospitalDTO.getEmail(), hospitalDTO.getPassword());
         return ResponseEntity.ok(hospitalsDto);
     }
 

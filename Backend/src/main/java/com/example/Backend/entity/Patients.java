@@ -13,10 +13,10 @@ public class Patients {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "hospitalID", nullable = false)
+    @Column(name = "hospitalID")
     private Long hospitalsId; //Fk hospitals id
 
-    @Column(name = "departmentID", nullable = false)
+    @Column(name = "departmentID")
     private Long departmentID; //Fk department id
 
     public Long getId() {
@@ -131,13 +131,13 @@ public class Patients {
 		this.remarks = remarks;
 	}
 
-	@Column(name = "doctorID", nullable = false)
+	@Column(name = "doctorID")
     private Long doctorID; //Fk doctor id
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email")
     private String email;
 
     @Column(name = "phn")

@@ -5,7 +5,7 @@ import {
   CreateHospitals,
   listHospitalEmail,
   listHospitalLicense,
-} from "./AdminService";
+} from "../../Database/AdminService";
 import Select from "react-select";
 import { message } from "antd";
 
@@ -77,7 +77,7 @@ export default function AdminRegister() {
       district: district,
       state: state,
       post: post,
-      registerAddress: registerAddress,
+      address: registerAddress,
     };
     CreateHospitals(data).then((res) => {
       message.success("User Created Successfully");

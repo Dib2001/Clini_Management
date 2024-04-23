@@ -4,7 +4,7 @@ import com.example.Backend.dto.HospitalsDto;
 import com.example.Backend.entity.Hospitals;
 
 public class HospitalMapper {
-    public static HospitalsDto mapToClinicDto(Hospitals hospitals){
+    public static HospitalsDto mapToHospitalDto(Hospitals hospitals){
         return new HospitalsDto(
                 hospitals.getId(),
                 hospitals.getEmail(),
@@ -20,7 +20,7 @@ public class HospitalMapper {
                 hospitals.getAddress()
         );
     }
-    public static Hospitals mapToClinics(HospitalsDto hospitalsDto){
+    public static Hospitals mapToHospital(HospitalsDto hospitalsDto){
         return new Hospitals(
                 hospitalsDto.getId(),
                 hospitalsDto.getEmail(),

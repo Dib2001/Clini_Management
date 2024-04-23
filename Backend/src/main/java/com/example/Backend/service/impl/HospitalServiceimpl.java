@@ -20,58 +20,56 @@ public class HospitalServiceimpl implements HospitalsService {
     private HospitalReprository hospitalReprository;
     @Override
     public HospitalsDto createHospitals(HospitalsDto hospitalsDto) {
-        Hospitals hospitals = HospitalMapper.mapToClinics(hospitalsDto);
+        Hospitals hospitals = HospitalMapper.mapToHospital(hospitalsDto);
         Hospitals savedHospitals = hospitalReprository.save(hospitals);
-        return HospitalMapper.mapToClinicDto(savedHospitals);
+        return HospitalMapper.mapToHospitalDto(savedHospitals);
     }
 
     @Override
-    public HospitalsDto getHospitalsByLic(String clinicsLic) {
-        Hospitals hospitals = hospitalReprository.findByLicense(clinicsLic)
+    public HospitalsDto getHospitalsByLic(String HospitalsLic) {
+        Hospitals hospitals = hospitalReprository.findByLicense(HospitalsLic)
                 .orElseThrow(() ->
-                        new ResourceFoundException("Hospitals is exist with given license: " + clinicsLic));
-        return HospitalMapper.mapToClinicDto(hospitals);
+                        new ResourceFoundException("Hospitals is exist with given license: " + HospitalsLic));
+        return HospitalMapper.mapToHospitalDto(hospitals);
     }
 
     @Override
-    public HospitalsDto getHospitalsByEmail(String clinicsEmail) {
-        Hospitals hospitals = hospitalReprository.findByEmail(clinicsEmail)
+    public HospitalsDto getHospitalsByEmail(String HospitalsEmail) {
+        Hospitals hospitals = hospitalReprository.findByEmail(HospitalsEmail)
                 .orElseThrow(() ->
-                        new ResourceFoundException("Hospitals is exist with given email: " + clinicsEmail));
-        return HospitalMapper.mapToClinicDto(hospitals);
+                        new ResourceFoundException("Hospitals is exist with given email: " + HospitalsEmail));
+        return HospitalMapper.mapToHospitalDto(hospitals);
     }
 
-    @Override
-    public HospitalsDto getHospitalsByPassword(String clinicsPassword) {
-        Hospitals hospitals = hospitalReprository.findByPassword(clinicsPassword)
-                .orElseThrow(() ->
-                        new ResourceFoundException("" + clinicsPassword));
-        return HospitalMapper.mapToClinicDto(hospitals);
+    public boolean authenticateUser(String HospitalsEmail, String password) {
+        Hospitals hospital = hospitalReprository.findByEmail(HospitalsEmail)
+                .orElse(null);
+        return hospital != null && hospital.getPassword().equals(password);
     }
 
     @Override
     public List<HospitalsDto> getAllHospitals() {
-        List<Hospitals> clinics = hospitalReprository.findAll();
-        return clinics.stream().map((clinic) -> HospitalMapper.mapToClinicDto(clinic))
+        List<Hospitals> Hospitals = hospitalReprository.findAll();
+        return Hospitals.stream().map((Hospital) -> HospitalMapper.mapToHospitalDto(Hospital))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public HospitalsDto updateHospitals(Long ID, HospitalsDto updatedClinics) {
+    public HospitalsDto updateHospitals(Long ID, HospitalsDto updatedHospitals) {
          Hospitals hospitals =  hospitalReprository.findById(ID).orElseThrow(
                 ()-> new ResourceNotFoundException("Hospitals is not exists with given id:"+ID)
         );
-        hospitals.setHospitalName(updatedClinics.getHospitalName());
-        hospitals.setEmail(updatedClinics.getEmail());
-        hospitals.setPassword(updatedClinics.getPassword());
-        hospitals.setMobile(updatedClinics.getMobile());
-        hospitals.setAddress(updatedClinics.getAddress());
-        hospitals.setPin(updatedClinics.getPin());
-        hospitals.setDistrict(updatedClinics.getDistrict());
-        hospitals.setState(updatedClinics.getState());
-        hospitals.setPost(updatedClinics.getPost());
+        hospitals.setHospitalName(updatedHospitals.getHospitalName());
+        hospitals.setEmail(updatedHospitals.getEmail());
+        hospitals.setPassword(updatedHospitals.getPassword());
+        hospitals.setMobile(updatedHospitals.getMobile());
+        hospitals.setAddress(updatedHospitals.getAddress());
+        hospitals.setPin(updatedHospitals.getPin());
+        hospitals.setDistrict(updatedHospitals.getDistrict());
+        hospitals.setState(updatedHospitals.getState());
+        hospitals.setPost(updatedHospitals.getPost());
 
         Hospitals updatedHospitalsObj = hospitalReprository.save(hospitals);
-        return HospitalMapper.mapToClinicDto(updatedHospitalsObj);
+        return HospitalMapper.mapToHospitalDto(updatedHospitalsObj);
     }
 }

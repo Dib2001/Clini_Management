@@ -26,6 +26,7 @@ import Pricing from "./Index/Pricing";
 import Feature from "./Index/Feature";
 import MadicineHome from "./Admin/pages/Madicine/MadicineHome";
 import CommingSoon from "./Admin/pages/CommingSoon";
+import Navbar from "./Index/Navbar";
 
 function App() {
   return (
@@ -47,11 +48,11 @@ function App() {
         <Route exact path="/admin/doctor" element={<><AdminMain/><DoctorMain/> </>}/>
         <Route exact path="/admin/dashboard" element={<><AdminMain/><AdminHome/> </>}/>
         <Route exact path="/admin/madicine" element={<><AdminMain/><MadicineHome/> </>}/>
-        <Route exact path="/feature" element={<><Feature/> </>}/>
-        <Route exact path="/pricing" element={<><Pricing/> </>}/>
-        <Route exact path="/faqs" element={<><Faqs/> </>}/>
-        <Route exact path="/about" element={<><About/> </>}/>
-        <Route exact path="/" element={<><Appoinment/> </>}/>
+        <Route exact path="/feature" element={<><Navbar/><Feature/> </>}/>
+        <Route exact path="/pricing" element={<><Navbar/><Pricing/> </>}/>
+        <Route exact path="/faqs" element={<><Navbar/><Faqs/> </>}/>
+        <Route exact path="/about" element={<><Navbar/><About/> </>}/>
+        <Route exact path="/" element={<><Navbar/><Appoinment/> </>}/>
         {/* <Route exact path="/Patient/Track" element={<><PatientForgotpsw /> </>}/> */}
         <Route exact path="/admin" element={<><AdminLogin/> </>}/>
         <Route exact path="/admin/forgot-password" element={<><AdminForgotpsw/> </>}/>
