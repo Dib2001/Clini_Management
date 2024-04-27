@@ -10,6 +10,9 @@ import com.example.Backend.service.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class PatientServiceimpl implements PatientService {
@@ -49,5 +52,12 @@ public class PatientServiceimpl implements PatientService {
                 ()-> new ResourceNotFoundException("Patients is not exists with given id:"+ID)
         );
         patientReprository.deleteById(ID);
+    }
+
+    @Override
+    public List<PatientsDto> getAllPatients() {
+        List<Patients> Patients = patientReprository.findAll();
+        return Patients.stream().map((Patient) -> PatientMapper.mapToPatientDto(Patient))
+                .collect(Collectors.toList());
     }
 }

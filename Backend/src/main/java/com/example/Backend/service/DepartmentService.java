@@ -1,7 +1,8 @@
 package com.example.Backend.service;
 
 import com.example.Backend.dto.DepartmentDto;
-import com.example.Backend.dto.DoctorsDto;
+
+import java.util.List;
 
 public interface DepartmentService {
     DepartmentDto createDepartment(DepartmentDto departmentDto);
@@ -11,4 +12,6 @@ public interface DepartmentService {
     DepartmentDto updateDepartments(Long ID, DepartmentDto updateDepartments);
 
     void deleteDepartment(Long ID);
+
+    List<DepartmentDto> getAllDepartments();
 }

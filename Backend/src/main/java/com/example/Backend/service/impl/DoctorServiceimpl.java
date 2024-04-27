@@ -9,6 +9,9 @@ import com.example.Backend.service.DoctorsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class DoctorServiceimpl implements DoctorsService {
@@ -36,5 +39,12 @@ public class DoctorServiceimpl implements DoctorsService {
                 .orElseThrow(() ->
                         new ResourceFoundException("Doctor is not exist with given Id: " + ID));
         doctorReprository.deleteById(ID);
+    }
+
+    @Override
+    public List<DoctorsDto> getAllDoctors() {
+        List<Doctors> Doctors = doctorReprository.findAll();
+        return Doctors.stream().map((Doctor) -> DoctorMapper.mapToDoctorDto(Doctor))
+                .collect(Collectors.toList());
     }
 }

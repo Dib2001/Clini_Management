@@ -67,11 +67,23 @@ public class HospitalController {
         return new ResponseEntity<>(savedDoctors, HttpStatus.CREATED);
     }
 
+    @GetMapping("doctors/")
+    public ResponseEntity<List<DoctorsDto>>getAllDoctors(){
+        List<DoctorsDto> Doctors = doctorsService.getAllDoctors();
+        return ResponseEntity.ok(Doctors);
+    }
+
     //Post department REST API
     @PostMapping("department/")
     public ResponseEntity<DepartmentDto> createDepartments(@RequestBody DepartmentDto departmentDto){
         DepartmentDto savedDepartment = departmentService.createDepartment(departmentDto);
         return new ResponseEntity<>(savedDepartment, HttpStatus.CREATED);
+    }
+
+    @GetMapping("department/")
+    public ResponseEntity<List<DepartmentDto>>getAllDepartments(){
+        List<DepartmentDto> Department = departmentService.getAllDepartments();
+        return ResponseEntity.ok(Department);
     }
 
     // Get doctor by ID REST API
@@ -93,6 +105,12 @@ public class HospitalController {
     public ResponseEntity<PatientsDto> createPatients(@RequestBody PatientsDto patientsDto){
         PatientsDto savedPatients = patientService.createPatients(patientsDto);
         return new ResponseEntity<>(savedPatients, HttpStatus.CREATED);
+    }
+
+    @GetMapping("patients/")
+    public ResponseEntity<List<PatientsDto>>getAllPatients(){
+        List<PatientsDto> Patients = patientService.getAllPatients();
+        return ResponseEntity.ok(Patients);
     }
 
     // Get patient by ID REST API

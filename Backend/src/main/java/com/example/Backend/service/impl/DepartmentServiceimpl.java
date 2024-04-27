@@ -10,6 +10,9 @@ import com.example.Backend.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class DepartmentServiceimpl implements DepartmentService {
@@ -49,5 +52,12 @@ public class DepartmentServiceimpl implements DepartmentService {
         );
 
         departmentReprository.deleteById(ID);
+    }
+
+    @Override
+    public List<DepartmentDto> getAllDepartments() {
+        List<Department> Department = departmentReprository.findAll();
+        return Department.stream().map((Hospital) -> DepartmentMapper.mapToDepartmentDto(Hospital))
+                .collect(Collectors.toList());
     }
 }
