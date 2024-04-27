@@ -1,12 +1,21 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { listPatients } from "../../Database/AdminService";
 
 export default function PatientMain() {
   const [appointmentcount, setappointmentcount] = useState(0);
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const HID = parseInt(localStorage.getItem("HId"), 10);
 
-  const listApprovePatient = async (e) => {
-    
+  const listApprovePatient = async () => {
+    const res = await listPatients();
+    let count = 0;
+    res.data.forEach((patient) => {
+      if (patient.approvereject === "N" && patient.clinicId === HID) {
+        console.table(patient);
+        count++;
+      }
+    });
+    setappointmentcount(count);
   };
 
   useEffect(() => {

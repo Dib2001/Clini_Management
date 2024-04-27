@@ -1,21 +1,64 @@
 import { React, useState, useEffect } from "react";
-export default function DoctorRegister() {
+import {
+  CreateDoctors,
+  DoctorsName,
+  listDepartments,
+} from "../../Database/AdminService";
+import Select from "react-select";
+import { message } from "antd";
 
+export default function DoctorRegister() {
   const [doctorName, setdoctorName] = useState("");
   const [doctorEmail, setdoctorEmail] = useState("");
   const [doctorContact, setdoctorContact] = useState("");
   const [doctorAddress, setdoctorAddress] = useState("");
   const [doctorDepartment, setdoctorDepartment] = useState("");
+  const [Department, setDepartment] = useState([]);
 
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const HID = parseInt(localStorage.getItem("HId"), 10);
+
+  const [DoctorExists, setDoctorExists] = useState(false);
+  const DoctorCheck = async (e) => {
+    e.preventDefault();
+    const Doctor = e.target.value;
+    try {
+      const res = await DoctorsName(Doctor);
+      if (res.data && res.data.hospitalId === HID) {
+        message.warning("Docotr already exists");
+        setDoctorExists(true);
+      } else {
+        setDoctorExists(false);
+      }
+    } catch (error) {
+      setDoctorExists(false);
+    }
+  };
 
   const addDoctor = async (e) => {
     e.preventDefault();
-    alert("Doctor Successfully added")
+    const data = {
+      email: doctorEmail,
+      name: doctorName,
+      hospitalId: HID,
+      departmentID: doctorDepartment,
+      mobile: doctorContact,
+      address: doctorAddress,
+    };
+    await CreateDoctors(data).then(() => alert("Doctor Successfully added"));
   };
 
-  const getDepartment = async (e) => {
-    
+  const getDepartment = async () => {
+    try {
+      const res = await listDepartments();
+      const filtered = res.data.filter((data) => data.hospitalId === HID);
+      const formattedData = filtered.map((data) => ({
+        value: data.id,
+        label: data.name,
+      }));
+      setDepartment(formattedData);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
   };
 
   useEffect(() => {
@@ -45,6 +88,7 @@ export default function DoctorRegister() {
                     onChange={(event) => {
                       setdoctorName(event.target.value);
                     }}
+                    onKeyUp={DoctorCheck}
                   />
                 </div>
                 <div className="col-md-6">
@@ -96,21 +140,21 @@ export default function DoctorRegister() {
                   />
                 </div>
                 <div className="col-sm-6">
-                  <select
-                    className="btn btn-secondary"
+                  <Select
                     required
-                    id="departmentlist"
-                    onChange={(event) => {
-                      setdoctorDepartment(event.target.value);
-                    }}
-                  >
-                    <option value="">Select Department</option>
-                  </select>
+                    options={Department}
+                    onChange={(e) => setdoctorDepartment(e.value)}
+                  />
                 </div>
                 <div className="col-12">
-                  <button type="submit" className="btn btn-success">
-                    Add <i className="fas fa-plus" />
-                  </button>
+                  {!DoctorExists ? (
+                    <button
+                      type="submit"
+                      className="btn btn-success"
+                    >
+                      Add <i className="fas fa-plus" />
+                    </button>
+                  ) : null}
                 </div>
               </form>
             </div>

@@ -72,4 +72,12 @@ public class HospitalServiceimpl implements HospitalsService {
         Hospitals updatedHospitalsObj = hospitalReprository.save(hospitals);
         return HospitalMapper.mapToHospitalDto(updatedHospitalsObj);
     }
+    @Override
+    public HospitalsDto getHospitalsById(Long id) {
+        Hospitals hospitals = hospitalReprository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceFoundException("Hospital is not exist with given Id: " + id));
+        return HospitalMapper.mapToHospitalDto(hospitals);
+    }
+
 }

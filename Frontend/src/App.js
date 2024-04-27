@@ -53,7 +53,6 @@ function App() {
         <Route exact path="/faqs" element={<><Navbar/><Faqs/> </>}/>
         <Route exact path="/about" element={<><Navbar/><About/> </>}/>
         <Route exact path="/" element={<><Navbar/><Appoinment/> </>}/>
-        {/* <Route exact path="/Patient/Track" element={<><PatientForgotpsw /> </>}/> */}
         <Route exact path="/admin" element={<><AdminLogin/> </>}/>
         <Route exact path="/admin/forgot-password" element={<><AdminForgotpsw/> </>}/>
         <Route exact path="/admin/register" element={<><AdminRegister/> </>}/>

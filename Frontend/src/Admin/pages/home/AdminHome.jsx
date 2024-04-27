@@ -1,42 +1,62 @@
 import { React, useState, useEffect } from "react";
+import { listDoctors, listPatients } from "../../Database/AdminService";
 
 export default function UHome() {
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const HID = parseInt(localStorage.getItem("HId"), 10);
 
   const [doctorcount, setdoctorcount] = useState(0);
-
-  const [patientcount, setpatientcount] = useState(0);
-  const [todaypatientcount, settodaypatientcount] = useState(0);
-
-  const [approveappointmentcount, setapproveappointmentcount] = useState(0);
 
   const [medicinecount, setmedicinecount] = useState(0);
   const [todaymedicinecount, settodaymedicinecount] = useState(0);
 
-  const [patientFNamecount, setpatientFNamecount] = useState();
-  const [patientLNamecount, setpatientLNamecount] = useState();
-  const [patientSympNamecount, setpatientSympNamecount] = useState();
-  const [patientMobileNamecount, setpatientMobileNamecount] = useState();
-  const [patientAddressNamecount, setpatientAddressNamecount] = useState();
-  const [patientStatusNamecount, setpatientStatusNamecount] = useState();
-
   const listDoctore = async (e) => {
-    
+    const res = await listDoctors();
+    let count = 0;
+    res.data.filter((data) => {
+      if (data.hospitalId === HID) {
+        count++;
+        return true;
+      }
+      return false;
+    });
+    setdoctorcount(count);
   };
 
-  const listApprovePatient = async (e) => {
-    
+  const [approveappointmentcount, setapproveappointmentcount] = useState(0);
+  const listPatient = async () => {
+    const res = await listPatients();
+    let count = 0;
+    res.data.forEach((patient) => {
+      if (patient.approvereject === "Y" && patient.clinicId === HID) {
+        count++;
+      }
+    });
+    setapproveappointmentcount(count);
+  };
+
+  const [appointmentcount, setappointmentcount] = useState(0);
+  const listApprovePatient = async () => {
+    const res = await listPatients();
+    let count = 0;
+    res.data.forEach((patient) => {
+      if (patient.approvereject === "N" && patient.clinicId === HID) {
+        console.table(patient);
+        count++;
+      }
+    });
+    setappointmentcount(count);
   };
 
   useEffect(() => {
     listDoctore();
+    listPatient();
     listApprovePatient();
   }, []);
 
   return (
     <>
       <div className="row mx-5 my-3">
-      <p className="fs-1 text-center">Dashbord</p>
+        <p className="fs-1 text-center">Dashbord</p>
         <div className="col-sm-3 mb-3 mb-sm-0">
           <div className="card text-bg-danger ">
             <div className="card-header">Total Doctor : {doctorcount}</div>
@@ -48,9 +68,9 @@ export default function UHome() {
         </div>
         <div className="col-sm-3 mb-3 mb-sm-0">
           <div className="card text-bg-success">
-            <div className="card-header">Total Patient : {patientcount}</div>
+            <div className="card-header">Total Patient</div>
             <div className="card-body">
-              <p className="card-text">Today Patient : {todaypatientcount}</p>
+              <p className="card-text">Today Patient : {approveappointmentcount}</p>
               <i className="fas fa-user-plus" style={{ fontSize: "3rem" }} />
             </div>
           </div>
@@ -60,7 +80,7 @@ export default function UHome() {
             <div className="card-header">Appointment</div>
             <div className="card-body">
               <p className="card-text">
-                Approve Appointments : {approveappointmentcount}
+                Approve Appointments : {appointmentcount}
               </p>
               <i className="fa fa-calendar" style={{ fontSize: "3rem" }} />
             </div>
@@ -77,62 +97,6 @@ export default function UHome() {
             </div>
           </div>
         </div>
-        {/* <div className="col-sm-6">
-          <div className="table-responsive">
-            <table className="table table-sm caption-top table-bordered border-success">
-              <caption>Recent Patient</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Sl No.</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Symptoms</th>
-                  <th scope="col">Mobile</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">{patientcount}</th>
-                  <td>{patientFNamecount}</td>
-                  <td>{patientLNamecount}</td>
-                  <td>{patientSympNamecount}</td>
-                  <td>{patientMobileNamecount}</td>
-                  <td>{patientAddressNamecount}</td>
-                  <td>{patientStatusNamecount}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="col-sm-6">
-          <div className="table-responsive">
-            <table className="table table-sm caption-top table-bordered border-success">
-              <caption>No of Medicine</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Sl No.</th>
-                  <th scope="col">Medincine Name</th>
-                  <th scope="col">Symptoms</th>
-                  <th scope="col">Mobile</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">{patientcount}</th>
-                  <td>{patientFNamecount}</td>
-                  <td>{patientSympNamecount}</td>
-                  <td>{patientMobileNamecount}</td>
-                  <td>{patientAddressNamecount}</td>
-                  <td>{patientStatusNamecount}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div> */}
       </div>
     </>
   );

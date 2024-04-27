@@ -1,13 +1,43 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
+import { DocotrDeleteId, listDepartments, listDoctors } from "../../Database/AdminService";
+import { message } from "antd";
 
 export default function DoctorRecord() {
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const HID = parseInt(localStorage.getItem("HId"), 10);
+  const [Doctor, setDoctor] = useState([]);
+  const [department, setdepartment] = useState([]);
 
-  const getDoctor = async (e) => {
+  const listDoctor = async () => {
+    try {
+      const resDept = await listDepartments();
+      const resDoctor = await listDoctors();
+      const filteredDoctor = resDoctor.data.filter((data) => {
+        if (data.hospitalId === HID) {
+          return true;
+        }
+        return false;
+      });
+      const filteredDept = resDept.data.filter((data) => {
+        if (data.hospitalId === HID) {
+          return true;
+        }
+        return false;
+      });
+      setDoctor(filteredDoctor);
+      setdepartment(filteredDept);
+    } catch (error) {
+      console.error("Error fetching Doctor:", error);
+    }
+  };
+
+  const handleReject = async (patientId) => {
+    await DocotrDeleteId(patientId).then((res) => {
+      message.success("Delete");
+    });
   };
 
   useEffect(() => {
-    getDoctor();
+    listDoctor();
   }, []);
 
   return (
@@ -23,11 +53,31 @@ export default function DoctorRecord() {
                   <th scope="col">Mobile</th>
                   <th scope="col">Address</th>
                   <th scope="col">Department</th>
-                  <th scope="col">Update</th>
                   <th scope="col">Delete</th>
                 </tr>
               </thead>
-              <tbody id="Doctorlist">
+              <tbody>
+                {Doctor.map((doctor) => (
+                  <tr key={doctor.id}>
+                    <td>{doctor.name}</td>
+                    <td>{doctor.mobile}</td>
+                    <td>{doctor.address}</td>
+                    <td>
+                      {department.map((dept) => {
+                        if (dept.id === doctor.departmentID) {
+                          return dept.name;
+                        }
+                      })}
+                    </td>
+                    <td><button
+                        onClick={() => handleReject(doctor.id)}
+                        type="button"
+                        className="btn btn-danger"
+                      >
+                        Delete
+                      </button></td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

@@ -8,6 +8,7 @@ public interface HospitalsService {
     HospitalsDto createHospitals(HospitalsDto hospitalsDto);
 
     HospitalsDto getHospitalsByLic(String clinicsLic);
+    HospitalsDto getHospitalsById(Long id);
 
     HospitalsDto getHospitalsByEmail(String clinicsEmail);
 

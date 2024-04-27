@@ -1,5 +1,7 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { HospitalEmail } from "../../Database/AdminService";
+import { message } from "antd";
 
 export default function AdminForgotpsw() {
   const [wrong, setWrong] = useState(
@@ -13,14 +15,24 @@ export default function AdminForgotpsw() {
 
   const validationcheck = async () => {
     setValidation("was-validated");
-    
   };
 
-  const checkEmail = (event) => {
-    const email = event.target;
-    if (email.checkValidity()) {
-      setWrong("uk-button-primary uk-button  uk-button-large uk-width-1-1");
-    } else {
+  const [emailExists, setEmailExists] = useState(false);
+  
+  const EmailCheck = async (e) => {
+    e.preventDefault();
+    const email = e.target.value;
+    try {
+      const res = await HospitalEmail(email);
+      if (res.data && e.target.checkValidity()) {
+        setWrong("uk-button-primary uk-button  uk-button-large uk-width-1-1");
+        setEmailExists(true);
+      } else {
+        setEmailExists(false);
+        setWrong("uk-button-danger uk-button  uk-button-large uk-width-1-1");
+      }
+    } catch (error) {
+      setEmailExists(false);
       setWrong("uk-button-danger uk-button  uk-button-large uk-width-1-1");
     }
   };
@@ -47,13 +59,35 @@ export default function AdminForgotpsw() {
                           type="email"
                           placeholder="Email Address"
                           required
-                          onKeyUp={checkEmail}
+                          onKeyUp={EmailCheck}
                           onChange={(event) => {
                             setEmail(event.target.value);
                           }}
                         />
                       </div>
                     </div>
+                    {emailExists ? (
+                      <>
+                        <div className="uk-margin">
+                          <div className="uk-inline uk-width-1-1">
+                            <span
+                              className="uk-form-icon"
+                              uk-icon="icon: lock"
+                            />
+                            <input
+                              className="uk-input uk-form-large form-control"
+                              type="text"
+                              placeholder="OTP"
+                              required
+                              // onKeyUp={EmailCheck}
+                              // onChange={(event) => {
+                              //   setEmail(event.target.value);
+                              // }}
+                            />
+                          </div>
+                        </div>
+                      </>
+                    ) : null}
                     <div className="uk-margin">
                       <button
                         className={wrong}

@@ -163,5 +163,16 @@ public class Patients {
 
     @Column(name = "remarks")
     private String remarks;
+
+	public String getPay() {
+		return pay;
+	}
+
+	public void setPay(String pay) {
+		this.pay = pay;
+	}
+
+	@Column(name = "pay")
+	private String pay;
 }
 

@@ -1,21 +1,18 @@
 import { React, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
+import Select from "react-select";
+import { CreatePatients, listDepartments, listDoctors } from "../../Database/AdminService";
+import { message } from "antd";
 export default function PatientAdmit() {
-  const navigate = useNavigate();
 
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const HID = parseInt(localStorage.getItem("HId"), 10);
 
   const [patientEmail, setpatientEmail] = useState("");
-  const [patientPassword, setpatientPassword] = useState("");
-  const [patientFirstName, setpatientFirstName] = useState("");
-  const [patientLastName, setpatientLastName] = useState("");
+  const [patientName, setpatientFirstName] = useState("");
   const [patientMobile, setpatientMobile] = useState("");
   const [patientAge, setpatientAge] = useState("");
   const [patientSymptoms, setpatientSymptoms] = useState("");
   const [patientAddress, setpatientAddress] = useState("");
-  const [patientclinicName, setclinicName] = useState("");
-  const [patientclinicAddress, setclinicAddresss] = useState("");
+
 
   const [currentDateTime, setcurrentDateTime] = useState("");
   const DateTime = (props) => {
@@ -25,30 +22,71 @@ export default function PatientAdmit() {
     var year = date.getFullYear();
     var hour = date.getHours();
     var min = date.getMinutes();
-    if(day<10) day ='0'+day;
-    if(month<10) month ='0'+month;
-    if(hour<10) hour ='0'+hour;
-    if(min<10) min ='0'+min;
-    setcurrentDateTime(
-      year + "-" + month + "-" + day + " " + hour + ":" + min
-    );
+    if (day < 10) day = "0" + day;
+    if (month < 10) month = "0" + month;
+    if (hour < 10) hour = "0" + hour;
+    if (min < 10) min = "0" + min;
+    setcurrentDateTime(year + "-" + month + "-" + day + " " + hour + ":" + min);
   };
 
-  const getDepartment = async (e) => {
-   
+  const [doctorDepartment, setdoctorDepartment] = useState("");
+  const [doctor, setdoctor] = useState("");
+  const [Department, setDepartment] = useState([]);
+  const [Doctor, setDoctor] = useState([]);
+  const getDepartment = async () => {
+    try {
+      const res = await listDepartments();
+      const filtered = res.data.filter((data) => data.hospitalId === HID);
+      const formattedData = filtered.map((data) => ({
+        value: data.id,
+        label: data.name,
+      }));
+      setDepartment(formattedData);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
   };
-
   const getDoctor = async (e) => {
-    
-  };
-
-  const updatePatient = async (e) => {
-    
+    try {
+      const res = await listDoctors();
+      const filtered = res.data.filter(
+        (data) =>
+          data.hospitalId === HID && data.departmentID === doctorDepartment
+      );
+      console.log(filtered);
+      const formattedData = filtered.map((data) => ({
+        value: data.id,
+        label: data.name,
+      }));
+      console.log(formattedData);
+      setDoctor(formattedData);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
   };
 
   const registerUser = async (e) => {
     e.preventDefault();
-    
+    const gender = document.getElementById("gender").value;
+    const data = {
+      clinicId: HID,
+      departmentID: doctorDepartment,
+      doctorID: doctor,
+      name: patientName,
+      email: patientEmail,
+      phn: patientMobile,
+      sex: gender,
+      age: patientAge,
+      symp: patientSymptoms,
+      addr: patientAddress,
+      currentDateTime,
+      approvereject: "Y",
+      remarks: null,
+      pay: "400",
+    };
+    CreatePatients(data).then((res) => {
+      message.success("User Created Successfully");
+    });
   };
 
   useEffect(() => {
@@ -64,17 +102,17 @@ export default function PatientAdmit() {
           <div className="card" style={{ backgroundColor: "#59cbc0" }}>
             <div className="card-header text-center">Register Patient</div>
             <div className="card-body">
-              <form className="row g-3" onSubmit={registerUser}>
+              <form className="row g-3">
                 <div className="col-md-12">
                   <label htmlFor="PatientDate" className="form-label">
                     Date
                   </label>
                   <input
-                    required
-                    type='datetime-local'
+                    readOnly
+                    type="datetime-local"
                     className="form-control"
                     id="PatientDate"
-                    min={currentDateTime}
+                    value={currentDateTime}
                   />
                 </div>
 
@@ -96,15 +134,14 @@ export default function PatientAdmit() {
 
                 <div className="col-md-6">
                   <label htmlFor="pFName" className="form-label">
-                    First Name
+                    Name
                   </label>
                   <input
                     type="text"
                     className="form-control"
                     id="pFName"
-                    placeholder="First Name"
+                    placeholder="Name"
                     required
-                    pattern="[A-Za-z]{1,}"
                     onChange={(event) => {
                       setpatientFirstName(event.target.value);
                     }}
@@ -193,29 +230,27 @@ export default function PatientAdmit() {
                   />
                 </div>
 
-                <div className="col-sm-12">
-                  <select
-                    className="btn btn-secondary"
-                    id="departmentlist"
-                    onClick={getDoctor}
+                <div className="col-sm-6">
+                  <Select
                     required
-                  >
-                    <option value="">Select Department</option>
-                  </select>
+                    options={Department}
+                    onChange={(e) => {
+                      setdoctorDepartment(e.value);
+                      getDoctor(e);
+                    }}
+                  />
                 </div>
 
-                <div className="col-sm-12">
-                  <select
-                    className="btn btn-secondary"
-                    id="doctorlist"
+                <div className="col-sm-6">
+                  <Select
                     required
-                  >
-                    <option value="">Select Doctor</option>
-                  </select>
+                    options={Doctor}
+                    onChange={(e) => setdoctor(e.value)}
+                  />
                 </div>
 
                 <div className="col-12">
-                  <button type="submit" className="btn btn-success">
+                  <button type="submit" className="btn btn-success" onClick={registerUser}>
                     Add <i className="fas fa-plus" />
                   </button>
                 </div>

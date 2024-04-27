@@ -47,6 +47,12 @@ public class HospitalController {
         return ResponseEntity.ok(hospitalsDto);
     }
 
+    @GetMapping("id/{id}")
+    public ResponseEntity<HospitalsDto> getHospitalById(@PathVariable("id") Long hospitalsId){
+        HospitalsDto hospitalsDto = hospitalsService.getHospitalsById(hospitalsId);
+        return ResponseEntity.ok(hospitalsDto);
+    }
+
     //Get hospitals by email REST API
     @GetMapping("email/{email}")
     public ResponseEntity<HospitalsDto> getHospitalByEmail(@PathVariable("email") String hospitalsEmail){
@@ -93,10 +99,22 @@ public class HospitalController {
         return ResponseEntity.ok(doctorsDto);
     }
 
+    @GetMapping("doctors/name/{name}")
+    public ResponseEntity<DoctorsDto> getDoctorByName(@PathVariable("name") String name){
+        DoctorsDto doctorsDto = doctorsService.getDoctorByName(name);
+        return ResponseEntity.ok(doctorsDto);
+    }
+
     // Get department by ID REST API
     @GetMapping("department/{id}")
     public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable("id") Long departmentId){
         DepartmentDto departmentDto = departmentService.getDepartmentById(departmentId);
+        return ResponseEntity.ok(departmentDto);
+    }
+
+    @GetMapping("department/name/{name}")
+    public ResponseEntity<DepartmentDto> getDepartmentByNsme(@PathVariable("name") String departmentName){
+        DepartmentDto departmentDto = departmentService.getDepartmentByName(departmentName);
         return ResponseEntity.ok(departmentDto);
     }
 
@@ -121,8 +139,8 @@ public class HospitalController {
     }
 
     /*Build update Hospitals Rest Api*/
-    @PutMapping("{id}")
-   public ResponseEntity<HospitalsDto> updateHospitals(@PathVariable("id") Long ID,@RequestBody HospitalsDto updatedHospitals){
+    @PutMapping("id/{id}")
+    public ResponseEntity<HospitalsDto> updateHospitals(@PathVariable("id") Long ID,@RequestBody HospitalsDto updatedHospitals){
        HospitalsDto hospitalsDto=hospitalsService.updateHospitals(ID, updatedHospitals);
        return ResponseEntity.ok(hospitalsDto);
    }
@@ -132,20 +150,6 @@ public class HospitalController {
     public ResponseEntity<PatientsDto> updatePatients(@PathVariable("id") Long ID,@RequestBody PatientsDto updatedPatients){
         PatientsDto patientsDto=patientService.updatePatients(ID, updatedPatients);
         return ResponseEntity.ok(patientsDto);
-    }
-
-    /*Build update Department Rest Api*/
-    @PutMapping("department/{id}")
-    public ResponseEntity<DepartmentDto> updatePatients(@PathVariable("id") Long ID,@RequestBody DepartmentDto updatedDepartment){
-        DepartmentDto departmentDto=departmentService.updateDepartments(ID, updatedDepartment);
-        return ResponseEntity.ok(departmentDto);
-    }
-
-    /*Build Delete Department Rest Api*/
-    @DeleteMapping("department/{id}")
-    public ResponseEntity<String> deleteDepartment(@PathVariable("id") Long ID){
-        departmentService.deleteDepartment(ID);
-        return ResponseEntity.ok("Department Deleted");
     }
 
     @DeleteMapping("patients/{id}")

@@ -34,24 +34,11 @@ public class DepartmentServiceimpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto updateDepartments(Long ID, DepartmentDto updateDepartments) {
-        Department department = departmentReprository.findById(ID).orElseThrow(
-                ()->new ResourceNotFoundException("Department is not found")
-        );
-        department.setHospitalsId(updateDepartments.getHospitalId());
-        department.setName(updateDepartments.getName());
-
-        Department updateDepartmentObj = departmentReprository.save(department);
-        return DepartmentMapper.mapToDepartmentDto(updateDepartmentObj);
-    }
-
-    @Override
-    public void deleteDepartment(Long ID) {
-        Department department = departmentReprository.findById(ID).orElseThrow(
-                ()->new ResourceNotFoundException("Department is not found")
-        );
-
-        departmentReprository.deleteById(ID);
+    public DepartmentDto getDepartmentByName(String departmentName) {
+        Department department = departmentReprository.findByName(departmentName)
+                .orElseThrow(() ->
+                        new ResourceFoundException("Department is not exist with given NAme: " + departmentName));
+        return DepartmentMapper.mapToDepartmentDto(department);
     }
 
     @Override

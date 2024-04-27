@@ -8,10 +8,7 @@ public interface DepartmentService {
     DepartmentDto createDepartment(DepartmentDto departmentDto);
 
     DepartmentDto getDepartmentById(Long departmentId);
-
-    DepartmentDto updateDepartments(Long ID, DepartmentDto updateDepartments);
-
-    void deleteDepartment(Long ID);
+    DepartmentDto getDepartmentByName(String departmentName);
 
     List<DepartmentDto> getAllDepartments();
 }

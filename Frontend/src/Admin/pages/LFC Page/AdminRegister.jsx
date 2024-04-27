@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 import "./readonly.css";
 import {
   CreateHospitals,
-  listHospitalEmail,
-  listHospitalLicense,
+  HospitalEmail,
+  HospitalLicense,
 } from "../../Database/AdminService";
 import Select from "react-select";
 import { message } from "antd";
 
 export default function AdminRegister() {
-
   const [registerEmail, setregisterEmail] = useState("");
   const [registerPassword, setregisterPassword] = useState("");
   const [registerHospitalName, setregisterHospitalName] = useState("");
@@ -33,39 +32,44 @@ export default function AdminRegister() {
     "uk-button-danger uk-button  uk-button-large uk-width-1-1"
   );
 
-  let emailExists = false;
+  const [emailExists, setEmailExists] = useState(false);
+  const [licenseExists, setLicenseExists] = useState(false);
+
   const EmailCheck = async (e) => {
+    e.preventDefault();
     const email = e.target.value;
     try {
-      const res = await listHospitalEmail(email);
+      const res = await HospitalEmail(email);
       if (res.data) {
         message.warning("Email already exists");
-        emailExists = true;
+        setEmailExists(true);
       } else {
-        emailExists = false;
+        setEmailExists(false);
       }
     } catch (error) {
-      console.error(error);
+      setEmailExists(false);
     }
   };
 
-  let licenseExists = false;
   const LicenseCheck = async (e) => {
+    e.preventDefault();
     const license = e.target.value;
     try {
-      const res = await listHospitalLicense(license);
+      const res = await HospitalLicense(license);
       if (res.data) {
         message.warning("License already exists");
-        licenseExists = true;
+        setLicenseExists(true);
       } else {
-        licenseExists = false;
+        setLicenseExists(false);
       }
     } catch (error) {
       console.error(error);
+      setLicenseExists(false);
     }
   };
 
   const createUser = async (e) => {
+    e.preventDefault();
     const data = {
       email: registerEmail,
       password: registerPassword,
@@ -79,18 +83,24 @@ export default function AdminRegister() {
       post: post,
       address: registerAddress,
     };
-    CreateHospitals(data).then((res) => {
-      message.success("User Created Successfully");
-    });
+    try {
+      await CreateHospitals(data).then((res) => {
+        message.success("User Created Successfully");
+      });
+    } catch (error) {
+      console.error(error);
+      message.error("Failed to create user");
+    }
   };
 
   const register = async (e) => {
     e.preventDefault();
+    await LicenseCheck(e);
+    console.log(emailExists, licenseExists);
     if (!emailExists && !licenseExists) {
-      createUser();
+      createUser(e);
     }
   };
-
   const checkPassword = (event) => {
     const passowrd = event.target;
     if (passowrd.value.length >= 8) {

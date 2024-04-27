@@ -1,16 +1,39 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
+import {
+  PatientsDeleteId,
+  listPatients,
+} from "../../Database/AdminService";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export default function PatientApprove() {
+  const HID = parseInt(localStorage.getItem("HId"), 10);
 
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const [patients, setPatients] = useState([]);
 
-  const getPatient = async (e) => {
-    
+  const navigate = useNavigate();
+
+  const getPatient = async () => {
+    const res = await listPatients();
+    const filteredPatients = res.data.filter(
+      (patient) => patient.approvereject === "N" && patient.clinicId === HID
+    );
+    setPatients(filteredPatients);
   };
 
   useEffect(() => {
     getPatient();
   });
+
+  const handleApprove = async (patientId) => {
+    navigate(`preview/${patientId}`)
+  };
+
+  const handleReject = async (patientId) => {
+    await PatientsDeleteId(patientId).then((res) => {
+      message.success("Delete");
+    });
+  };
 
   return (
     <>
@@ -28,10 +51,39 @@ export default function PatientApprove() {
                   <th scope="col">Age</th>
                   <th scope="col">Sex</th>
                   <th scope="col">Approve</th>
-                  <th scope="col">Reject</th>
+                  <th scope="col">Delete</th>
                 </tr>
               </thead>
-              <tbody id="needApprove"></tbody>
+              <tbody>
+                {patients.map((patient) => (
+                  <tr key={patient.id}>
+                    <td>{patient.name}</td>
+                    <td>{patient.phn}</td>
+                    <td>{patient.addr}</td>
+                    <td>{patient.symp}</td>
+                    <td>{patient.age}</td>
+                    <td>{patient.sex}</td>
+                    <td>
+                      <button
+                        onClick={() => handleApprove(patient.id)}
+                        type="button"
+                        className="btn btn-success"
+                      >
+                        Approve
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => handleReject(patient.id)}
+                        type="button"
+                        className="btn btn-danger"
+                      >
+                        Reject
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>

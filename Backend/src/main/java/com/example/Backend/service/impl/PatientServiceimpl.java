@@ -41,6 +41,7 @@ public class PatientServiceimpl implements PatientService {
         patients.setDepartmentID(updatedPatients.getDepartmentID());
         patients.setDoctorID(updatedPatients.getDoctorID());
         patients.setRemarks(updatedPatients.getRemarks());
+        patients.setApprovereject(updatedPatients.getApprovereject());
 
         Patients updatePatientsObj = patientReprository.save(patients);
         return PatientMapper.mapToPatientDto(updatePatientsObj);

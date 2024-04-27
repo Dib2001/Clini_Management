@@ -34,6 +34,14 @@ public class DoctorServiceimpl implements DoctorsService {
     }
 
     @Override
+    public DoctorsDto getDoctorByName(String Name) {
+        Doctors doctors = doctorReprository.findByName(Name)
+                .orElseThrow(() ->
+                        new ResourceFoundException("Doctor is not exist with given name: " + Name));
+        return DoctorMapper.mapToDoctorDto(doctors);
+    }
+
+    @Override
     public void deleteDoctor(Long ID) {
         Doctors doctors = doctorReprository.findById(ID)
                 .orElseThrow(() ->

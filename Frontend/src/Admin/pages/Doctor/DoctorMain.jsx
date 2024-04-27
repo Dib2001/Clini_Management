@@ -1,16 +1,31 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { listDoctors } from "../../Database/AdminService";
 
 export default function DoctorMain() {
   const [doctorcount, setdoctorcount] = useState(0);
 
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const HID = parseInt(localStorage.getItem("HId"), 10);
 
-  const listDoctore = async (e) => {
+  const listDoctor = async () => {
+    try {
+      const res = await listDoctors();
+      let count = 0;
+      res.data.filter((data) => {
+        if (data.hospitalId === HID) {
+          count++;
+          return true;
+        }
+        return false;
+      });
+      setdoctorcount(count);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
   };
 
   useEffect(() => {
-    listDoctore();
+    listDoctor();
   }, []);
 
   return (

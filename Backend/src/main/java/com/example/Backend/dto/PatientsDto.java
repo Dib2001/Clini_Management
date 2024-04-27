@@ -104,4 +104,14 @@ public class PatientsDto {
     private String date;
     private String approvereject;
     private String remarks;
+
+	public String getPay() {
+		return pay;
+	}
+
+	public void setPay(String pay) {
+		this.pay = pay;
+	}
+
+	private String pay;
 }

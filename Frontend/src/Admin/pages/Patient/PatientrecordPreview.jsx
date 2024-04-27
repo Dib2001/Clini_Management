@@ -1,49 +1,21 @@
 import { React, useState, useEffect } from "react";
-
 import { useParams, useNavigate } from "react-router-dom";
-
+import { PatientsId, PatientsUpdateId, listDepartments, listDoctors } from "../../Database/AdminService";
+import { message } from "antd";
+import Select from "react-select";
 export default function PatientrecordPreview() {
   const navigate = useNavigate();
 
   const PatientKey = useParams();
+  const HID = parseInt(localStorage.getItem("HId"), 10);
 
-  const clinicEmail = localStorage.getItem("adminEmail");
-
-  const [patientclinicName, setclinicName] = useState("");
-
-  const [patientclinicAddress, setclinicAddresss] = useState("");
-
-  const [patient, Setpatient] = useState({
-    Email: "",
-    Contact: "",
-    FName: "",
-    LName: "",
-    Sex: "",
-    Age: "",
-    Symptoms: "",
-    Address: "",
-    Remarks:""
-  });
-
-  const getPatient = async (e) => {
-   
-  };
-
-  const updatePatient = async (e) => {
-    e.preventDefault();
-    
-  };
-
-  const getDepartment = async (e) => {
-   
-  };
-
-  const getDoctor = async (e) => {
-    
-  };
-
+  const [Department, setDepartment] = useState([]);
+  const [Doctor, setDoctor] = useState([]);
+  const [doctorDepartment, setdoctorDepartment] = useState("");
+  const [doctor, setdoctor] = useState("");
+  const [patient, setpatient] = useState([]);
   const [currentDateTime, setcurrentDateTime] = useState("");
-  const DateTime = (props) => {
+  const DateTime = () => {
     var date = new Date();
     var day = date.getDate();
     var month = date.getMonth() + 1;
@@ -58,7 +30,84 @@ export default function PatientrecordPreview() {
       year + "-" + month + "-" + day + " " + hour + ":" + min
     );
   };
+
+  const getPatient = async () => {
+    const get = await PatientsId(PatientKey.patientId);
+    setpatient(get.data)
+  };
   
+  const updatePatient = async () => {
+    const get = await PatientsId(PatientKey.patientId);
+    const {
+      clinicId,
+      departmentID,
+      doctorID,
+      name,
+      email,
+      phn,
+      sex,
+      age,
+      symp,
+      addr,
+      date,
+      remarks,
+      pay,
+    } = get.data;
+    const extractedData = {
+      clinicId,
+      departmentID:doctorDepartment,
+      doctorID:doctor,
+      name,
+      email,
+      phn,
+      sex,
+      age,
+      symp,
+      addr,
+      date:currentDateTime,
+      approvereject:"Y",
+      remarks,
+      pay,
+    };
+    await PatientsUpdateId(PatientKey.patientId,extractedData).then((res) => {
+      message.success("Approved");
+    });
+    navigate(`/admin/patient/approve`)
+  };
+
+  const getDepartment = async () => {
+    try {
+      const res = await listDepartments();
+      const filtered = res.data.filter((data) => data.hospitalId === HID);
+      const formattedData = filtered.map((data) => ({
+        value: data.id,
+        label: data.name,
+      }));
+      setDepartment(formattedData);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  };
+
+  const getDoctor = async (e) => {
+    try {
+      const res = await listDoctors();
+      const filtered = res.data.filter(
+        (data) =>
+          data.hospitalId === HID && data.departmentID === doctorDepartment
+      );
+      console.log(filtered);
+      const formattedData = filtered.map((data) => ({
+        value: data.id,
+        label: data.name,
+      }));
+      console.log(formattedData);
+      setDoctor(formattedData);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  };
+
   useEffect(() => {
     getDepartment();
     getPatient();
@@ -73,17 +122,17 @@ export default function PatientrecordPreview() {
           <div className="card" style={{ backgroundColor: "#59cbc0" }}>
             <div className="card-header text-center">Preview Patient</div>
             <div className="card-body">
-              <form className="row g-3" onSubmit={updatePatient}>
+              <form className="row g-3">
                 <div className="col-md-12">
                   <label htmlFor="PatientDate" className="form-label">
                     Date
                   </label>
                   <input
+                    readOnly
                     type="datetime-local"
                     className="form-control"
                     id="PatientDate"
-                    min={currentDateTime}
-                    required
+                    value={currentDateTime}
                   />
                 </div>
                 <div className="col-md-6">
@@ -96,7 +145,7 @@ export default function PatientrecordPreview() {
                     className="form-control"
                     placeholder="Email"
                     id="pEmail"
-                    value={patient.Email}
+                    value={patient.email}
                   />
                 </div>
                 <div className="col-md-6">
@@ -104,7 +153,7 @@ export default function PatientrecordPreview() {
                     Mobile Number
                   </label>
                   <input
-                    value={patient.Contact}
+                    value={patient.phn}
                     readOnly
                     type="tel"
                     className="form-control"
@@ -114,28 +163,15 @@ export default function PatientrecordPreview() {
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="pFName" className="form-label">
-                    First Name
+                    Name
                   </label>
                   <input
-                    value={patient.FName}
+                    value={patient.name}
                     readOnly
                     type="text"
                     className="form-control"
                     id="pFName"
-                    placeholder="First Name"
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="pLName" className="form-label">
-                    Last Name
-                  </label>
-                  <input
-                    value={patient.LName}
-                    readOnly
-                    type="text"
-                    className="form-control"
-                    id="pLName"
-                    placeholder="Last Name"
+                    placeholder="Name"
                   />
                 </div>
                 <div className="col-md-6">
@@ -143,7 +179,7 @@ export default function PatientrecordPreview() {
                     Sex
                   </label>
                   <input
-                    value={patient.Sex}
+                    value={patient.sex}
                     readOnly
                     type="text"
                     className="form-control"
@@ -156,7 +192,7 @@ export default function PatientrecordPreview() {
                     Age
                   </label>
                   <input
-                    value={patient.Age}
+                    value={patient.age}
                     readOnly
                     type="text"
                     className="form-control"
@@ -169,7 +205,7 @@ export default function PatientrecordPreview() {
                     Symptoms
                   </label>
                   <input
-                    value={patient.Symptoms}
+                    value={patient.symp}
                     readOnly
                     type="text"
                     className="form-control"
@@ -177,12 +213,12 @@ export default function PatientrecordPreview() {
                     id="pSymptoms"
                   />
                 </div>
-                <div className="col-6">
+                <div className="col-12">
                   <label htmlFor="pAddress" className="form-label">
                     Address
                   </label>
                   <textarea
-                    value={patient.Address}
+                    value={patient.addr}
                     type="text"
                     readOnly
                     className="form-control"
@@ -190,39 +226,25 @@ export default function PatientrecordPreview() {
                     id="pAddress"
                   />
                 </div>
-                <div className="col-12">
-                  <label htmlFor="pRemarks" className="form-label">
-                    Remarks
-                  </label>
-                  <input
-                    value={patient.Remarks}
-                    type="text"
-                    className="form-control"
-                    placeholder="Remarks"
-                    id="pRemarks"
+                <div className="col-sm-6">
+                  <Select
+                    required
+                    options={Department}
+                    onChange={(e) => {
+                      setdoctorDepartment(e.value);
+                      getDoctor(e);
+                    }}
                   />
                 </div>
-                <div className="col-sm-12">
-                  <select
-                    className="btn btn-secondary"
-                    id="departmentlist"
-                    onClick={getDoctor}
+                <div className="col-sm-6">
+                  <Select
                     required
-                  >
-                    <option value="">Select Department</option>
-                  </select>
-                </div>
-                <div className="col-sm-12">
-                  <select
-                    className="btn btn-secondary"
-                    id="doctorlist"
-                    required
-                  >
-                    <option value="">Select Doctor</option>
-                  </select>
+                    options={Doctor}
+                    onChange={(e) => setdoctor(e.value)}
+                  />
                 </div>
                 <div className="col-md-6">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="button" className="btn btn-primary" onClick={updatePatient}>
                     Update
                   </button>
                 </div>

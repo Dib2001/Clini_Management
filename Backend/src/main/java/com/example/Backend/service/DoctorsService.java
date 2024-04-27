@@ -8,6 +8,7 @@ public interface DoctorsService {
     DoctorsDto createDoctors(DoctorsDto doctorsDto);
 
     DoctorsDto getDoctorById(Long id);
+    DoctorsDto getDoctorByName(String name);
 
     void deleteDoctor(Long ID);
 

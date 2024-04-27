@@ -1,14 +1,36 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
+import { listDepartments, listDoctors } from "../../Database/AdminService";
 
 export default function DoctorSpecialisation() {
-  const clinicEmail = localStorage.getItem("adminEmail");
+  const HID = parseInt(localStorage.getItem("HId"), 10);
+  const [Doctor, setDoctor] = useState([]);
+  const [department, setdepartment] = useState([]);
 
-  const getDoctor = async (e) => {
-    
+  const listDoctor = async () => {
+    try {
+      const resDept = await listDepartments();
+      const resDoctor = await listDoctors();
+      const filteredDoctor = resDoctor.data.filter((data) => {
+        if (data.hospitalId === HID) {
+          return true;
+        }
+        return false;
+      });
+      const filteredDept = resDept.data.filter((data) => {
+        if (data.hospitalId === HID) {
+          return true;
+        }
+        return false;
+      });
+      setDoctor(filteredDoctor);
+      setdepartment(filteredDept);
+    } catch (error) {
+      console.error("Error fetching Doctor:", error);
+    }
   };
 
   useEffect(() => {
-    getDoctor();
+    listDoctor();
   }, []);
 
   return (
@@ -26,7 +48,20 @@ export default function DoctorSpecialisation() {
                   <th scope="col">Department</th>
                 </tr>
               </thead>
-              <tbody id="Doctorlist"></tbody>
+              <tbody>
+                {Doctor.map((doctor) => (
+                  <tr key={doctor.id}>
+                    <td>{doctor.name}</td>
+                    <td>
+                      {department.map((dept) => {
+                        if (dept.id === doctor.departmentID) {
+                          return dept.name;
+                        }
+                      })}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>
