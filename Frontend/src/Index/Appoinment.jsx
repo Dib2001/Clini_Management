@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { CreatePatients, listHospitals } from "../Admin/Database/AdminService";
 import Select from "react-select";
-import { message } from "antd";
+import { QRCode, message } from "antd";
 
 export default function Appoinment() {
   const [patientEmail, setpatientEmail] = useState("");
@@ -302,12 +302,12 @@ export default function Appoinment() {
             </div>
             <form className={Validation} onSubmit={registerUser}>
               <div className="modal-body">
-                <div
-                  className="card text-white"
-                  style={{ backgroundColor: "#254a52" }}
-                >
+                <div>
                   <div className="card-body">
                     <div className="row g-3">
+                      <div className="col-md-12 ">
+                        <QRCode type="svg" value={`upi://pay?pa=7365955640@paytm&am=${400}&cu=INR`} />
+                      </div>
                       <div className="col-md-6">
                         <label htmlFor="pEmail" className="form-label">
                           Email
