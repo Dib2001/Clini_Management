@@ -43,8 +43,8 @@ public class DepartmentServiceimpl implements DepartmentService {
 
     @Override
     public List<DepartmentDto> getAllDepartments() {
-        List<Department> Department = departmentReprository.findAll();
-        return Department.stream().map((Hospital) -> DepartmentMapper.mapToDepartmentDto(Hospital))
+        List<Department> Departments = departmentReprository.findAll();
+        return Departments.stream().map((Department) -> DepartmentMapper.mapToDepartmentDto(Department))
                 .collect(Collectors.toList());
     }
 }

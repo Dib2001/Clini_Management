@@ -11,7 +11,8 @@ export default function About() {
             <h1 className="fw-light">About us</h1>
             <blockquote className="blockquote">
               <p className="lead text-center">
-              <strong>Health Ca </strong>
+              <strong> </strong>
+              {/* pic */}
               </p>
             </blockquote>
           </div>

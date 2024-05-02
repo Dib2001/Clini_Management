@@ -1,14 +1,8 @@
 package com.example.Backend.controller;
 
 
-import com.example.Backend.dto.HospitalsDto;
-import com.example.Backend.dto.DepartmentDto;
-import com.example.Backend.dto.DoctorsDto;
-import com.example.Backend.dto.PatientsDto;
-import com.example.Backend.service.HospitalsService;
-import com.example.Backend.service.DepartmentService;
-import com.example.Backend.service.DoctorsService;
-import com.example.Backend.service.PatientService;
+import com.example.Backend.dto.*;
+import com.example.Backend.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +19,7 @@ public class HospitalController {
     private DoctorsService doctorsService;
     private DepartmentService departmentService;
     private PatientService patientService;
+    private MedicinesService medicinesService;
 
     //Post clinic REST API
     @PostMapping
@@ -60,6 +55,13 @@ public class HospitalController {
         return ResponseEntity.ok(hospitalsDto);
     }
 
+    //Post clinic REST API
+    @PostMapping("medicine/")
+    public ResponseEntity<MedicinesDto> createMedicines(@RequestBody MedicinesDto medicinesDto){
+        MedicinesDto savedMedicines = medicinesService.createMedicines(medicinesDto);
+        return new ResponseEntity<>(savedMedicines, HttpStatus.CREATED);
+    }
+
     @PostMapping("login/")
     public ResponseEntity<Boolean> loginUser(@RequestBody HospitalsDto hospitalDTO) {
         boolean hospitalsDto = hospitalsService.authenticateUser(hospitalDTO.getEmail(), hospitalDTO.getPassword());
@@ -77,6 +79,13 @@ public class HospitalController {
     public ResponseEntity<List<DoctorsDto>>getAllDoctors(){
         List<DoctorsDto> Doctors = doctorsService.getAllDoctors();
         return ResponseEntity.ok(Doctors);
+    }
+
+    //Get all Hospitals REST API
+    @GetMapping("medicine/")
+    public ResponseEntity<List<MedicinesDto>>getAllMedicines(){
+        List<MedicinesDto> Medicines = medicinesService.getAllMedicines();
+        return ResponseEntity.ok(Medicines);
     }
 
     //Post department REST API
