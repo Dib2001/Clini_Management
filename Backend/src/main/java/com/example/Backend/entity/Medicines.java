@@ -13,8 +13,14 @@ public class Medicines {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "hospitalID", nullable = false)
+    private Long hospitalsId; //Fk hospitals id
+
+    @Column(name = "quantity", nullable = false)
+    private Long quantity;
 
     public String getName() {
         return name;
@@ -31,12 +37,6 @@ public class Medicines {
     public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
-
-    @Column(name = "hospitalID", nullable = false)
-    private Long hospitalsId; //Fk hospitals id
-
-    @Column(name = "quantity", nullable = false)
-    private Long quantity;
 
     public Long getHospitalsId() {
         return hospitalsId;

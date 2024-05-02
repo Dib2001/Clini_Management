@@ -3,7 +3,6 @@ package com.example.Backend.service.impl;
 import com.example.Backend.dto.MedicinesDto;
 import com.example.Backend.entity.Medicines;
 import com.example.Backend.exception.ResourceFoundException;
-import com.example.Backend.mapper.DepartmentMapper;
 import com.example.Backend.mapper.MedicinesMapper;
 import com.example.Backend.repository.MedicinesReprository;
 import com.example.Backend.service.MedicinesService;
@@ -27,25 +26,9 @@ public class MedicinesServiceimpl implements MedicinesService {
     }
 
     @Override
-    public MedicinesDto getMedicinesById(Long medicinesId) {
-        Medicines medicines = medicinesReprository.findById(medicinesId)
-                .orElseThrow(() ->
-                        new ResourceFoundException("Medicines is not exist with given Id: " + medicinesId));
-        return MedicinesMapper.mapToMedicinesDto(medicines);
-    }
-
-    @Override
-    public MedicinesDto getMedicinesByName(String medicinesName) {
-        Medicines medicines = medicinesReprository.findByMedicinesName(medicinesName)
-                .orElseThrow(() ->
-                        new ResourceFoundException("Medicines is not exist with given NAme: " + medicinesName));
-        return MedicinesMapper.mapToMedicinesDto(medicines);
-    }
-
-    @Override
     public List<MedicinesDto> getAllMedicines() {
-        List<Medicines> Medicines = medicinesReprository.findAll();
-        return Medicines.stream().map((Medicine) -> MedicinesMapper.mapToMedicinesDto(Medicine))
+        List<Medicines> Medicine = medicinesReprository.findAll();
+        return Medicine.stream().map((Medicines) -> MedicinesMapper.mapToMedicinesDto(Medicines))
                 .collect(Collectors.toList());
     }
 }

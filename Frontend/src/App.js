@@ -9,7 +9,6 @@ import AdminMain from "./Admin/components/AdminMain";
 import AdminHome from "./Admin/pages/home/AdminHome";
 import DoctorMain from "./Admin/pages/Doctor/DoctorMain";
 import PatientMain from "./Admin/pages/Patient/PatientMain";
-import CustomerMain from "./Admin/pages/Customer/CustomerMain";
 import DoctorRecord from "./Admin/pages/Doctor/DoctorRecord";
 import DoctorRegister from "./Admin/pages/Doctor/DoctorRegister";
 import DoctorSpecialisation from "./Admin/pages/Doctor/DoctorSpecialisation";
@@ -27,6 +26,7 @@ import Feature from "./Index/Feature";
 import MadicineHome from "./Admin/pages/Madicine/MadicineHome";
 import CommingSoon from "./Admin/pages/CommingSoon";
 import Navbar from "./Index/Navbar";
+import Addmedicine from "./Admin/pages/Madicine/Addmedicine";
 
 function App() {
   return (
@@ -43,7 +43,6 @@ function App() {
         <Route exact path="/admin/doctor/specialisation" element={<><AdminMain/><DoctorSpecialisation/> </>}/>
         <Route exact path="/admin/doctor/register" element={<><AdminMain/><DoctorRegister/> </>}/>
         <Route exact path="/admin/doctor/record" element={<><AdminMain/><DoctorRecord/> </>}/>
-        <Route exact path="/admin/customer" element={<><AdminMain/><CustomerMain/> </>}/>
         <Route exact path="/admin/patient" element={<><AdminMain/><PatientMain/> </>}/>
         <Route exact path="/admin/doctor" element={<><AdminMain/><DoctorMain/> </>}/>
         <Route exact path="/admin/dashboard" element={<><AdminMain/><AdminHome/> </>}/>
@@ -56,6 +55,7 @@ function App() {
         <Route exact path="/admin" element={<><AdminLogin/> </>}/>
         <Route exact path="/admin/forgot-password" element={<><AdminForgotpsw/> </>}/>
         <Route exact path="/admin/register" element={<><AdminRegister/> </>}/>
+        <Route exact path="/admin/medicine/add" element={<><AdminMain/><Addmedicine/></>}/>
 
       </Routes>
     </BrowserRouter>

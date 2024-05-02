@@ -81,3 +81,11 @@ const REST_API_BASE_URL_LIST_DEPARTMENT_Name = "http://localhost:8080/api/hospit
 export const DepartmentsName = (name) => {
   return axios.get(REST_API_BASE_URL_LIST_DEPARTMENT_Name + name);
 };
+
+const RESt_API_BASE_URL_LIST_MEDICINE_CREATE = "http://localhost:8080/api/hospitals/medicine/";
+export const listMedicines= () => {
+  return axios.get(RESt_API_BASE_URL_LIST_MEDICINE_CREATE);
+};
+export const CreateMedicine = (medicine) => {
+  return axios.post(RESt_API_BASE_URL_LIST_MEDICINE_CREATE, medicine);
+};

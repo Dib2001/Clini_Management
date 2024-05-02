@@ -92,15 +92,6 @@ export default function UNavbar() {
                 <Link
                   className="nav-link active"
                   style={{ textDecoration: "none" }}
-                  to="/admin/customer"
-                >
-                  Customer
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  style={{ textDecoration: "none" }}
                   to="/admin/madicine"
                 >
                   Medicine

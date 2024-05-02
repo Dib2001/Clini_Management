@@ -3,7 +3,6 @@ package com.example.Backend.service.impl;
 import com.example.Backend.dto.DepartmentDto;
 import com.example.Backend.entity.Department;
 import com.example.Backend.exception.ResourceFoundException;
-import com.example.Backend.exception.ResourceNotFoundException;
 import com.example.Backend.mapper.DepartmentMapper;
 import com.example.Backend.repository.DepartmentReprository;
 import com.example.Backend.service.DepartmentService;

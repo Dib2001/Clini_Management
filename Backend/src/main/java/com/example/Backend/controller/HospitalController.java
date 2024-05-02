@@ -55,13 +55,6 @@ public class HospitalController {
         return ResponseEntity.ok(hospitalsDto);
     }
 
-    //Post clinic REST API
-    @PostMapping("medicine/")
-    public ResponseEntity<MedicinesDto> createMedicines(@RequestBody MedicinesDto medicinesDto){
-        MedicinesDto savedMedicines = medicinesService.createMedicines(medicinesDto);
-        return new ResponseEntity<>(savedMedicines, HttpStatus.CREATED);
-    }
-
     @PostMapping("login/")
     public ResponseEntity<Boolean> loginUser(@RequestBody HospitalsDto hospitalDTO) {
         boolean hospitalsDto = hospitalsService.authenticateUser(hospitalDTO.getEmail(), hospitalDTO.getPassword());
@@ -87,6 +80,14 @@ public class HospitalController {
         List<MedicinesDto> Medicines = medicinesService.getAllMedicines();
         return ResponseEntity.ok(Medicines);
     }
+
+    //Post clinic REST API
+    @PostMapping("medicine/")
+    public ResponseEntity<MedicinesDto> createMedicines(@RequestBody MedicinesDto medicinesDto){
+        MedicinesDto savedMedicines = medicinesService.createMedicines(medicinesDto);
+        return new ResponseEntity<>(savedMedicines, HttpStatus.CREATED);
+    }
+
 
     //Post department REST API
     @PostMapping("department/")
