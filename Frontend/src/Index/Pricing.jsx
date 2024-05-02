@@ -45,9 +45,6 @@ export default function Pricing() {
                 </div>
               </div>
             </blockquote>
-            <figcaption className="blockquote-footer">
-              Created By <cite title="Source Title">- B Biswas</cite>
-            </figcaption>
           </div>
         </div>
       </figure>
