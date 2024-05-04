@@ -17,7 +17,7 @@ export default function Addmedicine() {
       hospitalId: HID,
       quantity: parseInt(Quantity),
     };
-    await CreateMedicine(data).then(() => alert("Medicine Successfully added"));
+    await CreateMedicine(data).then(() => message.success("Medicine Successfully added"));
   };
 
   return (

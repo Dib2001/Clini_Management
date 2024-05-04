@@ -1,6 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { PatientsId, PatientsUpdateId, listDepartments, listDoctors } from "../../Database/AdminService";
+import {
+  PatientsId,
+  PatientsUpdateId,
+  listDepartments,
+  listDoctors,
+} from "../../Database/AdminService";
 import { message } from "antd";
 import Select from "react-select";
 export default function PatientrecordPreview() {
@@ -15,6 +20,7 @@ export default function PatientrecordPreview() {
   const [doctor, setdoctor] = useState("");
   const [patient, setpatient] = useState([]);
   const [currentDateTime, setcurrentDateTime] = useState("");
+  const [remark, setremark] = useState("");
   const DateTime = () => {
     var date = new Date();
     var day = date.getDate();
@@ -22,20 +28,18 @@ export default function PatientrecordPreview() {
     var year = date.getFullYear();
     var hour = date.getHours();
     var min = date.getMinutes();
-    if(day<10) day ='0'+day;
-    if(month<10) month ='0'+month;
-    if(hour<10) hour ='0'+hour;
-    if(min<10) min ='0'+min;
-    setcurrentDateTime(
-      year + "-" + month + "-" + day + " " + hour + ":" + min
-    );
+    if (day < 10) day = "0" + day;
+    if (month < 10) month = "0" + month;
+    if (hour < 10) hour = "0" + hour;
+    if (min < 10) min = "0" + min;
+    setcurrentDateTime(year + "-" + month + "-" + day + " " + hour + ":" + min);
   };
 
   const getPatient = async () => {
     const get = await PatientsId(PatientKey.patientId);
-    setpatient(get.data)
+    setpatient(get.data);
   };
-  
+
   const updatePatient = async () => {
     const get = await PatientsId(PatientKey.patientId);
     const {
@@ -55,8 +59,8 @@ export default function PatientrecordPreview() {
     } = get.data;
     const extractedData = {
       clinicId,
-      departmentID:doctorDepartment,
-      doctorID:doctor,
+      departmentID: doctorDepartment,
+      doctorID: doctor,
       name,
       email,
       phn,
@@ -64,15 +68,15 @@ export default function PatientrecordPreview() {
       age,
       symp,
       addr,
-      date:currentDateTime,
-      approvereject:"Y",
-      remarks,
+      date: currentDateTime,
+      approvereject: "Y",
+      remarks: remark,
       pay,
     };
-    await PatientsUpdateId(PatientKey.patientId,extractedData).then((res) => {
-      message.success("Approved");
+    await PatientsUpdateId(PatientKey.patientId, extractedData).then((res) => {
+      message.success("patient updated");
     });
-    navigate(`/admin/patient/approve`)
+    navigate(`/admin/patient`);
   };
 
   const getDepartment = async () => {
@@ -227,6 +231,9 @@ export default function PatientrecordPreview() {
                   />
                 </div>
                 <div className="col-sm-6">
+                  <label htmlFor="Department" className="form-label">
+                    Department
+                  </label>
                   <Select
                     required
                     options={Department}
@@ -237,14 +244,34 @@ export default function PatientrecordPreview() {
                   />
                 </div>
                 <div className="col-sm-6">
+                  <label htmlFor="Doctor" className="form-label">
+                    Doctor
+                  </label>
                   <Select
                     required
                     options={Doctor}
                     onChange={(e) => setdoctor(e.value)}
                   />
                 </div>
+                <div className="col-12">
+                  <label htmlFor="premark" className="form-label">
+                    Remark
+                  </label>
+                  <input
+                    // value={patient.addr}
+                    type="text"
+                    onChange={(e) => setremark(e.target.value)}
+                    className="form-control"
+                    placeholder="Remark"
+                    id="premark"
+                  />
+                </div>
                 <div className="col-md-6">
-                  <button type="button" className="btn btn-primary" onClick={updatePatient}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={updatePatient}
+                  >
                     Update
                   </button>
                 </div>

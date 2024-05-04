@@ -43,7 +43,7 @@ export default function MadicineHome() {
           </Link>
         </div>
         <div className="col-sm-6 mb-3 mb-sm-0">
-          <Link to="/admin/commingsoon" style={{ textDecoration: "none" }}>
+          <Link to="/admin/medicine/stock" style={{ textDecoration: "none" }}>
             <div className="card text-bg-success">
               <div className="card-header">In Stock : {stockmadicine}</div>
               <div className="card-body">

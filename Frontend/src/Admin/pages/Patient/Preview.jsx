@@ -1,6 +1,11 @@
 import { React, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { PatientsId, PatientsUpdateId, listDepartments, listDoctors } from "../../Database/AdminService";
+import {
+  PatientsId,
+  PatientsUpdateId,
+  listDepartments,
+  listDoctors,
+} from "../../Database/AdminService";
 import { message } from "antd";
 import Select from "react-select";
 export default function Preview() {
@@ -22,18 +27,16 @@ export default function Preview() {
     var year = date.getFullYear();
     var hour = date.getHours();
     var min = date.getMinutes();
-    if(day<10) day ='0'+day;
-    if(month<10) month ='0'+month;
-    if(hour<10) hour ='0'+hour;
-    if(min<10) min ='0'+min;
-    setcurrentDateTime(
-      year + "-" + month + "-" + day + " " + hour + ":" + min
-    );
+    if (day < 10) day = "0" + day;
+    if (month < 10) month = "0" + month;
+    if (hour < 10) hour = "0" + hour;
+    if (min < 10) min = "0" + min;
+    setcurrentDateTime(year + "-" + month + "-" + day + " " + hour + ":" + min);
   };
 
   const getPatient = async () => {
     const get = await PatientsId(PatientKey.patientId);
-    setpatient(get.data)
+    setpatient(get.data);
   };
 
   const updatePatient = async () => {
@@ -55,8 +58,8 @@ export default function Preview() {
     } = get.data;
     const extractedData = {
       clinicId,
-      departmentID:doctorDepartment,
-      doctorID:doctor,
+      departmentID: doctorDepartment,
+      doctorID: doctor,
       name,
       email,
       phn,
@@ -64,15 +67,15 @@ export default function Preview() {
       age,
       symp,
       addr,
-      date:currentDateTime,
-      approvereject:"Y",
+      date: currentDateTime,
+      approvereject: "Y",
       remarks,
       pay,
     };
-    await PatientsUpdateId(PatientKey.patientId,extractedData).then((res) => {
+    await PatientsUpdateId(PatientKey.patientId, extractedData).then((res) => {
       message.success("Approved");
     });
-    navigate(`/admin/patient/approve`)
+    navigate(`/admin/patient/approve`);
   };
 
   const getDepartment = async () => {
@@ -227,6 +230,9 @@ export default function Preview() {
                   />
                 </div>
                 <div className="col-sm-6">
+                  <label htmlFor="Department" className="form-label">
+                    Department
+                  </label>
                   <Select
                     required
                     options={Department}
@@ -237,6 +243,9 @@ export default function Preview() {
                   />
                 </div>
                 <div className="col-sm-6">
+                  <label htmlFor="Doctor" className="form-label">
+                    Doctor
+                  </label>
                   <Select
                     required
                     options={Doctor}
@@ -244,7 +253,11 @@ export default function Preview() {
                   />
                 </div>
                 <div className="col-md-6">
-                  <button type="button" className="btn btn-primary" onClick={updatePatient}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={updatePatient}
+                  >
                     Approve
                   </button>
                 </div>

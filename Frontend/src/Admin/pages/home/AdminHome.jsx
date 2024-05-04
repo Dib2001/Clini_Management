@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { listDoctors, listPatients } from "../../Database/AdminService";
+import { listDoctors, listMedicines, listPatients } from "../../Database/AdminService";
 
 export default function UHome() {
   const HID = parseInt(localStorage.getItem("HId"), 10);
@@ -7,7 +7,6 @@ export default function UHome() {
   const [doctorcount, setdoctorcount] = useState(0);
 
   const [medicinecount, setmedicinecount] = useState(0);
-  const [todaymedicinecount, settodaymedicinecount] = useState(0);
 
   const listDoctore = async (e) => {
     const res = await listDoctors();
@@ -47,10 +46,24 @@ export default function UHome() {
     setappointmentcount(count);
   };
 
+  const listMedicine = async () => {
+    const res = await listMedicines();
+    let count = 0;
+    console.log(res);
+    res.data.forEach((medicine) => {
+      if (medicine.hospitalId === HID) {
+        console.table(medicine);
+        count++;
+      }
+    });
+    setmedicinecount(count);
+  };
+
   useEffect(() => {
     listDoctore();
     listPatient();
     listApprovePatient();
+    listMedicine();
   }, []);
 
   return (
@@ -88,10 +101,10 @@ export default function UHome() {
         </div>
         <div className="col-sm-3 mb-3 mb-sm-0">
           <div className="card text-bg-warning  ">
-            <div className="card-header">Total Medicine : {medicinecount}</div>
+            <div className="card-header">Medicine</div>
             <div className="card-body">
               <p className="card-text">
-                Number of Medicine added today : {todaymedicinecount}
+                Total Medicines : {medicinecount}
               </p>
               <i className="fa fa-medkit" style={{ fontSize: "3rem" }} />
             </div>

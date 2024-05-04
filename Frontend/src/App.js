@@ -27,6 +27,7 @@ import MadicineHome from "./Admin/pages/Madicine/MadicineHome";
 import CommingSoon from "./Admin/pages/CommingSoon";
 import Navbar from "./Index/Navbar";
 import Addmedicine from "./Admin/pages/Madicine/Addmedicine";
+import MedicineRecord from "./Admin/pages/Madicine/MedicineRecord";
 
 function App() {
   return (
@@ -56,7 +57,7 @@ function App() {
         <Route exact path="/admin/forgot-password" element={<><AdminForgotpsw/> </>}/>
         <Route exact path="/admin/register" element={<><AdminRegister/> </>}/>
         <Route exact path="/admin/medicine/add" element={<><AdminMain/><Addmedicine/></>}/>
-
+        <Route exact path="/admin/medicine/stock" element={<><AdminMain/><MedicineRecord/></>}/>
       </Routes>
     </BrowserRouter>
   );
