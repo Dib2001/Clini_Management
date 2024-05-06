@@ -403,8 +403,23 @@ export default function Appoinment() {
       </div>
 
       {/* Carosel */}
-
-
+      <div
+        id="carouselExampleSlidesOnly"
+        className="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div className="carousel-inner">
+          <div className="carousel-item active">
+            <img src="front.jpg" className="d-block w-100" alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src="front2.jpg" className="d-block w-100" alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src="high .jpg" className="d-block w-100" alt="..." />
+          </div>
+        </div>
+      </div>
 
       {/*  */}
 
