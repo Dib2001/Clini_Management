@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Style.css";
 
 export default function About() {
@@ -13,9 +12,7 @@ export default function About() {
               <p className="lead text-center">
                 <strong>HEALTHCARE</strong>
                 {/*  */}
-
-                <link rel="stylesheet" href="public/aboutus.jpg" />
-                
+                <img src="aboutus.jpg" alt="" />
                 {/*  */}
               </p>
             </blockquote>
