@@ -75,6 +75,7 @@ export default function PatientRecord() {
                   <th scope="col">Doctor</th>
                   <th scope="col">Department</th>
                   <th scope="col">Date</th>
+                  <th scope="col">Remarks</th>
                   <th scope="col">Update</th>
                   <th scope="col">Delete</th>
                 </tr>
@@ -103,6 +104,7 @@ export default function PatientRecord() {
                       })}
                     </td>
                     <td>{patient.date}</td>
+                    <td>{patient.remarks}</td>
                     <td>
                       <button
                         onClick={() => handleUpdate(patient.id)}

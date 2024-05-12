@@ -21,7 +21,7 @@ public class HospitalController {
     private PatientService patientService;
     private MedicinesService medicinesService;
 
-    //Post clinic REST API
+    // REST API create hospital
     @PostMapping
     public ResponseEntity<HospitalsDto> createHospitals(@RequestBody HospitalsDto hospitalsDto){
         HospitalsDto savedHospital = hospitalsService.createHospitals(hospitalsDto);
