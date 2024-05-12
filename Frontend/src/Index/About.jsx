@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Style.css";
 
 export default function About() {
@@ -11,12 +10,13 @@ export default function About() {
             <h1 className="fw-light">About us</h1>
             <blockquote className="blockquote">
               <p className="lead text-center">
-              <strong> </strong>
-              {/* pic */}
+                <strong>HEALTHCARE</strong>
+                {/*  */}
+                <img src="aboutus.jpg" alt="" />
+                {/*  */}
               </p>
             </blockquote>
-          </div>
-        </div>
+          </div></div>
       </figure>
       <div className="custom-shape-divider-bottom-1674155641">
         <svg

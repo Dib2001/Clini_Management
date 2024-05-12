@@ -23,14 +23,14 @@ export default function Faqs() {
             <blockquote className="blockquote">
               <div className="form-floating">
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  placeholder="Leave a comment here"
+                  placeholder="Name"
                   id="floatingTextarea2"
                   style={{ width: "fit-content" }}
                   required
                 />
-                <label htmlFor="floatingTextarea2">Email</label>
+                <label htmlFor="floatingTextarea2">Name</label>
               </div>
               <br />
               <div className="form-floating">

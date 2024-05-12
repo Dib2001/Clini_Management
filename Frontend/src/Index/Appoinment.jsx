@@ -306,7 +306,10 @@ export default function Appoinment() {
                   <div className="card-body">
                     <div className="row g-3">
                       <div className="col-md-12 ">
-                        <QRCode type="svg" value={`upi://pay?pa=7365955640@paytm&am=${400}&cu=INR`} />
+                        <QRCode
+                          type="svg"
+                          value={`upi://pay?pa=7365955640@paytm&am=${400}&cu=INR`}
+                        />
                       </div>
                       <div className="col-md-6">
                         <label htmlFor="pEmail" className="form-label">
@@ -387,7 +390,7 @@ export default function Appoinment() {
         </div>
       </div>
 
-      <div className="row mx-5">
+      <div className="row mx-5 mb-3">
         <div className="col-sm-4 mb-4 mb-sm-0"></div>
         <div className="col-sm-4 mb-4 mb-sm-0 text-center">
           <button
@@ -403,24 +406,42 @@ export default function Appoinment() {
       </div>
 
       {/* Carosel */}
-
-
-
-      {/*  */}
-
-      <div className="custom-shape-divider-bottom-1674156302">
-        <svg
-          data-name="Layer 1"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
+      <div
+        id="carouselExampleAutoplaying"
+        className="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div className="carousel-inner">
+          <div className="carousel-item active">
+            <img src="front.jpg" className="d-block w-100" alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src="front2.jpg" className="d-block w-100" alt="..." />
+          </div>
+          <div className="carousel-item">
+            <img src="high.jpg" className="d-block w-100" alt="..." />
+          </div>
+        </div>
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="prev"
         >
-          <path
-            d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"
-            className="shape-fill"
-          />
-        </svg>
+          <span className="carousel-control-prev-icon" aria-hidden="true" />
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="next"
+        >
+          <span className="carousel-control-next-icon" aria-hidden="true" />
+          <span className="visually-hidden">Next</span>
+        </button>
       </div>
+      {/*  */}
     </>
   );
 }
